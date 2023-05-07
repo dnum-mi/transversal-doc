@@ -8,6 +8,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'outils', link: '/outils/' },
       { text: 'client', link: '/client' },
       { text: 'serveur', link: '/serveur' }
     ],
