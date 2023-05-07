@@ -9,6 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "vitepress": "1.0.0-alpha.75",
+    "vue": "^3.2.47"
+  },
   "volta": {
     "node": "18.16.0"
   }
