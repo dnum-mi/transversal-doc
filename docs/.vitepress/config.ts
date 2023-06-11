@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Projets JS/TS",
-  description: "Conventions du Ministère de l’intérieur",
+  description: "Conventions de la Fabrique Numérique",
   themeConfig: {
     outline:{
       level: 2,

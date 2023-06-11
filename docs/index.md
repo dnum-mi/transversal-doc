@@ -25,7 +25,7 @@ hero:
 
 features:
   - title: Conventions
-    details: Les conventions du Ministère à utiliser rassemblées au même endroit
+    details: Les conventions de la Fabrique Numérique du Ministère de l’Intérieur à utiliser rassemblées au même endroit
   - title: Bonnes pratiques
     details: Les bonnes pratiques des langages et bibliothèques et frameworks recommandés
   - title: Recettes

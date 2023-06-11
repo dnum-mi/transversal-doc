@@ -129,7 +129,7 @@ Authorization: Bearer {{login.response.body.token}}
 
 {
   "title": "Conventions",
-  "description": "Ensemble des conventions (fortement) recommandées pour les projets du Ministère de l’Intérieur",
+  "description": "Ensemble des conventions (fortement) recommandées pour les projets de la Fabrique Numérique",
   "tags": ["conventions", "javascript", "typescript"],
   "content": "Lorem ipsum dolor sit amet, consectetur"
 }
