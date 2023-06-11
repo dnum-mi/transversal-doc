@@ -4,7 +4,7 @@ Ce document rassemble toutes les conventions qu’un projet JavaScript/TypeScrip
 
 Ces conventions concernent la documentation, le nommage, l’architecture, la gestion de la journalisation et des erreurs, ainsi que certaines bonnes pratiques concernant l’accessibilité et l’expérience utilisateur.
 
-## Documentation
+## Conventions sur la documentation des projets
 
 cf. [Documentation](/conventions/documentation)
 
