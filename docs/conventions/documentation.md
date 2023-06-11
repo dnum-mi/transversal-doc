@@ -13,4 +13,4 @@ La documentation pour les développeurs doit contenir :
 - la stack détaillée du projet
 - un TL;DR avec comment lancer les tests, comment démarrer l’application
 - une partie pour les nouveaux arrivants sur le projet (très important)
-- les conventions à suivre pour ce projet
+- les conventions à suivre pour ce projet (avec un rappel vers la présente documentation)
