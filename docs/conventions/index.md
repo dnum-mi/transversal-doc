@@ -12,22 +12,22 @@ cf. [Documentation](/conventions/documentation)
 
 cf. [Nommage](/conventions/nommage)
 
-## Conventions d’architecture de dossier
+## Conventions d’architecture de dossiers
 
-cf. [Nommage](/conventions/architecture-dossiers)
+cf. [Architecture de dossiers](/conventions/architecture-dossiers)
 
 ## Conventions TypeScript
 
-cf. [Nommage](/conventions/typescript)
+cf. [TypeScript](/conventions/typescript)
 
 ## Conventions pour les API
 
-cf. [Nommage](/conventions/api-restful)
+cf. [API RESTful](/conventions/api-restful)
 
 ## Conventions de lint et formattage
 
-cf. [Nommage](/conventions/lint-formattage)
+cf. [Lint et formattage](/conventions/lint-formattage)
 
 ## Autres conventions pour le code
 
-cf. [Nommage](/conventions/autres)
+cf. [Autres conventions](/conventions/autres)
