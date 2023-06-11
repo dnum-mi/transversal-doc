@@ -8,6 +8,9 @@ hero:
   tagline: La documentation de la Fabrique numérique des bonnes pratiques et conventions à utiliser pour les projets JavaScript (TypeScript)
   actions:
     - theme: brand
+      text: Ce document
+      link: /ce-document
+    - theme: brand
       text: Conventions
       link: /conventions/
     - theme: brand

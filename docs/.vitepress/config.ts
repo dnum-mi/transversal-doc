@@ -20,6 +20,10 @@ export default defineConfig({
 
     sidebar: [
       {
+        text: 'Ce document',
+        link: '/ce-document',
+      },
+      {
         text: 'Conventions',
         link: '/conventions/',
         items: [
