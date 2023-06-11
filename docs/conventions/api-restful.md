@@ -8,14 +8,14 @@ Les noms de routes d’API doivent **comporter uniquement des noms, jamais de ve
 
 Bien :
 
-```
+```http
 /auth/token
 /users/1
 ```
 
 Mal :
 
-```
+```http
 /session/create
 /users/get/1
 /user/1
@@ -23,12 +23,12 @@ Mal :
 
 Exemples :
 
-- POST /cats (pour créer un cat)
-- GET /cats (pour récupérer un tableaux de cats)
-- GET /cats/:id (pour récupérer un cat)
-- PUT /cats/:id (pour modifier toutes les propriétés d’un cat)
-- PATCH /cats/:id (pour modifier une partie des propriétés d’un cat)
-- DELETE /cats/:id (pour effacer un cat)
+- `POST /cats` (pour créer un cat)
+- `GET /cats` (pour récupérer un tableaux de cats)
+- `GET /cats/:id` (pour récupérer un cat)
+- `PUT /cats/:id` (pour modifier toutes les propriétés d’un cat)
+- `PATCH /cats/:id` (pour modifier une partie des propriétés d’un cat)
+- `DELETE /cats/:id` (pour effacer un cat)
 
 ## Gestion de la journalisation
 

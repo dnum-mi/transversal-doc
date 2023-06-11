@@ -6,7 +6,7 @@ Les noms des modules et fichiers associés de NestJS doivent respecter la conven
 
 La structure est la suivante :
 
-```
+```tree
 ├── src
 │   └── modules
 │       └── cat

@@ -12,13 +12,13 @@ Avec les `enum`, le compilateur rajoute du code JS qui n’existe pas dans le co
 
 Ex. :
 
-```
+```typescript
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 ```
 
 au lieu de
 
-```
+```typescript
 enum HttpMethod {
   Get = 'GET',
   Post = 'POST',
