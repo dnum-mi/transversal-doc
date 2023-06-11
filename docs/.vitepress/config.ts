@@ -41,6 +41,7 @@ export default defineConfig({
       },
       {
         text: 'Recettes client',
+        link: '/client/',
         items: [
           { text: 'Vue 3', link: '/client/vue3' },
           { text: 'Nuxt 3', link: '/client/nuxt3' },
@@ -49,6 +50,7 @@ export default defineConfig({
       },
       {
         text: 'Recettes serveur',
+        link: '/serveur/',
         items: [
           { text: 'NestJS', link: '/serveur/nestjs' },
           { text: 'Fastify', link: '/serveur/fastify' },
