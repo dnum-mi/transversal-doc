@@ -2,30 +2,32 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Conventions projets JS/TS",
+  title: "Projets JS/TS",
   description: "Conventions du Ministère de l’intérieur",
   themeConfig: {
+    logo: '/nouveau-logo-marianne-gouvernement.png',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
       { text: 'outils', link: '/outils/' },
-      { text: 'client', link: '/client' },
-      { text: 'serveur', link: '/serveur' }
+      { text: 'client', link: '/client/' },
+      { text: 'serveur', link: '/serveur/' },
     ],
 
     sidebar: [
       {
         text: 'Recettes client',
         items: [
-          { text: 'Vue 3', link: '/client/vue3-recettes' },
-          { text: 'Nuxt 3', link: '/client/nuxt3-recettes' }
+          { text: 'Vue 3', link: '/client/vue3' },
+          { text: 'Nuxt 3', link: '/client/nuxt3' },
+          { text: 'Toaster', link: '/client/toaster' },
         ]
       },
       {
-        text: 'Recettes serveurs',
+        text: 'Recettes serveur',
         items: [
-          { text: 'NestJS', link: '/serveurs/nestjs-recettes' },
-          { text: 'Fastify', link: '/serveurs/fastify-recettes' }
+          { text: 'NestJS', link: '/serveur/nestjs' },
+          { text: 'Fastify', link: '/serveur/fastify' },
         ]
       }
     ],

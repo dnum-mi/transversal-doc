@@ -3,12 +3,15 @@
 layout: home
 
 hero:
-  name: "Conventions projets JS/TS"
-  text: "Conventions du Ministère de l’intérieur"
-  tagline: My great project tagline
+  name: "CoFabNum"
+  text: "Conventions des projets JS/TS de la Fabrique Numérique"
+  tagline: La documentation de la Fabrique numérique des bonnes pratiques et conventions à utiliser pour les projets JavaScript (TypeScript)
   actions:
     - theme: brand
-      text: Les outils du développeur
+      text: Conventions
+      link: /conventions/
+    - theme: brand
+      text: Outils
       link: /outils/
     - theme: brand
       text: Applications clientes
