@@ -13,15 +13,18 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'outils', link: '/outils/' },
-      { text: 'client', link: '/client/' },
-      { text: 'serveur', link: '/serveur/' },
     ],
 
     sidebar: [
       {
         text: 'Ce document',
         link: '/ce-document',
+        items: []
+      },
+      {
+        text: 'Les outils du dev',
+        link: '/outils/',
+        items: []
       },
       {
         text: 'Conventions',
