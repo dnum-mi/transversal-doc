@@ -94,15 +94,19 @@ Ensuite, pour n’importe quel utilisateur qui a Volta installé, dès qu’il s
 
 TODO: write
 
-## REST Client
+## Les fichiers `.rest`
+
+Les fichiers `.rest` sont des fichiers qui permettent de facilement tester des API.
 
 [REST CLient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) est une extension pour Visual Studio Code qui permet de (très) facilement tester des requêtes d’API RESTful.
 
 Cf. [la page dédiée](./rest-client)
 
+Pour JetBrains, regardez [cette page](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html)
+
 ## Editorconfig
 
-Editorconfig est un logiciel soit inclus dans les éditeurs, soit disponible sous forme d’extension (VSCode).
+Editorconfig est un logiciel soit inclus dans les éditeurs (JetBrains), soit disponible sous forme d’extension (VSCode).
 
 Voici la configuration recommandée (dans le fichier `.editorconfig` à la racine du projet) :
 
@@ -126,4 +130,4 @@ insert_final_newline = true
 
 Linter pour le JS et le TS.
 
-Cf. [la page dédié](./eslint)
+Cf. [la page dédiée](./eslint)
