@@ -98,6 +98,56 @@ TODO: write
 
 Les fichiers `.rest` sont des fichiers qui permettent de facilement tester des API.
 
+Voici un exemple :
+
+```
+@protocol = http
+@host = localhost
+@port = 3000
+@apiPrefix = /api/v1
+@baseUrl = {{protocol}}://{{host}}:{{port}}{{apiPrefix}}
+
+###
+
+{{baseUrl}}/version
+
+
+###
+# @name login
+POST {{baseUrl}}/auth/token HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": ""53CR37P455!"
+}
+
+###
+POST {{baseUrl}}/docs HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "title": "Conventions",
+  "description": "Ensemble des conventions (fortement) recommandées pour les projets du Ministère de l’Intérieur",
+  "tags": ["conventions", "javascript", "typescript"],
+  "content": "Lorem ipsum dolor sit amet, consectetur"
+}
+
+###
+PATCH  {{baseUrl}}/docs/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "tags": ["conventions", "javascript", "typescript", "dossiers"],
+}
+
+###
+DELETE  {{baseUrl}}/docs/1 HTTP/1.1
+Authorization: Bearer {{login.response.body.token}}
+```
+
 [REST CLient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) est une extension pour Visual Studio Code qui permet de (très) facilement tester des requêtes d’API RESTful.
 
 Cf. [la page dédiée](./rest-client)
