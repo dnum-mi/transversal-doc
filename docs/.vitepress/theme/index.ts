@@ -5,6 +5,7 @@ import './style.css'
 
 export default {
   ...Theme,
+  outlineTitle: 'Sur cette page',
   Layout: () => {
     return h(Theme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
