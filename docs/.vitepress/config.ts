@@ -46,7 +46,15 @@ export default defineConfig({
           { text: 'NestJS', link: '/serveur/nestjs' },
           { text: 'Fastify', link: '/serveur/fastify' },
         ]
-      }
+      },
+      {
+        text: 'Recettes monorepo',
+        items: [
+          { text: 'pnpm', link: '/monorepo/pnpm' },
+          { text: 'turbo', link: '/monorepo/turbo' },
+          { text: 'Gabarit de monorepo', link: '/monorepo/gabarit' },
+        ]
+      },
     ],
 
     socialLinks: [
