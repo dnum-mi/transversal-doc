@@ -1,4 +1,6 @@
-# Les recettes pour Vue 3
+# Les recettes pour Nuxt 3
+
+TODO: Présenter brièvement Nuxt 3
 
 ## Construire un projet Nuxt 3 pour le MI
 

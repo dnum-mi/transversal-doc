@@ -15,7 +15,7 @@ const getRandomAlphaNum = () => {
   return alphanum[randomIndex]
 }
 
-const getRandomId = (prefix = '', suffix = '') => {
+const getRandomHtmlId = (prefix = '', suffix = '') => {
   return (prefix ? prefix + '-' : '') + getRandomString(5) + (suffix ? '-' + suffix : '')
 }
 const getRandomString = (length: number) => {
@@ -35,9 +35,10 @@ export type Message = {
   class?: string | Record<string, string> | Array<string | Record<string, string>>;
 }
 
+const timeouts: Record<string, number> = {}
+const messages: Message[] = reactive([])
+
 const useToaster = () => {
-  const timeouts: Record<string, number> = {}
-  const messages: Message[] = reactive([])
 
   function removeMessage (id: string) {
     const index = messages.findIndex(message => message.id === id)
@@ -49,7 +50,7 @@ const useToaster = () => {
   }
 
   function addMessage (message: Message) {
-    message.id ??= getRandomId('toaster')
+    message.id ??= getRandomHtmlId('toaster')
     messages.push({ ...message, description: `${message.description} (${message.timeout})` })
     timeouts[message.id] = window.setTimeout(() => removeMessage(message.id as string), message.timeout)
   }
