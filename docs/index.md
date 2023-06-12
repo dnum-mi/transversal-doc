@@ -17,6 +17,9 @@ hero:
       text: Outils
       link: /outils/
     - theme: brand
+      text: Bibliothèques et FW
+      link: /stack/
+    - theme: brand
       text: Applications clientes
       link: /client/
     - theme: brand

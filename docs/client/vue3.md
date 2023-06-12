@@ -24,3 +24,9 @@ Le projet généré contient tout ce qu’il faut pour commencer à travailler�
 - une application d’exemple avec un en-tête
 - un router minimal avec deux routes intégré à l’application
 - un store minimal intégré à l’application
+
+## Ce qu’on peut rajouter
+
+- [prettier](https://prettier.io/)
+- [auto-imports](https://github.com/antfu/unplugin-auto-import) (sera peut-être fait dans une prochaine versioin de `create-vue-dsfr`)
+- [date-fns](https://date-fns.org/) si le projet manipule et/ou affiche des dates
