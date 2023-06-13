@@ -71,13 +71,13 @@ Exemple d’une application Vue :
 ### Noms de variables
 
 - variable contenant une valeur booléenne : doit commencer par `is` (rarement `has`, `should` ou `can`) et être en `camelCase`  (comme `isReallyTrue`)
-- variable contenant une date : doit être préfixée par `Date` ou `At` et être en `camelCase`  comme `startDate` ou `lastModifiedAt`
+- variable contenant une date : doit être suffixée par `Date` ou `At` et être en `camelCase`  comme `startDate` ou `lastModifiedAt`
 - fonction constructeur et classe : `PascalCase`
 - autre variable ou fonction : `camelCase`
 - constante : `SCREAMING_SNAKE_CASE`
 
 Les noms de variables et de fonctions (méthodes aussi) doivent être explicite, et donc potentiellement très long... Jusqu’à une certaine limite.
 
-Les noms de variable d’un seul caractères doivent être proscrit, sauf dans de (très très) rares cas, comme la fonction d’identité (`x => x`) ou des fonctions fléchées extrêmement simples.
+Les noms de variable d’un seul caractère doivent être proscrits, sauf dans de (très très) rares cas, comme la fonction d’identité (`x => x`) ou des fonctions fléchées extrêmement simples.
 
 Les **noms de variable doivent être au maximum en anglais**, et **peuvent être en français dans certains cas** si la traduction prête à confusion ou trop difficile (`demarche` ou `dossier`) ou si c’est un mot réservé (`affaire` peut rester `affaire` pour ne pas utiliser `case`).
