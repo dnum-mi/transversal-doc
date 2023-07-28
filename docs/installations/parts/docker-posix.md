@@ -3,19 +3,19 @@
 Mettre à jour l’index des packages **apt** pour permettre à **apt** d’utiliser un dépôt en HTTPS :
 
 ```shell
- sudo apt-get update
+sudo apt-get update
 
- sudo apt-get install ca-certificates curl gnupg
+sudo apt-get install ca-certificates curl gnupg
 ```
 
 #### Ajouter la clé officielle Docker
 
 ```shell
- sudo install -m 0755 -d /etc/apt/keyrings
+sudo install -m 0755 -d /etc/apt/keyrings
 
- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
- sudo chmod a+r /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
 ```
 
 #### Installer le dépôt
@@ -35,7 +35,7 @@ Mettre à jour l’index des packages **apt** pour permettre à **apt** d’util
 Mettre à jour l’index des packages apt :
 
 ```shell
- sudo apt-get update
+sudo apt-get update
 ```
 
 Installer Docker Engine, containerd, et Docker Compose.

@@ -40,4 +40,4 @@ Cette commande fixera la version de Node.js du projet avec la denrière LTS (à 
 }
 ```
 
-Ensuite, pour n’importe quel utilisateur qui a Volta installé, dès qu’il se trouvera dans ce répertoire ou un de ses sous-répertoires, Volta se chargera d’utiliser la version fixé dans le `package.json`.
+Ensuite, pour n’importe quel utilisateur qui a Volta installé, dès qu’il se trouvera dans ce répertoire ou un de ses sous-répertoires, Volta se chargera d’utiliser la version fixée dans le `package.json`.

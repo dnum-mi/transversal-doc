@@ -36,7 +36,7 @@ Les logs doivent sortir dans la sortie standard pour pouvoir être récupérés 
 
 Chaque requête doit être loggée avec le temps de réponse.
 
-Chaque action importante sur le serveur doit être journalisé (tentative de connexion, création d’un enregistrement/document...).
+Chaque action importante sur le serveur doit être journalisée (tentative de connexion, création d’un enregistrement/document...).
 
 Les erreurs doivent être récupérées intelligemment et gérées à un seul endroit.
 
@@ -52,12 +52,17 @@ Les retours d’erreur de l’API RESTful doivent être soit en français et com
 
 ## Les codes HTTP de retour
 
+- `200` : tout s’est bien passé, le serveur envoie le résultat (la ou les ressources demandées pour un GET, la ou les resources modifiées pour un PUT/PATCH, et la ou les ressources supprimées pour un DELETE)
+- `201` : tout s’est bien passé, j’ai bien créé la ressource demandée (uniquement pour les requêtes POST)
 - `400` : je ne comprends pas ce que tu dis, qui que tu sois (qui que tu sois mais identifié)
 - `401` : je ne sais pas qui tu es, ou bien je ne pense pas que tu sois la personne que tu prétends être, donc je ne te laisse pas rentrer (et mettre le header `WWW-Authenticate: Bearer` dans la réponse)
 - `403` : je sais très bien qui tu es, et tel que je te connais, tu vas faire des dégâts, donc je ne te laisse pas rentrer
 - `404` : J’ai tout compris, je sais qui tu es (ou je m’en moque) mais je n’ai pas ce que tu veux
 - `409` : Conflit. J'ai bien compris ce que tu voulais créer mais cette ressource existe déjà, je ne peux pas l'écraser. (exemple: création d'une démarche avec un id de référence existante)
+- `429` : je sais qui tu es (ou je m’en moque) mais tu m’as déjà demandé trop de choses, je ne peux plus t’aider pour l’instant, il faut que je m’occupe aussi de servir les autres
 - `500` : j’ai compris ta requête, mais j’ai un gros problème pour y répondre : je ne sais pas faire
+
+Il y en a évidemment beaucoup d’autres, cf. [httpstatuses](https://www.webfx.com/web-development/glossary/http-status-codes/).
 
 ## Les fichiers `.rest`
 
