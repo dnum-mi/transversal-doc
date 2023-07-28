@@ -35,6 +35,10 @@ Plus d’info :
 
 <!--@include: ./parts/vscode.md-->
 
+Ajouter l’extension wsl :
+
+![Extension WSL dans VS Code](./wsl-extension.png)
+
 ## [Git](https://git-scm.com/)
 
 Dans un terminal WSL :

@@ -35,12 +35,6 @@ Ajouter ces paramètres (dans `settings.json`) :
 
 ### Extensions
 
-#### Obligatoires
-
-Ajouter l’extension wsl :
-
-![Extension WSL dans VS Code](./wsl-extension.png)
-
 #### Fortement recommandées
 
 - [Conventional Commits](https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits)
