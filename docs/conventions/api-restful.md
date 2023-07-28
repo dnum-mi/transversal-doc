@@ -58,3 +58,63 @@ Les retours d’erreur de l’API RESTful doivent être soit en français et com
 - `404` : J’ai tout compris, je sais qui tu es (ou je m’en moque) mais je n’ai pas ce que tu veux
 - `409` : Conflit. J'ai bien compris ce que tu voulais créer mais cette ressource existe déjà, je ne peux pas l'écraser. (exemple: création d'une démarche avec un id de référence existante)
 - `500` : j’ai compris ta requête, mais j’ai un gros problème pour y répondre : je ne sais pas faire
+
+## Les fichiers `.rest`
+
+Les fichiers `.rest` sont des fichiers qui permettent de facilement tester des API.
+
+Voici un exemple :
+
+```
+@protocol = http
+@host = localhost
+@port = 3000
+@apiPrefix = /api/v1
+@baseUrl = {{protocol}}://{{host}}:{{port}}{{apiPrefix}}
+
+###
+
+{{baseUrl}}/version
+
+
+###
+# @name login
+POST {{baseUrl}}/auth/token HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": ""53CR37P455!"
+}
+
+###
+POST {{baseUrl}}/docs HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "title": "Conventions",
+  "description": "Ensemble des conventions (fortement) recommandées pour les projets de la Fabrique Numérique",
+  "tags": ["conventions", "javascript", "typescript"],
+  "content": "Lorem ipsum dolor sit amet, consectetur"
+}
+
+###
+PATCH  {{baseUrl}}/docs/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "tags": ["conventions", "javascript", "typescript", "dossiers"],
+}
+
+###
+DELETE  {{baseUrl}}/docs/1 HTTP/1.1
+Authorization: Bearer {{login.response.body.token}}
+```
+
+[REST CLient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) est une extension pour Visual Studio Code qui permet de (très) facilement tester des requêtes d’API RESTful.
+
+Cf. [la page dédiée](./rest-client)
+
+Pour JetBrains, regardez [cette page](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html)

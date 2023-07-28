@@ -1,5 +1,27 @@
 # Conventions de lint et formattage
 
+## Editorconfig
+
+Editorconfig est un logiciel soit inclus dans les éditeurs (JetBrains), soit disponible sous forme d’extension (VSCode).
+
+Voici la configuration recommandée (dans le fichier `.editorconfig` à la racine du projet) :
+
+```ini
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+```
+
 ## Lint avec ESLint
 
 Le code doit être *lint*é et formaté. Le minimum est ESLint avec [standard](https://standardjs.com/) et les seules règles à modifier par rapport à standard sont les suivantes :
