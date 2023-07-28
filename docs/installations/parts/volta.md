@@ -32,12 +32,12 @@ Une fois Volta installé, pour fixer la version de Node.js à utiliser pour le p
 volta pin node@lts
 ```
 
-Cette commande fixera la version de Node.js du projet avec la denrière LTS (à l’heure de l’écriture de ce document, la version `18.16.0`), et rajoutera les lignes suivante dans le fichier `package.json` :
+Cette commande fixera la version de Node.js du projet avec la denrière LTS (à l’heure de l’écriture de ce document, la version `18.16.0`), et rajoutera les lignes suivantes dans le fichier `package.json` :
 
 ```json
-  "volta": {
-    "node": "18.16.0"
-  }
+"volta": {
+  "node": "18.16.0"
+}
 ```
 
 Ensuite, pour n’importe quel utilisateur qui a Volta installé, dès qu’il se trouvera dans ce répertoire ou un de ses sous-répertoires, Volta se chargera d’utiliser la version fixé dans le `package.json`.

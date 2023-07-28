@@ -1,6 +1,4 @@
-## ZSH
-
-### zsh
+### Installer zsh
 
 ```shell
 sudo apt install zsh

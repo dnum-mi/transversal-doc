@@ -5,8 +5,8 @@ Installer la police [JetBrains Mono](https://www.jetbrains.com/fr-fr/lp/mono/).
 Dans les paramètres de VS Code, ajouter les lignes suivantes :
 
 ```json
-  "editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
-  "terminal.integrated.fontFamily": "'JetBrains Mono'",
+"editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
+"terminal.integrated.fontFamily": "'JetBrains Mono'",
 ```
 
 D’autres polices :
