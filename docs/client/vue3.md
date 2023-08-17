@@ -28,5 +28,5 @@ Le projet généré contient tout ce qu’il faut pour commencer à travailler�
 ## Ce qu’on peut rajouter
 
 - [prettier](https://prettier.io/)
-- [auto-imports](https://github.com/antfu/unplugin-auto-import) (sera peut-être fait dans une prochaine versioin de `create-vue-dsfr`)
+- [auto-imports](https://github.com/antfu/unplugin-auto-import) (sera peut-être fait dans une prochaine version de `create-vue-dsfr`)
 - [date-fns](https://date-fns.org/) si le projet manipule et/ou affiche des dates

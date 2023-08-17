@@ -72,10 +72,10 @@ export default useToaster
 // AppToaster
 import { DsfrAlert } from '@gouvminint/vue-dsfr'
 
-import type { Message } from '../composables/use-toaster'
+import type { Message } from '@/composables/use-toaster'
 
-defineProps<{ messages: Message[] }>();
-const emit = defineEmits(['close-message']);
+defineProps<{ messages: Message[] }>()
+const emit = defineEmits(['close-message'])
 const close = (id: string) => emit('close-message', id)
 </script>
 
@@ -90,6 +90,7 @@ const close = (id: string) => emit('close-message', id)
       <DsfrAlert
         v-for="message in messages"
         :key="message.id"
+        class="app-alert"
         v-bind="message"
         @close="close(message.id as string)"
       />
@@ -99,6 +100,7 @@ const close = (id: string) => emit('close-message', id)
 
 <style scoped>
 .toaster-container {
+  pointer-events: none;
   position: fixed;
   bottom: 1rem;
   width: 100%;
@@ -108,6 +110,12 @@ const close = (id: string) => emit('close-message', id)
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.app-alert {
+  background-color: var(--grey-1000-50);
+  width: 90%;
+  pointer-events: all;
 }
 
 .list-move, /* apply transition to moving elements */
@@ -198,12 +206,16 @@ setTimeout(() => toaster.addMessage({ // Ajout d’un troisième message...
     :quick-links="quickLinks"
     show-search
   />
+
   <div class="fr-container">
     <router-view />
   </div>
+
   <AppToaster
     :messages="toaster.messages"
     @close-message="toaster.removeMessage($event)"
   />
 </template>
+
+
 ```
