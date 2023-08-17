@@ -2,22 +2,22 @@
 
 ## Conventions
 
-Les noms des modules et fichiers associés de NestJS doivent respecter la convention du framework. Les noms sont au singulier: CatModule, CatService, CatController etc.
+Les noms des modules et fichiers associés de NestJS doivent respecter la convention du framework. Les noms sont au pluriel: CatsModule, CatsService, CatsController etc.
 
 La structure est la suivante :
 
 ```tree
 ├── src
 │   └── modules
-│       └── cat
+│       └── cats
 │           ├── controllers
-│           │   ├── cat.controller.ts
-│           │   └── cat.controller.spec.ts
+│           │   ├── cats.controller.ts
+│           │   └── cats.controller.spec.ts
 │           ├── providers
-│           │   ├── cat.service.ts
-│           │   └── cat.service.spec.ts
+│           │   ├── cats.service.ts
+│           │   └── cats.service.spec.ts
 │           ├── entity
-│           │   └── cat.entity.ts
-│           └── cat.module.ts
+│           │   └── cats.entity.ts
+│           └── cats.module.ts
 └ ...
 ```
