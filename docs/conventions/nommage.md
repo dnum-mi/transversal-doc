@@ -1,5 +1,22 @@
 ### Noms de branche git
 
+#### Le nom de la branche par défaut devrait être `main`
+
+Pour changer le nom de la branche par défaut pour tous les prochains projets créés avec `git init` :
+
+```shell
+git config --global init.defaultBranch main
+```
+
+Ceci va ajouter cette ligne dans votre `~/.gitconfig` :
+
+```toml
+[init]
+    defaultBranch = main
+```
+
+#### Le nom des autres branches
+
 Le nom de branche doit être formé de la façon suivante :
 
 `<feat|fix|hotfix|tech|docs|refacto>/<description-en-kebab-case>#<ticket_github>`

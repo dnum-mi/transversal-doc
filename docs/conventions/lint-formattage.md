@@ -53,27 +53,36 @@ Un fichier de configuration ESLint pour NestJS :
 require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
-  root: true,
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    sourceType: 'module',
-    project: ['tsconfig.eslint.json', 'tsconfig.json'],
-  },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: [
+    'prettier', //
+  ],
   extends: [
-    'plugin:@typescript-eslint/recommended',
+    'eslint:recommended', //
+    'plugin:vue/vue3-recommended',
+    '@vue/eslint-config-typescript/recommended',
     'standard',
   ],
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+    'vue/setup-compiler-macros': true,
+  },
+  ignorePatterns: ['.eslintrc.js'],
   rules: {
-    'comma-dangle': [2, 'always-multiline'],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/interface-name-prefix': 'off', //
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'comma-dangle': ['error', 'always-multiline'],
   },
   overrides: [
     {
-      files: [
-        'src/**/*.{spec,test}.{js,ts,jsx,tsx}',
-      ],
+      files: ['cypress/support/*.{js,ts,jsx,tsx}', 'cypress/integration/*.{spec,e2e}.{js,ts,jsx,tsx}', 'src/**/*.ct.{js,ts,jsx,tsx}'],
+      extends: ['plugin:cypress/recommended'],
+    },
+    {
+      files: ['src/**/*.{spec,test}.{js,ts,jsx,tsx}'],
       env: {
         jest: true,
       },
@@ -84,21 +93,28 @@ module.exports = {
 
 ## Optionnellement [Prettier](https://prettier.io/)
 
-Si prettier est utilisé en plus d’ESLint, il doit l’être avec ces options :
+Si prettier (>3.0.0) est utilisé en plus d’ESLint, il doit l’être avec la version ces options :
 
 ```json
 {
-  "bracketSpacing": true,
-  "printWidth": 120,
-  "semi": false,
   "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "all",
-  "useTabs": false
+  "semi": false,
+  "singleAttributePerLine": true
 }
 ```
 
-et ESLint doit être utilisé avec [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)
+et ESLint doit être utilisé avec [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier),
+et il faut ajouter cette ligne à la configuration eslint :
+
+```diff
+   extends: [
+     'eslint:recommended', //
+     'plugin:vue/vue3-recommended',
+     '@vue/eslint-config-typescript/recommended',
+     'standard',
++    'plugin:prettier/recommended',
+   ],
+```
 
 ### Les scripts de lint et de formattage
 

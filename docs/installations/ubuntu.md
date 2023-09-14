@@ -19,6 +19,8 @@ sudo apt update
 sudo apt install git
 ```
 
+<!--@include: ./parts/git-config.md -->
+
 ## ZSH
 
 <!--@include: ./parts/zsh-oh-my-zsh.md-->

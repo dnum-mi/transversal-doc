@@ -25,6 +25,8 @@ Plus d’info : <https://brew.sh/>
 
 Télécharger et installer Git : <https://git-scm.com/download/mac>
 
+<!--@include: ./parts/git-config.md -->
+
 ## ZSH
 
 <!--@include: ./parts/zsh-oh-my-zsh.md-->
