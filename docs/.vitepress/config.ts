@@ -24,7 +24,11 @@ export default defineConfig({
       {
         text: 'Les outils du dev',
         link: '/outils/',
-        items: []
+        items: [
+          {text: 'Windows', link: '/installations/windows'},
+          {text: 'macOS', link: '/installations/macos'},
+          {text: 'GNU/Linux', link: '/installations/linux'},
+        ]
       },
       {
         text: 'Conventions',

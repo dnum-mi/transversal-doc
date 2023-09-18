@@ -24,7 +24,7 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 
 Idéalement, il faut fixer la même version pour l’image Docker utilisée par les scripts CI que celle qui est fixée avec Volta.
 
-###  Utiliser de Volta
+###  Utiliser Volta
 
 Une fois Volta installé, pour fixer la version de Node.js à utiliser pour le projet, il faut lancer la commande suivante dans le dossier où est présent le fichier `package.json` du projet :
 
