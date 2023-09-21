@@ -2,13 +2,36 @@
 
 ## Qu’est-ce que ESLint
 
-ESLint est, comme son nom l’indique un linter, et est aussi par extension un formateur, même si ce n’est pas son but premier.
+ESLint est, comme son nom l’indique, un *linter*, et est aussi par extension un *formateur*, même si ce n’est pas son but premier.
 
 Cf. la partie ESLint des [conventions](/conventions/#conventions-de-lint-et-formattage)
 
 ## Installation de ESLint dans un projet
 
-TODO: write
+ESLint doit être installé en tant que dépendance de développement du projet, avec les plugins et config additionnels.
+
+Ensuite il doit être configuré dans votre éditeur (comme VS Code) ou IDE (comme JetBrains).
+
+Pour VS Code, il faut installer l’extension [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), et voici la configuration minimale recommandée :
+
+```json
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true, //
+  },
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+```
+
+Cf. [partie dédiée aux installations](../installations/) pour plus de configurations pour VS Code.
 
 ### Dans un projet Vue
 
@@ -74,22 +97,62 @@ Ou, si vous avez installé `@antfu/ni` (recommandé) :
 
 ```console
 ni -D eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-n
+
 ```
+
+::: tip
+Cette configration est déjà présente dans un projet créé avec `create-vue-dsfr`.
+
+Pour créer un projet avec `create-vue-dsfr`, lancer une des commandes suivantes :
+
+```shell
+npm init vue-dsfr
+```
+
+ou
+
+```shell
+pnpm create vue-dsfr
+```
+
+:::
 
 ### Dans un projet back
 
-TODO: write
+Dans un projet back, la configuration est plus simple :
+
+```javascript
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+module.exports = {
+  root: true,
+  extends: [
+    'eslint-config-typescript/recommended',
+    'standard',
+  ],
+  rules: {
+    'jsx-quotes': [2, 'prefer-double'],
+    'comma-dangle': [2, 'always-multiline'],
+  },
+  overrides: [
+    {
+      files: [
+        'src/**/*.{spec,test}.{js,ts,jsx,tsx}',
+      ],
+      env: {
+        jest: true,
+      },
+    },
+  ],
+}
+```
 
 ### Dans un projet fullstack
 
-TODO: write
+::: info
+Dans un projet fullstack, si le back est en Python, cela revient à avoir un projet uniquement front pour eslint.
+:::
 
-## ESLint dans VS Code
+Idéalement, la configuration eslint ne serait faite qu’une seule fois, dans un ***workspace*** dédié à cela, et qui serait utilisé par tous les autres *workspaces*.
 
-Il faut installer l’[extension ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), et ajouter dans les paramètres :
-
-```json
-"editor.codeActionsOnSave": {
-  "source.fixAll": true,
-},
-```
+Cf. le [gabarit d’exemple de monorepo](https://github.com/laruiss/template-monorepo) sur GitHub.

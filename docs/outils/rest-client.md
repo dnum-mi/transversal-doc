@@ -125,7 +125,6 @@ Content-Type: application/json
   "email": "{{adminUser}}",
   "password": "{{adminPassword}}"
 }
-
 ```
 
 Changer l’environnement dans VSCode se fait avec la commande `switch environment` de l’extension Rest Client :

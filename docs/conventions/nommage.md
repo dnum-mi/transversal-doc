@@ -37,7 +37,7 @@ Exemples :
 
 Les messages de validation *git* doivent respecter les conventions de [Commits Conventionnels](https://www.conventionalcommits.org/fr/v1.0.0/).
 
-le projet étant franco-français d’une part, et l’anglais n’étant que rarement maîtrisé d’autre part, les messages de commit peuvent être en français. S’ils sont en anglais veuillez bien vérifier le vocabulaire (faux-amis, notamment) et la syntaxe, pour éviter les ambiguïtés.
+le projet étant franco-français d’une part, et l’anglais n’étant que rarement maîtrisé d’autre part, les messages de commit peuvent être en français. S’ils sont en anglais, veuillez bien vérifier le vocabulaire (faux-amis, notamment) et la syntaxe, pour éviter les ambiguïtés.
 
 ### Noms de dossiers et fichiers
 
