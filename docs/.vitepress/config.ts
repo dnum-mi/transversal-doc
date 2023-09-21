@@ -30,7 +30,7 @@ export default defineConfig({
         items: [
           {text: 'Windows', link: '/installations/windows'},
           {text: 'macOS', link: '/installations/macos'},
-          {text: 'GNU/Linux', link: '/installations/linux'},
+          {text: 'Ubuntu', link: '/installations/ubuntu'},
         ]
       },
       {
