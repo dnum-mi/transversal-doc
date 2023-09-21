@@ -6,7 +6,26 @@ export default defineConfig({
   description: "Conventions de la Fabrique Numérique",
   themeConfig: {
     search: {
-      provider: 'local'
+      provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: 'Rechercher...',
+            buttonAriaLabel: 'Rechercher'
+          },
+          modal: {
+            backButtonTitle: 'effacer la recherche',
+            displayDetails: 'afficher les détails',
+            noResultsText: 'Aucun résultat pour ',
+            resetButtonTitle: 'resetButtonTitle',
+            footer: {
+              selectText: 'aller à ce texte',
+              navigateText: 'naviguer dans les résultats',
+              closeText: 'fermer'
+            }
+      }
+        },
+      }
     },
     outline:{
       level: 2,
