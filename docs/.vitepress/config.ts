@@ -5,6 +5,9 @@ export default defineConfig({
   title: "Projets JS/TS",
   description: "Conventions de la Fabrique Numérique",
   themeConfig: {
+    search: {
+      provider: 'local'
+    },
     outline:{
       level: 2,
       label: 'Sur cette page :',

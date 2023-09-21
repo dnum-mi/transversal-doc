@@ -12,7 +12,7 @@ TODO: write
 
 ### Dans un projet Vue
 
-Par rapport à la configuration de base de ESLint par `npm create vue`, il faut modifier comme suit :
+Par rapport à la configuration de base de ESLint par `npm create vue`, il convient de modifier le fichier `.eslintrc.cjs` comme suit :
 
 ```diff
  /* eslint-env node */
