@@ -12,7 +12,7 @@
 
 ## [Git](https://git-scm.com/)
 
-Dans un terminal WSL :
+Dans un terminal :
 
 ```shell
 sudo apt update
