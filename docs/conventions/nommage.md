@@ -33,6 +33,45 @@ Exemples :
 - `feat/worker-logs#353`
 - `refacto/reorganize-backend#360`
 
+Voici des configurations à ajouter à votre `~/.zshrc` pour vous faciliter la vie :
+
+```zsh
+# create new branch from current branch
+# gfeat my-branch-details-#123
+# gfix my-branch-details-#124
+# gtech my-branch-details-#125
+alias gfeat='createFeatBranch'
+alias gfix='createFixBranch'
+alias gtech='createTechBranch'
+
+createFeatBranch() {
+    (git switch -c feat/$1 && ding) || dong
+}
+createFixBranch() {
+    (git switch -c fix/$1 && ding) || dong
+}
+createTechBranch() {
+    (git switch -c tech/$1 && ding) || dong
+}
+
+# Notification sound
+ding() {
+    if [ "$(uname -s)" = "Darwin" ]; then
+        (afplay /System/Library/Sounds/Glass.aiff &> /dev/null &)
+    else
+        (play /path/to/ok-sound.mp3) # install sox and fix path
+    fi
+}
+
+dong() {
+    if [ "$(uname -s)" = "Darwin" ]; then
+        (afplay /System/Library/Sounds/Sosumi.aiff &> /dev/null &)
+    else
+        (play /path/to/error-sound.mp3) # install sox and fix path
+    fi
+}
+```
+
 ### Message de validation (*commit*)
 
 Les messages de validation *git* doivent respecter les conventions de [Commits Conventionnels](https://www.conventionalcommits.org/fr/v1.0.0/).
