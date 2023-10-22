@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "vitepress --port 5172 dev docs",
     "build": "vitepress build docs",
-    "preview": "vitepress preview docs"
+    "preview": "vitepress preview docs",
+    "docker:build": "docker build --tag transversal-doc --target prod .",
+    "docker:run": "docker run --publish 8080:8080 --rm transversal-doc"
   },
   "keywords": [],
   "author": "",
