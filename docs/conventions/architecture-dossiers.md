@@ -8,7 +8,7 @@ Cf. [page dédiée](/serveur/nestjs.md)
 
 ## Vue.js
 
-```tree
+```txt
 ├── README.md
 ├── env.d.ts
 ├── index.html

@@ -12,7 +12,7 @@ http://localhost:8080
 
 Voici comment faire une requête `POST` :
 
-```rest
+```txt
 POST http://localhost:8080/api/auth/token HTTP/1.1
 Content-Type: application/json
 
@@ -34,7 +34,7 @@ Voici le rendu dans VSCode :
 
 Des variables locales au fichier `.rest` peuvent être ajoutées :
 
-```rest
+```txt
 @baseUrl = http://localhost:3000/api
 ```
 
@@ -42,7 +42,7 @@ Des variables locales au fichier `.rest` peuvent être ajoutées :
 
 Les variables définies peuvent s’utiliser entre `{{}}` :
 
-```rest
+```txt
 ###
 {{baseUrl}}
 
@@ -52,7 +52,7 @@ Les variables définies peuvent s’utiliser entre `{{}}` :
 
 Et il est possible d’utiliser les variables pour créer d’autres variables :
 
-```rest
+```txt
 @protocol = http://
 @host = localhost
 @port = 3000
@@ -69,7 +69,7 @@ On peut aussi stocker dans une variable le résultat d’une requête :
 
 Noter ici le `@name login` :
 
-```rest
+```txt
 ###
 # @name login
 POST {{base}}/auth/token HTTP/1.1
@@ -85,7 +85,7 @@ Et l’utiliser plus tard dans une autre requête :
 
 Noter ici l’utilisation de `login` qui correspond au nom donné plus haut, qui sera désormais un objet qui va contenir la réponse dans sa propriété `response`, qui elle-même contiendra le corps de la réponse dans la propriété `body`. Ici, le corps de la réponse aura été un objet avec une propriété `token` qui contiendra le jeton d’accès (access token) au format JWT.
 
-```rest
+```txt
 ###
 GET {{base}}/lessons HTTP/1.1
 Authorization: Bearer {{login.response.body.token}}
@@ -117,7 +117,7 @@ Il est possible de paramétrer plusieurs environments dans les paramètres vscod
 
 Que l’on peut utiliser ensuite en tant que variables comme précédemment :
 
-```rest
+```txt
 POST {{baseUrl}} HTTP/1.1
 Content-Type: application/json
 
