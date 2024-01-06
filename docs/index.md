@@ -25,6 +25,9 @@ hero:
     - theme: brand
       text: Applications serveurs (API RESTful)
       link: /serveur/
+    - theme: brand
+      text: CI/CD
+      link: /ci-cd/
 
 features:
   - title: Conventions
