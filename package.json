@@ -16,10 +16,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vitepress": "1.0.0-rc.25",
-    "vue": "^3.3.7"
+    "vitepress": "1.0.0-rc.35",
+    "vue": "^3.4.5"
   },
   "volta": {
-    "node": "20.9.0"
+    "node": "20.10.0"
   }
 }
