@@ -94,8 +94,8 @@ export default defineConfig({
         text: 'CI/CD',
         link: '/ci-cd/',
         items: [
-          { text: 'principes', link: '/ci-cd/principes' },
-          { text: 'exemples', link: '/ci-cd/exemples' },
+          { text: 'Principes', link: '/ci-cd/principes' },
+          { text: 'Exemples', link: '/ci-cd/exemples' },
         ]
       },
     ],
