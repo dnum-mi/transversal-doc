@@ -90,10 +90,18 @@ export default defineConfig({
           { text: 'Gabarit de monorepo', link: '/monorepo/gabarit' },
         ]
       },
+      {
+        text: 'CI/CD',
+        link: '/ci-cd/',
+        items: [
+          { text: 'principes', link: '/ci-cd/principes' },
+          { text: 'exemples', link: '/ci-cd/exemples' },
+        ]
+      },
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/laruiss/transversal-doc' }
+      { icon: 'github', link: 'https://github.com/dnum-mi/transversal-doc' }
     ]
   }
 })
