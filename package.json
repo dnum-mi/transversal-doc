@@ -16,8 +16,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vitepress": "1.0.0-rc.35",
-    "vue": "^3.4.5"
+    "vitepress": "^1.0.1",
+    "vue": "^3.4.21"
   },
   "volta": {
     "node": "20.10.0"
