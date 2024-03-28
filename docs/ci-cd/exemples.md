@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: "20.10.0"
+  NODE_VERSION: "20.12.0"
   PNPM_VERSION: "8"
   REGISTRY: "ghcr.io"
   MULTI_ARCH: false
