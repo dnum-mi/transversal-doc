@@ -2,26 +2,11 @@
 
 ## Le composable `useToaster`
 
-```typescript
+```ts twoslash
+const reactive = <T>(val: T): T => val
+// ---cut---
 // use-toaster.ts
-import { reactive } from 'vue'
-
-const alphanumBase = 'abcdefghijklmnopqrstuvwyz0123456789'
-
-const alphanum = alphanumBase.repeat(10)
-
-const getRandomAlphaNum = () => {
-  const randomIndex = Math.floor(Math.random() * alphanum.length)
-  return alphanum[randomIndex]
-}
-
-const getRandomHtmlId = (prefix = '', suffix = '') => {
-  return (prefix ? prefix + '-' : '') + getRandomString(5) + (suffix ? '-' + suffix : '')
-}
-const getRandomString = (length: number) => {
-  return Array.from({ length })
-    .map(getRandomAlphaNum).join('')
-}
+import { getRandomId, type TitleTag } from '@gouvminint/vue-dsfr'
 
 export type Message = {
   id?: string;
@@ -29,18 +14,18 @@ export type Message = {
   description: string;
   type: 'info' | 'success' | 'warning' | 'error';
   closeable: boolean;
-  titleTag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  titleTag: TitleTag;
   timeout?: number;
   style?: Record<string, string>;
   class?: string | Record<string, string> | Array<string | Record<string, string>>;
 }
 
 const timeouts: Record<string, number> = {}
-const messages: Message[] = reactive([])
+const messages: Message[] = reactive<Message[]>([])
 
 const useToaster = () => {
 
-  function removeMessage (id: string) {
+  const removeMessage = (id: string): void => {
     const index = messages.findIndex(message => message.id === id)
     clearTimeout(timeouts[id])
     if (index === -1) {
@@ -49,8 +34,8 @@ const useToaster = () => {
     messages.splice(index, 1)
   }
 
-  function addMessage (message: Message) {
-    message.id ??= getRandomHtmlId('toaster')
+  const addMessage = (message: Message): void => {
+    message.id ??= getRandomId('toaster')
     messages.push({ ...message, description: `${message.description} (${message.timeout})` })
     timeouts[message.id] = window.setTimeout(() => removeMessage(message.id as string), message.timeout)
   }
@@ -202,7 +187,7 @@ setTimeout(() => toaster.addMessage({ // Ajout d’un troisième message...
     v-model="searchQuery"
     :service-title="serviceTitle"
     :service-description="serviceDescription"
-    :logo-text="logoText"****
+    :logo-text="logoText"
     :quick-links="quickLinks"
     show-search
   />
@@ -216,6 +201,4 @@ setTimeout(() => toaster.addMessage({ // Ajout d’un troisième message...
     @close-message="toaster.removeMessage($event)"
   />
 </template>
-
-
 ```

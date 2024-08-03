@@ -1,0 +1,10 @@
+{{baseUrl}}
+###
+
+POST {{baseUrl}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "{{adminUser}}",
+  "password": "{{adminPassword}}"
+}
