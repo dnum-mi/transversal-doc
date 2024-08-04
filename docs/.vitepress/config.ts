@@ -1,7 +1,13 @@
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  markdown: {
+    codeTransformers: [
+      transformerTwoslash()
+    ]
+  },
   title: "Projets JS/TS",
   description: "Conventions de la Fabrique Numérique",
   themeConfig: {

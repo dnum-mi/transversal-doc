@@ -8,7 +8,7 @@ Cf. la partie ESLint des [conventions](/conventions/#conventions-de-lint-et-form
 
 ## Installation de ESLint dans un projet
 
-ESLint doit être installé en tant que dépendance de développement du projet, avec les plugins et config additionnels.
+ESLint doit être installé en tant que dépendance de développement du projet, avec les plugins et configs additionnels.
 
 Ensuite il doit être configuré dans votre éditeur (comme VS Code) ou IDE (comme JetBrains).
 
@@ -16,7 +16,7 @@ Pour VS Code, il faut installer l’extension [ESLint](https://marketplace.visua
 
 ```json
   "editor.codeActionsOnSave": {
-    "source.fixAll": true, //
+    "source.fixAll": "explicit",
   },
   "eslint.format.enable": true,
   "eslint.validate": [
@@ -29,122 +29,102 @@ Pour VS Code, il faut installer l’extension [ESLint](https://marketplace.visua
       "mode": "auto"
     }
   ],
+  "eslint.useFlatConfig": true, // Attention, à ne pas utiliser si vous utilisez encore l’ancien système de config
 ```
 
 Cf. [partie dédiée aux installations](../installations/) pour plus de configurations pour VS Code.
 
 ### Dans un projet Vue
 
-Par rapport à la configuration de base de ESLint par `npm create vue`, il convient de modifier le fichier `.eslintrc.cjs` comme suit :
+Il est fortement conseillé de travailler à partir de la [configuration de Anthony Fu](https://eslint-config.antfu.me/), et de la modifier en surchargeant quelques règles comme suit :
 
-```diff
- /* eslint-env node */
- require('@rushstack/eslint-patch/modern-module-resolution')
+```js
+import antfu from '@antfu/eslint-config'
 
- module.exports = {
-   root: true,
-   extends: [
--    'plugin:vue/vue3-essential',
-+    'plugin:vue/vue3-recommended',
-     '@vue/eslint-config-typescript/recommended',
-+    'standard',
-   ],
-   env: {
-     'vue/setup-compiler-macros': true,
-   },
-
-   rules: {
-     'jsx-quotes': [2, 'prefer-double'],
-+    'comma-dangle': [2, 'always-multiline'],
-   },
-   overrides: [
-     {
-       files: [
-         'cypress/support/*.{js,ts,jsx,tsx}',
-         'cypress/integration/*.{spec,e2e}.{js,ts,jsx,tsx}',
-         'src/**/*.ct.{js,ts,jsx,tsx}',
-       ],
-       extends: [
-         'plugin:cypress/recommended',
-       ],
-     },
-     {
-       files: [
-         'src/**/*.{spec,test}.{js,ts,jsx,tsx}',
-       ],
-       env: {
-         jest: true,
-       },
-     },
-   ],
- }
+export default antfu({
+}, [
+  {
+    rules: {
+      'style/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
+      'style/space-before-function-paren': ['error', 'always'],
+      'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      'curly': ['error', 'all'],
+      'ts/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
+      'import/order': [
+        1,
+        {
+          'newlines-between': 'always',
+        },
+      ],
+      'comma-dangle': [
+        'error',
+        'always-multiline',
+      ],
+    },
+  },
+])
 ```
+
+::: tip Astuce
+
+Pour une compatibilité des [régions](https://dev.to/hurricaneinteractive/vs-code-define-a-region-1cd1) entre VSCode et JetBrains, on peut surcharger la règle `style/spaced-comment` comme suit :
+
+```js
+// (...)
+    'style/spaced-comment': [
+      'error',
+      'always',
+      {
+        markers: [
+          '#region',
+          '#endregion',
+          '/',
+        ],
+      },
+    ],
+// (...)
+```
+
+:::
+
+::: tip Astuce
+
+Pour pouvoir utiliser des [espaces insécables et des espaces fines insécables](https://www.lalanguefrancaise.com/articles/espace-insecable), il faut ajouter ces deux surcharges :
+
+```js
+// (...)
+    'no-irregular-whitespace': 'off',
+    'vue/no-irregular-whitespace': 'off',
+// (...)
+```
+
+:::
 
 Et ajouter les packages suivants :
 
-  -`eslint-config-standard`
-  -`eslint-plugin-import`
-  -`eslint-plugin-n`
-  -`eslint-plugin-promise`
+-`@antfu/eslint-config`
 
 Vous pouvez le faire avec la commande suivante :
 
 ```console
-pnpm install -D eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-n
+pnpm install -D eslint @antfu/eslint-config
 ```
 
 Ou, si vous avez installé `@antfu/ni` (recommandé) :
 
 ```console
-ni -D eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-n
-
+ni -D eslint @antfu/eslint-config
 ```
-
-::: tip
-Cette configration est déjà présente dans un projet créé avec `create-vue-dsfr`.
-
-Pour créer un projet avec `create-vue-dsfr`, lancer une des commandes suivantes :
-
-```shell
-npm init vue-dsfr
-```
-
-ou
-
-```shell
-pnpm create vue-dsfr
-```
-
-:::
 
 ### Dans un projet back
 
-Dans un projet back, la configuration est plus simple :
+Dans un projet back, la configuration est la même, avec ces deux surcharges en plus :
 
-```javascript
-/* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
-module.exports = {
-  root: true,
-  extends: [
-    'eslint-config-typescript/recommended',
-    'standard',
-  ],
-  rules: {
-    'jsx-quotes': [2, 'prefer-double'],
-    'comma-dangle': [2, 'always-multiline'],
-  },
-  overrides: [
-    {
-      files: [
-        'src/**/*.{spec,test}.{js,ts,jsx,tsx}',
-      ],
-      env: {
-        jest: true,
-      },
-    },
-  ],
-}
+```ts
+// (...)
+  'no-unused-vars': 'off',
+  'ts/no-unused-vars': 'off',
+// (...)
 ```
 
 ### Dans un projet fullstack
@@ -156,3 +136,12 @@ Dans un projet fullstack, si le back est en Python, cela revient à avoir un pro
 Idéalement, la configuration eslint ne serait faite qu’une seule fois, dans un ***workspace*** dédié à cela, et qui serait utilisé par tous les autres *workspaces*.
 
 Cf. le [gabarit d’exemple de monorepo](https://github.com/laruiss/template-monorepo) sur GitHub.
+
+### Les scripts de lint et de formattage
+
+Les scripts de formattage et de fix doivent être séparés :
+
+```json
+"lint": "eslint .",
+"format": "eslint . --fix",
+```

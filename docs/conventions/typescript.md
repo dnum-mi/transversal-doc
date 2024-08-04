@@ -27,4 +27,4 @@ enum HttpMethod {
 }
 ```
 
-Au lieu d’utiliser les namespaces, il faut utiliser les modules. Cf. Cette réponse sur [SO](https://stackoverflow.com/questions/56059351/tslint-namespace-and-module-are-disallowed#56061134), par exemple.
+Au lieu d’utiliser les namespaces, il faut utiliser les modules. Cf. cette réponse sur [StackOverflow](https://stackoverflow.com/questions/56059351/tslint-namespace-and-module-are-disallowed#56061134), par exemple.
