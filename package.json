@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "packageManager": "pnpm@8.14.1",
   "scripts": {
     "dev": "vitepress --port 5172 dev docs",
     "build": "vitepress build docs",
@@ -21,8 +20,5 @@
     "typescript": "^5.3.3",
     "vitepress": "^1.0.1",
     "vue": "^3.4.21"
-  },
-  "volta": {
-    "node": "20.12.0"
   }
 }
