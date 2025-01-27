@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "packageManager": "pnpm@8.14.1",
   "scripts": {
     "dev": "vitepress --port 5172 dev docs",
     "build": "vitepress build docs",
@@ -16,13 +15,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@gouvminint/vue-dsfr": "^5.7.0",
-    "@shikijs/vitepress-twoslash": "^1.12.1",
-    "typescript": "^5.3.3",
-    "vitepress": "^1.0.1",
-    "vue": "^3.4.21"
-  },
-  "volta": {
-    "node": "20.12.0"
+    "@gouvminint/vue-dsfr": "^8.1.1",
+    "@shikijs/vitepress-twoslash": "^2.1.0",
+    "typescript": "^5.7.3",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13"
   }
 }
