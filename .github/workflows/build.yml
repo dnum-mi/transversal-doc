@@ -1,9 +1,12 @@
 name: Build
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 3 * * 0'
 
 jobs:
   build:
@@ -39,3 +42,10 @@ jobs:
           target: prod
           platforms: linux/amd64,linux/arm64
           push: true
+
+      - name: Deploy new image
+        run: |
+          curl -X POST https://gitops.fabrique-numerique.fr/api/v1/applications/transversal-doc/sync \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.ARGOCD_TOKEN }}" \
+            -d '${{ vars.ARGOCD_SYNC_PAYLOAD }}'
