@@ -8,7 +8,7 @@ export default defineConfig({
       transformerTwoslash()
     ]
   },
-  title: "Projets JS/TS",
+  title: "Projets FabNum",
   description: "Conventions de la Fabrique Numérique",
   themeConfig: {
     search: {
@@ -68,6 +68,7 @@ export default defineConfig({
           {text: 'TypeScript', link: '/conventions/typescript'},
           {text: 'RESTful API', link: '/conventions/api-restful'},
           {text: 'Lint et Formattage', link: '/conventions/lint-formattage'},
+          {text: 'Poc vers Production', link: '/conventions/poc-to-prod'},
           {text: 'Autres conventions', link: '/conventions/autres'},
         ],
       },
@@ -86,6 +87,7 @@ export default defineConfig({
         items: [
           { text: 'NestJS', link: '/serveur/nestjs' },
           { text: 'Fastify', link: '/serveur/fastify' },
+          { text: 'FastAPI', link: '/serveur/fastapi' },
         ]
       },
       {

@@ -1,0 +1,14 @@
+services:
+  transversal-doc:
+    container_name: transversal-doc_dev
+    restart: always
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+    - 5172:5172
+    volumes:
+    - ./:/app
+    - /app/node_modules

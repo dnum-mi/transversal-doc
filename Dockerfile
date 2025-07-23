@@ -4,7 +4,7 @@ FROM docker.io/node:22-slim AS dev
 WORKDIR /app
 RUN npm install --location=global pnpm
 COPY --chown=node:root package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 COPY --chown=node:root docs ./docs
 ENTRYPOINT [ "pnpm", "run", "dev" ]
 
