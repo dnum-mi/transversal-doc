@@ -49,3 +49,7 @@ Cf. [page dédiée](/serveur/nestjs.md)
 ├── vite.config.ts
 └── vitest-setup.ts
 ```
+
+## FastAPI
+
+TODO
