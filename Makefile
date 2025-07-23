@@ -1,6 +1,6 @@
 PYTHONPATH=$(PWD)
 
-.PHONY: install-uv install-local linter test-bakend \
+.PHONY: install-uv install-local linter test-backend \
         up down build \
         upgrade-db upgrade-revision help
 
