@@ -1,8 +1,6 @@
 PYTHONPATH=$(PWD)
 
-.PHONY: install-uv install-local linter test-backend \
-        up down build \
-        upgrade-db upgrade-revision help
+.PHONY: up down build help
 
 .DEFAULT_GOAL := help
 
