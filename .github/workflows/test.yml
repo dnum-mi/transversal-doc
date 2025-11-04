@@ -15,7 +15,7 @@ on:
         description: Nodejs version used to run build tests
         required: true
         type: string
-        default: "22"
+        default: "24"
       PNPM_VERSION:
         description: Pnpm version used to run build tests
         required: true
@@ -23,7 +23,7 @@ on:
         default: "10"
 
 env:
-  NODE_VERSION: "22"
+  NODE_VERSION: "24"
   PNPM_VERSION: "10"
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -42,7 +42,7 @@ jobs:
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "${{ inputs.NODE_VERSION || env.NODE_VERSION }}"
 
