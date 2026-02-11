@@ -71,6 +71,7 @@ export default defineConfig({
           { text: 'API RESTful', link: '/conventions/api-restful' },
           { text: 'Lint et formattage', link: '/conventions/lint-formattage' },
           { text: 'Bonnes pratiques de code', link: '/conventions/autres' },
+          { text: 'Déploiement', link: '/conventions/deploiement' },
           { text: 'Du POC à la production', link: '/conventions/poc-to-prod' },
         ],
       },
