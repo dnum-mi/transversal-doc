@@ -1,8 +1,8 @@
 # Conventions
 
-Ce document rassemble toutes les conventions qu’un projet JavaScript/TypeScript de la Fabrique Numérique doit suivre.
+Ce document rassemble toutes les conventions que les projets de la Fabrique Numérique doivent suivre, quel que soit le langage (TypeScript, Python, etc.).
 
-Ces conventions concernent la documentation, le nommage, l’architecture, la gestion de la journalisation et des erreurs, ainsi que certaines bonnes pratiques concernant l’accessibilité et l’expérience utilisateur.
+Ces conventions couvrent la documentation, le nommage, l'architecture des dossiers, les règles TypeScript, les API RESTful, le lint et formattage, ainsi que les bonnes pratiques de code et le passage du POC à la production.
 
 ## Conventions sur la documentation des projets
 
@@ -28,6 +28,10 @@ cf. [API RESTful](/conventions/api-restful)
 
 cf. [Lint et formattage](/conventions/lint-formattage)
 
-## Autres conventions pour le code
+## Bonnes pratiques de code
 
-cf. [Autres conventions](/conventions/autres)
+cf. [Bonnes pratiques de code](/conventions/autres)
+
+## Du POC à la production
+
+cf. [POC to Prod](/conventions/poc-to-prod)

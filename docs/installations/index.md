@@ -7,14 +7,13 @@
 - Git
 - zsh
 - oh-my-zsh
-- Volta et node
-- Distribution Ubuntu
+- proto et node
 - GitHub CLI
 - pnpm
 - docker
 
-## [Windows (WSL)](./windows.md)
+## [Windows (WSL)](/installations/windows)
 
-## [Ubuntu](./windows.md)
+## [Ubuntu](/installations/ubuntu)
 
-## [macOS](./windows.md)
+## [macOS](/installations/macos)

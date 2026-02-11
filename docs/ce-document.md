@@ -2,7 +2,7 @@
 
 ## Ce qu’il est
 
-La présente documentation rassemble les conventions à respecter pour les projets TypeScript (JavaScript) de la Fabrique Numérique. Elle contient aussi des "recettes" réutilisables (selon la technologie utilisée) dans les projets.
+La présente documentation rassemble les conventions et bonnes pratiques à respecter pour les projets de la Fabrique Numérique, qu'ils soient en TypeScript/JavaScript, Python ou d'autres technologies. Elle contient aussi des "recettes" réutilisables (selon la technologie utilisée) dans les projets.
 
 ## Pour qui il est
 
@@ -12,9 +12,9 @@ Cette documentation est vivante et les retours des développeurs seront appréci
 
 ## Pourquoi il est
 
-Il n’existait pas jusqu’à récemment de conventions communes pour les projets JavaScript et TypeScript : certains utilisent JS et d’autres TS, certains utilisent mongodb, d’autres PostgreSQL, certains utilisent express, d’autres fastify, d’autres NestJS...
+Il n'existait pas jusqu'à récemment de conventions communes pour les projets de la Fabrique Numérique : certains utilisent JavaScript et d'autres TypeScript, certains Python et d'autres Node.js, certains utilisent MongoDB, d'autres PostgreSQL, certains utilisent Express, d'autres Fastify, NestJS ou FastAPI...
 
-D’autre part, certains projets ont été commencés par des prestataires qui travaillent parfois seuls sur des technologies qu’ils ne maîtrisent pas, et cela engendre de la dette techniques qui auraient pu être évitée (au moins en partie) s’ils avaient un document avec certains points à respecter.
+D'autre part, certains projets ont été commencés par des prestataires qui travaillent parfois seuls sur des technologies qu'ils ne maîtrisent pas, et cela engendre de la dette technique qui aurait pu être évitée (au moins en partie) s'ils avaient un document avec certains points à respecter.
 
 ## Pour quoi il est
 

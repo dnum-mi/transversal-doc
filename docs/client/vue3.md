@@ -9,7 +9,7 @@ Il existe un [portage du DSFR pour Vue](https://vue-dsfr.netlify.app/) qui est a
 Le plus simple est d’utiliser la CLI créé et maintenu par Stanislas Ormières `create-vue-dsfr` :
 
 ```console
-npm init vue-dsfr
+pnpm create vue-dsfr
 ```
 
 Et suivre les indications en répondant `Vue 3` et `TS`.

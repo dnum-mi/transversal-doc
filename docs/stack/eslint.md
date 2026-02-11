@@ -29,7 +29,7 @@ Pour VS Code, il faut installer l’extension [ESLint](https://marketplace.visua
       "mode": "auto"
     }
   ],
-  "eslint.useFlatConfig": true, // Attention, à ne pas utiliser si vous utilisez encore l’ancien système de config
+  "eslint.useFlatConfig": true, // Plus nécessaire depuis ESLint 9+ (flat config par défaut), mais utile pour les versions antérieures
 ```
 
 Cf. [partie dédiée aux installations](../installations/) pour plus de configurations pour VS Code.
@@ -56,7 +56,7 @@ export default antfu({
           'newlines-between': 'always',
         },
       ],
-      'comma-dangle': [
+      'style/comma-dangle': [
         'error',
         'always-multiline',
       ],

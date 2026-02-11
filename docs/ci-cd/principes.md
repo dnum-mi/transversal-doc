@@ -8,11 +8,11 @@ Plus précisément, l'approche CI/CD garantit une automatisation et une surveill
 
 Différents outils servent à faire de la CI/CD, à savoir faire tourner des `pipelines` d'automatisation à l'aide de `runners` (instance isolée qui va exécuter le pipeline), les plus connus sont [Github Actions](https://github.com/features/actions), [Gitlab CI](https://docs.gitlab.com/ee/ci/) ou encore [Jenkins](https://www.jenkins.io/).
 
-A ces outils permettant d'exécuter des pipelines CI/CD, s'ajoute des applications avec lesquels ces pipelines vont intéragir :
+A ces outils permettant d'exécuter des pipelines CI/CD, s'ajoute des applications avec lesquels ces pipelines vont interagir :
 
 - [Sonarqube](https://www.sonarsource.com/products/sonarqube/) est un logiciel d'analyse de code, un agent va analyser le code source de l'application et générer un rapport qui sera envoyé au serveur Sonarqube qui présentera alors différentes statistiques sur une interface web.
     > *A noter qu'il est possible de paramétrer le serveur Sonarqube pour qu'une synthèse du rapport soit affichée directement dans la pull request associée à l'analyse.*
-- [Trivy]() est un logiciel de détection de CVE (faille de sécurité), un agent analyse les dépendances (systèmes et applicatives) et génère un rapport des potentielles failles présentes dans l'application. Attention, une faille remontée n'est pas forcément exploitable par un attaquant et une relecture assidue dans le context de l'application est à prévoir.
+- [Trivy](https://trivy.dev/) est un logiciel de détection de CVE (faille de sécurité), un agent analyse les dépendances (systèmes et applicatives) et génère un rapport des potentielles failles présentes dans l'application. Attention, une faille remontée n'est pas forcément exploitable par un attaquant et une relecture assidue dans le context de l'application est à prévoir.
 
 ## Les différentes phases
 
@@ -30,12 +30,101 @@ Les différentes étapes :
 - Tests (de bout en bout)
 - Analyse de qualité de code
 
-### Déploiement continue (CD)
+### Déploiement continu (CD)
 
-Le déploiement continue permet de livrer automatiquement une nouvelle version de l'application, à savoir figer une nouvelle version ou `tag` dans le gestion de sources (Git), générer et publier des notes de changements ainsi que la nouvelle version de l'application (sous forme de binaires, sources, image docker, etc...).
+Le déploiement continu permet de livrer automatiquement une nouvelle version de l'application, à savoir figer une nouvelle version ou `tag` dans le gestion de sources (Git), générer et publier des notes de changements ainsi que la nouvelle version de l'application (sous forme de binaires, sources, image docker, etc...).
 
 Les différentes étapes :
 
 - Analyse de CVE / mauvaise configuration
 - Release (+ génération du changelog)
 - Déploiement
+
+## Exemples simples
+
+### CI minimale
+
+```yaml
+name: CI
+
+on:
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+```
+
+### CD minimale (build et push d'une image Docker)
+
+```yaml
+name: CD
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+```
+
+::: tip Pour aller plus loin
+Pour des pipelines plus complets (scan Trivy, SonarQube, release automatique, Helm, etc.), utilisez les [workflows réutilisables](/ci-cd/workflows-reutilisables) maintenus par l'équipe DevOps.
+:::

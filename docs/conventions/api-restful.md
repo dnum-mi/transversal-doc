@@ -1,6 +1,6 @@
 # Conventions pour les API
 
-cf. [Nommage](/conventions/api-restful)
+cf. [Nommage](/conventions/nommage)
 
 ## Nommage des routes
 
@@ -120,6 +120,6 @@ Authorization: Bearer {{login.response.body.token}}
 
 [REST CLient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) est une extension pour Visual Studio Code qui permet de (très) facilement tester des requêtes d’API RESTful.
 
-Cf. [la page dédiée](../outils/rest-client)
+Cf. [la page dédiée](../stack/rest-client)
 
 Pour JetBrains, regardez [cette page](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html)

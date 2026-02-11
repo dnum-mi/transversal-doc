@@ -1,5 +1,7 @@
 # Conventions de lint et formattage
 
+Ce document couvre les conventions de lint et de formattage pour les projets JavaScript/TypeScript et Python.
+
 ## Editorconfig
 
 Editorconfig est un logiciel soit inclus dans les éditeurs (JetBrains), soit disponible sous forme d’extension (VSCode).
@@ -24,27 +26,112 @@ insert_final_newline = true
 
 ## Lint avec ESLint
 
-Le code doit être *lint*é et formaté. Le minimum est ESLint avec [standard](https://standardjs.com/) et les seules règles à modifier par rapport à standard sont les suivantes :
+Le code doit être *lint*é et formaté. Il est fortement recommandé d'utiliser la [configuration d'Anthony Fu](https://eslint-config.antfu.me/) (`@antfu/eslint-config`) qui gère à la fois le linting et le formattage.
 
-- [comma-dangle](https://eslint.org/docs/latest/rules/comma-dangle) : `['error', 'always-multiline']`
-- [no-irregular-whitespace](https://eslint.org/docs/latest/rules/no-irregular-whitespace) : `'warning'`
+Les règles suivantes doivent être surchargées :
 
-```javascript
-rules: {
-  'comma-dangle': ['error', 'always-multiline'], // Pour avoir une virgule au dernier élément des listes
-                                                 // s’il y a un élément par ligne
-  'no-irregular-whitespace': 'warning', // Pour pouvoir utiliser l’espace fine insécable devant les signes : ; ? et !
-}
-```
-
-Pour NestJS, il faut aussi désactiver la règle `no-unused-vars` pour les **injections de dépendances**, autrement dit surcharger les valeurs pour ces 2 règles :
+- [`style/comma-dangle`](https://eslint.style/rules/default/comma-dangle) : `['error', 'always-multiline']`
+- [`no-irregular-whitespace`](https://eslint.org/docs/latest/rules/no-irregular-whitespace) : `'off'` (pour permettre l'espace fine insécable)
 
 ```javascript
 rules: {
-  'no-unused-vars': 'off',
-  '@typescript-eslint/no-unused-vars': 'off',  // Si vous n’utilisez pas @antfu/eslint-config
-  // 'ts/no-unused-vars': 'off', // Si vous utilisez @antfu/eslint-config
+  'style/comma-dangle': ['error', 'always-multiline'],
+  'no-irregular-whitespace': 'off',
 }
 ```
 
-Plus de [détails ici](../outils/eslint.md).
+Pour NestJS, il faut aussi désactiver la règle `no-unused-vars` pour les **injections de dépendances** :
+
+```javascript
+rules: {
+  'ts/no-unused-vars': 'off',
+}
+```
+
+Plus de [détails ici](../stack/eslint).
+
+## Lint avec Ruff
+
+Pour les projets Python, utiliser [Ruff](https://docs.astral.sh/ruff/) — un linter et formatter ultra-rapide (écrit en Rust) qui remplace `black`, `flake8`, `isort`, `pyupgrade` et autres outils traditionnels.
+
+### Installation
+
+Avec `uv` (recommandé) :
+
+```shell
+uv add --dev ruff
+```
+
+### Configuration
+
+Créer un fichier `ruff.toml` à la racine du projet ou ajouter la configuration dans `pyproject.toml` :
+
+```toml
+[tool.ruff]
+# Longueur de ligne maximale
+line-length = 88
+
+# Version Python cible
+target-version = "py312"
+
+[tool.ruff.lint]
+# Règles activées (équivalent flake8, isort, pyupgrade...)
+select = [
+  "E",      # pycodestyle errors
+  "W",      # pycodestyle warnings
+  "F",      # pyflakes
+  "I",      # isort
+  "N",      # pep8-naming
+  "UP",     # pyupgrade
+  "B",      # flake8-bugbear
+  "C4",     # flake8-comprehensions
+  "SIM",    # flake8-simplify
+]
+
+# Règles ignorées
+ignore = [
+  "E501",   # line-too-long (géré par le formatter)
+]
+
+[tool.ruff.format]
+# Guillemets doubles par défaut
+quote-style = "double"
+
+# Indentation : espaces
+indent-style = "space"
+```
+
+### Intégration VS Code
+
+Ajouter dans `.vscode/settings.json` :
+
+```json
+{
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  }
+}
+```
+
+### CI/CD
+
+Exemple pour GitHub Actions :
+
+```yaml
+- name: Lint Python
+  run: |
+    uv run ruff check .
+    uv run ruff format --check .
+```
+
+### Points importants
+
+- **Ruff remplace black** : pas besoin d'installer black séparément
+- **Ruff remplace isort** : l'import sorting est intégré (règle `I`)
+- **Ultra-rapide** : 10-100x plus rapide que les outils traditionnels
+- **Compatible** : respecte les conventions black et isort par défaut

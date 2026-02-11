@@ -1,6 +1,6 @@
 # Les recettes pour Nuxt 3
 
-TODO: Présenter brièvement Nuxt 3
+[Nuxt 3](https://nuxt.com/) est un framework fullstack basé sur Vue 3 qui apporte le rendu côté serveur (SSR), la génération statique (SSG), le routage automatique basé sur le système de fichiers, et l'auto-import des composants et composables. Il est particulièrement adapté pour les applications nécessitant un bon référencement (SEO) ou un premier affichage rapide.
 
 ## Construire un projet Nuxt 3 pour le MI
 
@@ -13,7 +13,7 @@ Il existe un [portage du DSFR pour Vue](https://vue-dsfr.netlify.app/) qui est a
 Le plus simple est d’utiliser la CLI créé et maintenu par Stanislas Ormières `create-vue-dsfr` :
 
 ```console
-npm init vue-dsfr
+pnpm create vue-dsfr
 ```
 
 Et suivre les indications en répondant `Nuxt 3` et `TS`.

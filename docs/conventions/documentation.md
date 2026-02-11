@@ -27,6 +27,51 @@ Elle doit contenir :
 - une partie pour les nouveaux arrivants sur le projet (très important)
 - les conventions à suivre pour ce projet (avec un rappel vers la présente documentation)
 
+### Le fichier `README.md`
+
+Le `README.md` est le premier fichier lu par un nouveau développeur. Il doit contenir au minimum :
+
+```markdown
+# Nom du projet
+
+> Description courte du projet
+
+## Prérequis
+
+- Node.js 24.x (via proto)
+- pnpm 10.x
+- Docker
+
+## Démarrage rapide
+
+pnpm install
+pnpm dev
+
+## Scripts disponibles
+
+| Commande     | Description                  |
+| ------------ | ---------------------------- |
+| `pnpm dev`   | Lancer en mode développement |
+| `pnpm build` | Compiler le projet           |
+| `pnpm test`  | Lancer les tests             |
+| `pnpm lint`  | Vérifier le lint             |
+
+## Architecture
+
+Voir [conventions d'architecture](/conventions/architecture-dossiers).
+```
+
+### Le fichier `CONTRIBUTING.md`
+
+Pour les projets avec des contributeurs externes, un fichier `CONTRIBUTING.md` décrivant le workflow de contribution (branching, PR, revues) est recommandé.
+
 ## La documentation pour les utilisateurs
 
-Cette documentation, la plupart du temps, s’adresse à un public non-technique. Veillez à prendre cela en compte en rédigeant la documentation.
+Cette documentation, la plupart du temps, s'adresse à un public non-technique. Veillez à prendre cela en compte en rédigeant la documentation.
+
+Elle doit contenir :
+
+- un guide de démarrage pas-à-pas
+- les fonctionnalités principales avec captures d'écran ou GIFs
+- une FAQ pour les questions récurrentes
+- les coordonnées de contact en cas de problème

@@ -1,4 +1,4 @@
-# Examples de pipelines (Github Actions)
+# Exemples de pipelines (Github Actions)
 
 Quelques exemples de pipelines très complets avec les Github Actions, n'hésitez pas à retirer les parties ne concernant pas votre projet.
 
@@ -21,8 +21,8 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: "20.12.0"
-  PNPM_VERSION: "8"
+  NODE_VERSION: "24.13.1"
+  PNPM_VERSION: "10"
   REGISTRY: "ghcr.io"
   MULTI_ARCH: false
   USE_QEMU: false
@@ -55,17 +55,17 @@ jobs:
       - expose-vars
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
           version: "${{ needs.expose-vars.outputs.PNPM_VERSION }}"
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "${{ needs.expose-vars.outputs.NODE_VERSION }}"
 
@@ -75,7 +75,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache node files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ${{ steps.pnpm-store.outputs.STORE_PATH }}
@@ -84,7 +84,7 @@ jobs:
             node-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Cache turbo files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ./.turbo/cache
@@ -105,17 +105,17 @@ jobs:
       - expose-vars
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
           version: "${{ needs.expose-vars.outputs.PNPM_VERSION }}"
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "${{ needs.expose-vars.outputs.NODE_VERSION }}"
 
@@ -125,7 +125,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache node files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ${{ steps.pnpm-store.outputs.STORE_PATH }}
@@ -134,7 +134,7 @@ jobs:
             node-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Cache turbo files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ./.turbo/cache
@@ -150,7 +150,7 @@ jobs:
         run: pnpm run test
 
       - name: Upload vitest coverage artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: unit-tests-coverage
           path: |
@@ -175,7 +175,7 @@ jobs:
 
       - name: SonarQube Scan
         if: ${{ steps.check-secrets.outputs.run-scan == 'true' }}
-        uses: sonarsource/sonarqube-scan-action@master
+        uses: sonarsource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -195,7 +195,7 @@ jobs:
       - name: SonarQube Quality Gate check
         if: ${{ steps.check-secrets.outputs.run-scan == 'true' }}
         id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
+        uses: sonarsource/sonarqube-quality-gate-action@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -211,17 +211,17 @@ jobs:
         browsers: "${{ github.base_ref == 'main' && 'electron,firefox' || 'electron' }}"
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
           version: "${{ needs.expose-vars.outputs.PNPM_VERSION }}"
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "${{ needs.expose-vars.outputs.NODE_VERSION }}"
 
@@ -230,7 +230,7 @@ jobs:
         if: ${{ matrix.browsers == 'firefox' }}
 
       - name: Setup chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
         if: ${{ matrix.browsers == 'chrome' }}
 
       - name: Setup edge
@@ -243,7 +243,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache node files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ${{ steps.pnpm-store.outputs.STORE_PATH }}
@@ -253,7 +253,7 @@ jobs:
             node-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Cache turbo files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ./.turbo/cache
@@ -270,7 +270,7 @@ jobs:
 
       - name: Upload cypress artifacts
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-report
           path: ./cypress/components/screenshots/
@@ -286,7 +286,7 @@ jobs:
       short-sha: ${{ steps.get-infos.outputs.SHORT_SHA }}
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Generate matrix for build
         id: get-infos
@@ -305,13 +305,13 @@ jobs:
         runners: ${{ needs.expose-vars.outputs.MULTI_ARCH && !needs.expose-vars.outputs.USE_QEMU && fromJson('["ubuntu-latest", "ARM64"]') || fromJson('["ubuntu-latest"]') }}
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: /tmp/.buildx-cache
           key: buildx-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('src/**') }}
@@ -319,11 +319,11 @@ jobs:
             buildx-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Set up QEMU (for multi platform build)
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         if: ${{ needs.expose-vars.outputs.USE_QEMU }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ needs.expose-vars.outputs.REGISTRY }}
           username: ${{ github.actor }}
@@ -332,7 +332,7 @@ jobs:
 
       - name: Build and push docker image
         id: build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./
           file: ./Dockerfile
@@ -361,7 +361,7 @@ jobs:
           touch "/tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/${digest#sha256:}"
 
       - name: Upload digest
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
           path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/*
@@ -377,17 +377,17 @@ jobs:
       - build
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v7
         with:
           name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
           path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}
           tags: |
@@ -395,7 +395,7 @@ jobs:
             type=raw,value=${{ needs.expose-vars.outputs.TAG }},enable=${{ needs.expose-vars.outputs.TAG != '' }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ needs.expose-vars.outputs.REGISTRY }}
           username: ${{ github.actor }}
@@ -423,17 +423,17 @@ jobs:
         browsers: ${{ needs.expose-vars.outputs.BROWSERS }}
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
           version: "${{ needs.expose-vars.outputs.PNPM_VERSION }}"
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "${{ needs.expose-vars.outputs.NODE_VERSION }}"
 
@@ -442,7 +442,7 @@ jobs:
         if: ${{ matrix.browsers == 'firefox' }}
 
       - name: Setup chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
         if: ${{ matrix.browsers == 'chrome' }}
 
       - name: Setup edge
@@ -455,7 +455,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache node files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ${{ steps.pnpm-store.outputs.STORE_PATH }}
@@ -465,7 +465,7 @@ jobs:
             node-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Cache turbo files
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ./.turbo/cache
@@ -482,7 +482,7 @@ jobs:
 
       - name: Upload cypress artifacts
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: cypress-report
           path: ./cypress/e2e/screenshots/
@@ -496,13 +496,13 @@ jobs:
       - post-build
     steps:
       - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Create security artifacts directory
         run: mkdir -p ./artifacts/vulnerability-report/images/
 
       - name: Run Trivy vulnerability scanner on images
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: "${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}:${{ needs.expose-vars.outputs.TAG }}"
           format: "table"
@@ -513,7 +513,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload scan artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: vulnerability-report
           path: ./artifacts/vulnerability-report/
@@ -527,13 +527,13 @@ jobs:
       - post-build
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Create security artifacts directory
         run: mkdir -p ./artifacts/vulnerability-report/configs/
 
       - name: Run Trivy vulnerability scanner on config files
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-ref: "."
           scan-type: "config"
@@ -544,7 +544,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload scan artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: vulnerability-report
           path: ./artifacts/vulnerability-report/
@@ -583,7 +583,7 @@ jobs:
           echo "All jobs passed or were skipped."
 ```
 
-## Déploiement continue (CD)
+## Déploiement continu (CD)
 
 ```yaml
 name: CD
@@ -622,10 +622,10 @@ jobs:
       patch-tag: ${{ steps.release.outputs.patch }}
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Pre release new version
-        uses: google-github-actions/release-please-action@v3
+        uses: googleapis/release-please-action@v4
         id: release
         with:
           package-name: ${{ env.IMAGE_NAME }}
@@ -646,13 +646,13 @@ jobs:
         runners: ${{ needs.expose-vars.outputs.MULTI_ARCH && !needs.expose-vars.outputs.USE_QEMU && fromJson('["ubuntu-latest", "ARM64"]') || fromJson('["ubuntu-latest"]') }}
     steps:
       - name: Checks-out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: /tmp/.buildx-cache
           key: buildx-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('src/**') }}
@@ -660,11 +660,11 @@ jobs:
             buildx-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Set up QEMU (for multi platform build)
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         if: ${{ needs.expose-vars.outputs.USE_QEMU }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ needs.expose-vars.outputs.REGISTRY }}
           username: ${{ github.actor }}
@@ -673,7 +673,7 @@ jobs:
 
       - name: Build and push docker image
         id: build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./
           file: ./Dockerfile
@@ -700,7 +700,7 @@ jobs:
           touch "/tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/${digest#sha256:}"
 
       - name: Upload digest
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
           path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/*
@@ -717,17 +717,17 @@ jobs:
       - build
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v7
         with:
           name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
           path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}
           tags: |
@@ -735,7 +735,7 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ needs.expose-vars.outputs.REGISTRY }}
           username: ${{ github.actor }}

@@ -88,7 +88,7 @@ export class MyService {
 
 ## Gestion des erreurs
 
-Créer un *filter* qui interceptera toutes les erreurs et les loggera d’une part, et les
+Créer un *filter* qui interceptera toutes les erreurs et les loggera d'une part, et les renverra sous forme de réponse HTTP structurée d'autre part :
 
 ```typescript
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, LoggerService } from '@nestjs/common'
@@ -120,3 +120,9 @@ export class HttpExceptionFilter<T extends HttpException> implements ExceptionFi
 L’API doit fournir une documentation OpenAPI à jour.
 
 Pour cela, il faut utiliser `@nestjs/swagger` telle que documenté [ici dans la documentation officielle de nestjs](https://docs.nestjs.com/openapi/introduction).
+
+::: tip Voir aussi
+- [Prisma (ORM)](/stack/prisma) — Intégration de l'ORM recommandé
+- [Architecture des dossiers](/conventions/architecture-dossiers) — Structure de référence pour les projets
+- [Du POC à la production](/conventions/poc-to-prod) — Checklist avant mise en production
+:::

@@ -5,7 +5,7 @@
 - Git
 - zsh
 - oh-my-zsh
-- Volta et node
+- proto et node
 - GitHub CLI
 - pnpm
 - docker
@@ -29,9 +29,9 @@ sudo apt install git
 
 <!--@include: ./parts/fonts.md-->
 
-## Volta
+## proto
 
-<!--@include: ./parts/volta.md-->
+<!--@include: ./parts/proto.md-->
 
 ## GitHub CLI
 

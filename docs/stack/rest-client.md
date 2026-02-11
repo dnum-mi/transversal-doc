@@ -1,6 +1,8 @@
 # REST Client
 
-##  Installation
+## Installation
+
+Installer l'extension [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) dans VS Code.
 
 ## Utilisation basique
 
