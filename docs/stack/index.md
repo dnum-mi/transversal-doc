@@ -1,36 +1,34 @@
 # Les bibliothèques et frameworks préconisés
 
-## Client et serveur
-
 ## Agent pour le registre npm
 
 - [pnpm](https://pnpm.io)
 
 ## Gestion des versions de node
 
-- [Volta](https://volta.sh)
+- [proto](https://moonrepo.dev/docs/proto)
 
-Note : Épingler la version de node avec Volta ne dispense pas d’indiquer la propriété [`"engines"` dans le `package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#engines)
+Note : Épingler la version de node avec proto ne dispense pas d'indiquer la propriété [`"engines"` dans le `package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#engines)
 
-### Lint et formattage
+## Lint et formattage
 
-- [ESLint](https://eslint.org) cf. [page dédiée](/outils/eslint.md)
-- [Prettier](https://prettier.io) cf. [page dédiée](/outils/prettier.md)
+- [ESLint](https://eslint.org) cf. [page dédiée](/stack/eslint)
+- [Prettier](https://prettier.io) cf. [page dédiée](/stack/prettier)
 
-### Langage
+## Langage
 
-Les projets doivent être écrits en [TypeScript](https://typescriptlang.org/) (cf. [page dédiée](/conventions/typescript.md)).
+Les projets doivent être écrits en [TypeScript](https://typescriptlang.org/) (cf. [page dédiée](/conventions/typescript)).
 
-### Monorepo
+## Monorepo
 
 - [pnpm](https://pnpm.io)
 - [turborepo](https://turbo.build/repo)
 
-### Scripts npm
+## Scripts npm
 
-- [npm-run-all](https://github.com/)
+- [npm-run-all2](https://github.com/bcomnes/npm-run-all2) (fork maintenu de npm-run-all)
 
-### Dates
+## Dates
 
 Pour les projets qui manipulent des dates, il faut :
 
@@ -47,7 +45,7 @@ Pour les projets qui manipulent des dates, il faut :
 
 - [Vite](https://vitejs.dev)
 - [Vue](https://vuejs.org)
-- [VueDsfr](https://vue-dsfr.netlify.apple)
+- [VueDsfr](https://vue-dsfr.netlify.app)
 - [Pinia](https://pinia.vuejs.org)
 - [VueRouter](https://router.vuejs.org)
 - [UnoCSS](https://unocss.dev)
@@ -68,18 +66,30 @@ Pour les projets qui manipulent des dates, il faut :
 
 ### web
 
-- [Fastify](https://www.fastify.io) cf. [page dédiée](/serveur/fastify.md)
-- [NestJs](https://nestjs.com) cf. [page dédiée](/serveur/nestjs.md)
+- [Fastify](https://www.fastify.io) cf. [page dédiée](/serveur/fastify)
+- [NestJs](https://nestjs.com) cf. [page dédiée](/serveur/nestjs)
 - [Vite-plugin-node](https://github.com/axe-me/vite-plugin-node) idéalement (cf. [ce post pour NestJS](https://blog.logrocket.com/getting-started-with-nestjs-vite-esbuild/))
 - [Vitest](https://vitest.dev)
 - [supertest](https://github.com/ladjs/supertest)
 
 ### ORM
 
-- [prisma](https://prisma.io/)
-
-TODO: exemples et bonnes pratiques
+- [Prisma](https://prisma.io/) cf. [page dédiée](/stack/prisma)
 
 ### Base de données
 
 - [PostgreSQL](https://hub.docker.com/_/postgres)
+
+## Python
+
+### Gestionnaire de projet
+
+- [uv](https://docs.astral.sh/uv/) (gestion des dépendances, virtualenv, lockfile)
+
+### Framework web
+
+- [FastAPI](https://fastapi.tiangolo.com/) cf. [page dédiée](/serveur/fastapi)
+
+### Lint et formattage
+
+- [Ruff](https://docs.astral.sh/ruff/) (linter et formatter, remplace `black`, `flake8`, `isort`)

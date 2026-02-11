@@ -1,6 +1,8 @@
-### Noms de branche git
+# Conventions de nommage
 
-#### Le nom de la branche par défaut devrait être `main`
+## Noms de branche git
+
+### Le nom de la branche par défaut devrait être `main`
 
 Pour changer le nom de la branche par défaut pour tous les prochains projets créés avec `git init` :
 
@@ -15,23 +17,23 @@ Ceci va ajouter cette ligne dans votre `~/.gitconfig` :
     defaultBranch = main
 ```
 
-#### Le nom des autres branches
+### Le nom des autres branches
 
 Le nom de branche doit être formé de la façon suivante :
 
-`<feat|fix|hotfix|tech|docs|refacto>/<description-en-kebab-case>#<ticket_github>`
+`<feat|fix|hotfix|tech|docs|refactor>/<description-en-kebab-case>#<ticket_github>`
 
 - `feat` pour une nouvelle fonctionnalité
 - `fix` pour une correction d’anomalie ou correction de graphie
 - `hotfix` pour une correction d’anomalie qui est déjà en prod
 - `tech` pour une amélioration technique (réduction de dette technique, changement de nom de table ou champ, amélioration de script de build ou de  déploiement...)
 - `docs` pour une modification de la documentation
-- `refacto` pour un remaniement du code (qui n’ajoute pas de fonctionnalité pour l’utilisateur)
+- `refactor` pour un remaniement du code (qui n’ajoute pas de fonctionnalité pour l’utilisateur)
 
 Exemples :
 
 - `feat/worker-logs#353`
-- `refacto/reorganize-backend#360`
+- `refactor/reorganize-backend#360`
 
 Voici des configurations à ajouter à votre `~/.zshrc` pour vous faciliter la vie :
 
@@ -72,7 +74,7 @@ dong() {
 }
 ```
 
-### Message de validation (*commit*)
+## Message de validation (*commit*)
 
 Les messages de validation *git* doivent respecter les conventions de [Commits Conventionnels](https://www.conventionalcommits.org/fr/v1.0.0/).
 
@@ -80,7 +82,7 @@ Cela permet de facilement connaître le contenu d’un commit que l’on cherche
 
 le projet étant franco-français d’une part, et l’anglais n’étant que rarement maîtrisé d’autre part, les messages de commit peuvent être en français. S’ils sont en anglais, veuillez bien vérifier le vocabulaire (faux-amis, notamment) et la syntaxe, pour éviter les ambiguïtés.
 
-### Noms de dossiers et fichiers
+## Noms de dossiers et fichiers
 
 Les **noms des dossiers et des fichiers** doivent impérativement être écrits en [**kebab-case**](https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/) avec une seule exception : les noms de dossiers et de fichiers de composants Vue et des fichiers s’y afférents (fichiers de tests unitaires et de tests end-to-end, par exemple).
 
@@ -126,7 +128,7 @@ Exemple d’une application Vue :
 └── vitest-setup.ts
 ```
 
-### Noms de variables
+## Noms de variables
 
 - variable contenant une valeur booléenne : doit commencer par `is` (rarement `has`, `should` ou `can`) et être en `camelCase`  (comme `isReallyTrue`)
 - variable contenant une date : doit être suffixée par `Date` ou `At` et être en `camelCase`  comme `startDate` ou `lastModifiedAt`

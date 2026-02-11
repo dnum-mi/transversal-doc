@@ -6,7 +6,7 @@
 - Git
 - zsh
 - oh-my-zsh
-- Volta et node
+- proto et node
 - GitHub CLI
 - pnpm
 - docker
@@ -35,21 +35,19 @@ Télécharger et installer Git : <https://git-scm.com/download/mac>
 
 <!--@include: ./parts/fonts.md-->
 
-## Volta
+## proto
 
-<!--@include: ./parts/volta.md-->
+<!--@include: ./parts/proto.md-->
 
 ## GitHub CLI
 
-```shell
-brew install gh
-```
+<!--@include: ./parts/github-cli-macos.md-->
 
 ## pnpm
 
 [`pnpm`](https://pnpm.io/) est le gestionnaire de paquets du registre npm qu’il est recommandé d’utiliser.
 
-<!--@include: ./parts/pnpm-macos.md-->
+<!--@include: ./parts/pnpm-posix.md-->
 
 Plus d’informations : <https://pnpm.io/installation>
 

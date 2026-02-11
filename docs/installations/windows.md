@@ -7,7 +7,7 @@
 - Git
 - zsh
 - oh-my-zsh
-- Volta et node
+- proto et node
 - GitHub CLI
 - pnpm
 - docker
@@ -17,11 +17,11 @@
 Lancer un powershell en tant qu’administrateur, puis lancer les commandes suivantes :
 
 ```shell
-wsl --install Ubuntu-22.04
+wsl --install Ubuntu-24.04
 
-wsl --set-default Ubuntu-22.04
+wsl --set-default Ubuntu-24.04
 
-wsl --set-version Ubuntu-22.04 2
+wsl --set-version Ubuntu-24.04 2
 
 wsl --set-default-version 2
 ```
@@ -58,11 +58,11 @@ sudo apt install git
 
 <!--@include: ./parts/fonts.md-->
 
-## Volta
+## proto
 
 Les commandes suivantes doivent être exécutées dans WSL.
 
-<!--@include: ./parts/volta.md-->
+<!--@include: ./parts/proto.md-->
 
 ## GitHub CLI
 

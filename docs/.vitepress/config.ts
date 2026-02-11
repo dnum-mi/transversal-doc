@@ -5,11 +5,11 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   markdown: {
     codeTransformers: [
-      transformerTwoslash()
-    ]
+      transformerTwoslash(),
+    ],
   },
-  title: "Projets FabNum",
-  description: "Conventions de la Fabrique Numérique",
+  title: 'CoFabNum',
+  description: 'Conventions et bonnes pratiques de la Fabrique Numérique',
   themeConfig: {
     search: {
       provider: 'local',
@@ -17,59 +17,71 @@ export default defineConfig({
         translations: {
           button: {
             buttonText: 'Rechercher...',
-            buttonAriaLabel: 'Rechercher'
+            buttonAriaLabel: 'Rechercher',
           },
           modal: {
             backButtonTitle: 'effacer la recherche',
             displayDetails: 'afficher les détails',
             noResultsText: 'Aucun résultat pour ',
-            resetButtonTitle: 'resetButtonTitle',
+            resetButtonTitle: 'Réinitialiser',
             footer: {
               selectText: 'aller à ce texte',
               navigateText: 'naviguer dans les résultats',
-              closeText: 'fermer'
-            }
-      }
+              closeText: 'fermer',
+            },
+          },
         },
-      }
+      },
     },
-    outline:{
-      level: 2,
-      label: 'Sur cette page :',
+    outline: {
+      level: [2, 3],
+      label: 'Sur cette page',
     },
     logo: '/nouveau-logo-marianne-gouvernement.png',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
+      { text: 'Accueil', link: '/' },
+      { text: 'Conventions', link: '/conventions/' },
+      { text: 'Recettes', link: '/serveur/' },
     ],
 
     sidebar: [
       {
-        text: 'Ce document',
+        text: 'Introduction',
         link: '/ce-document',
-        items: []
+        items: [],
       },
       {
-        text: 'Les outils du dev',
+        text: 'Environnement de travail',
         link: '/outils/',
         items: [
-          {text: 'Windows', link: '/installations/windows'},
-          {text: 'macOS', link: '/installations/macos'},
-          {text: 'Ubuntu', link: '/installations/ubuntu'},
-        ]
+          { text: 'Installation Windows', link: '/installations/windows' },
+          { text: 'Installation macOS', link: '/installations/macos' },
+          { text: 'Installation Ubuntu', link: '/installations/ubuntu' },
+        ],
       },
       {
         text: 'Conventions',
         link: '/conventions/',
         items: [
-          {text: 'Documentation', link: '/conventions/documentation'},
-          {text: 'Nommage', link: '/conventions/nommage'},
-          {text: 'Architecture des dossiers', link: '/conventions/architecture-dossiers'},
-          {text: 'TypeScript', link: '/conventions/typescript'},
-          {text: 'RESTful API', link: '/conventions/api-restful'},
-          {text: 'Lint et Formattage', link: '/conventions/lint-formattage'},
-          {text: 'Poc vers Production', link: '/conventions/poc-to-prod'},
-          {text: 'Autres conventions', link: '/conventions/autres'},
+          { text: 'Documentation', link: '/conventions/documentation' },
+          { text: 'Nommage', link: '/conventions/nommage' },
+          { text: 'Architecture des dossiers', link: '/conventions/architecture-dossiers' },
+          { text: 'TypeScript', link: '/conventions/typescript' },
+          { text: 'API RESTful', link: '/conventions/api-restful' },
+          { text: 'Lint et formattage', link: '/conventions/lint-formattage' },
+          { text: 'Bonnes pratiques de code', link: '/conventions/autres' },
+          { text: 'Du POC à la production', link: '/conventions/poc-to-prod' },
+        ],
+      },
+      {
+        text: 'Stack technique',
+        link: '/stack/',
+        items: [
+          { text: 'ESLint', link: '/stack/eslint' },
+          { text: 'Prettier', link: '/stack/prettier' },
+          { text: 'REST Client', link: '/stack/rest-client' },
+          { text: 'Prisma (ORM)', link: '/stack/prisma' },
         ],
       },
       {
@@ -79,7 +91,7 @@ export default defineConfig({
           { text: 'Vue 3', link: '/client/vue3' },
           { text: 'Nuxt 3', link: '/client/nuxt3' },
           { text: 'Toaster', link: '/client/toaster' },
-        ]
+        ],
       },
       {
         text: 'Recettes serveur',
@@ -88,28 +100,29 @@ export default defineConfig({
           { text: 'NestJS', link: '/serveur/nestjs' },
           { text: 'Fastify', link: '/serveur/fastify' },
           { text: 'FastAPI', link: '/serveur/fastapi' },
-        ]
+        ],
       },
       {
-        text: 'Recettes monorepo',
+        text: 'Monorepo',
+        link: '/monorepo/',
         items: [
-          { text: 'pnpm', link: '/monorepo/pnpm' },
-          { text: 'turbo', link: '/monorepo/turbo' },
-          { text: 'Gabarit de monorepo', link: '/monorepo/gabarit' },
-        ]
+          { text: 'pnpm workspaces', link: '/monorepo/pnpm' },
+          { text: 'Turborepo', link: '/monorepo/turbo' },
+          { text: 'Gabarit', link: '/monorepo/gabarit' },
+        ],
       },
       {
         text: 'CI/CD',
         link: '/ci-cd/',
         items: [
           { text: 'Principes', link: '/ci-cd/principes' },
-          { text: 'Exemples', link: '/ci-cd/exemples' },
-        ]
+          { text: 'Workflows réutilisables', link: '/ci-cd/workflows-reutilisables' },
+        ],
       },
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/dnum-mi/transversal-doc' }
-    ]
-  }
+      { icon: 'github', link: 'https://github.com/dnum-mi/transversal-doc' },
+    ],
+  },
 })
