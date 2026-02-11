@@ -30,6 +30,7 @@ jobs:
   lint:
     name: Test app build
     runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Checks-out repository
         uses: actions/checkout@v6
