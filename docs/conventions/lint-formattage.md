@@ -26,27 +26,85 @@ insert_final_newline = true
 
 ## Lint avec ESLint
 
-Le code doit être *lint*é et formaté. Il est fortement recommandé d'utiliser la [configuration d'Anthony Fu](https://eslint-config.antfu.me/) (`@antfu/eslint-config`) qui gère à la fois le linting et le formattage.
+Pour les projets JavaScript/TypeScript, utiliser [ESLint](https://eslint.org/) avec la [configuration d'Anthony Fu](https://eslint-config.antfu.me/) (`@antfu/eslint-config`) qui gère à la fois le linting et le formattage.
+
+### Installation
+
+```shell
+pnpm add -D eslint @antfu/eslint-config
+```
+
+### Configuration
+
+Créer un fichier `eslint.config.js` à la racine du projet :
+
+```javascript
+import antfu from '@antfu/eslint-config'
+
+export default antfu({
+  rules: {
+    'style/comma-dangle': ['error', 'always-multiline'],
+    'no-irregular-whitespace': 'off',
+  },
+})
+```
 
 Les règles suivantes doivent être surchargées :
 
 - [`style/comma-dangle`](https://eslint.style/rules/default/comma-dangle) : `['error', 'always-multiline']`
 - [`no-irregular-whitespace`](https://eslint.org/docs/latest/rules/no-irregular-whitespace) : `'off'` (pour permettre l'espace fine insécable)
 
-```javascript
-rules: {
-  'style/comma-dangle': ['error', 'always-multiline'],
-  'no-irregular-whitespace': 'off',
+Pour **NestJS**, activer le support des décorateurs dans le `tsconfig.json` :
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node"
+  }
 }
 ```
 
-Pour NestJS, il faut aussi désactiver la règle `no-unused-vars` pour les **injections de dépendances** :
+Et ajuster certaines règles ESLint :
 
 ```javascript
 rules: {
-  'ts/no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars': 'warn',
+  '@typescript-eslint/no-explicit-any': 'off',
 }
 ```
+
+### Intégration VS Code
+
+Ajouter dans `.vscode/settings.json` :
+
+```json
+{
+  "[javascript][typescript][vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  }
+}
+```
+
+### CI/CD
+
+Exemple pour GitHub Actions :
+
+```yaml
+- name: Lint JS/TS
+  run: pnpm eslint .
+```
+
+### Points importants
+
+- **ESLint remplace Prettier** : avec `@antfu/eslint-config`, pas besoin d'installer Prettier séparément pour JS/TS
+- **Flat config** : depuis ESLint v9, la configuration est un fichier `eslint.config.js` (plus de `.eslintrc`)
+- **Stylistic** : les règles de style sont préfixées `style/` via `@stylistic/eslint-plugin`
 
 Plus de [détails ici](../stack/eslint).
 
