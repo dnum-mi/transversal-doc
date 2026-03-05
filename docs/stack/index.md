@@ -56,7 +56,7 @@ Pour les projets qui manipulent des dates, il faut :
 - [Vitest](https://vitest.dev) (harnais de tests)
 - [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/)
 - [Jest DOM](https://testing-library.com/docs/ecosystem-jest-dom/) (compatible avec Vitest, donc ne pas utiliser Jest !)
-- [Cypress](https://cypress.io) (pour les tests end-to-end et les tests de composants)
+- [Playwright](https://playwright.dev) (pour les tests end-to-end et les tests de composants)
 
 ### Pour les bibliothèques UI
 
