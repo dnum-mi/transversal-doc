@@ -20,7 +20,7 @@ Chaque projet devrait suivre le maximum d'étapes de la CI/CD pour détecter les
 
 ### Intégration continue (CI)
 
-L'intégration continue permet de garantir le bon fonctionnement de l'application lorsque de nouvelles fonctionnalités sont ajoutées (merge de pull request). L'équipe de développement écrit des tests automatisés (unitaires avec [Vitest](https://vitest.dev/) et de bout en bout avec [Cypress](https://www.cypress.io/)) qui seront joués par des machines distantes en suivant le scénario écrit sous forme de fichier `yaml`.
+L'intégration continue permet de garantir le bon fonctionnement de l'application lorsque de nouvelles fonctionnalités sont ajoutées (merge de pull request). L'équipe de développement écrit des tests automatisés (unitaires avec [Vitest](https://vitest.dev/) et de bout en bout avec [Playwright](https://playwright.dev/)) qui seront joués par des machines distantes en suivant le scénario écrit sous forme de fichier `yaml`.
 
 Les différentes étapes :
 

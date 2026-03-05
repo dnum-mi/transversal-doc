@@ -186,8 +186,8 @@ jobs:
             -Dsonar.sources=apps,packages
             -Dsonar.javascript.node.maxspace=4096
             -Dsonar.javascript.lcov.reportPaths=coverage/apps/server/coverage/lcov.info,coverage/apps/client/coverage/lcov.info,coverage/packages/shared/coverage/lcov.info
-            -Dsonar.coverage.exclusions=**/*.spec.js,**/*.spec.ts,**/*.vue,**/assets/**,**/cypress/**,**/packages/test-utils/**,apps/server/src/plugins/**
-            -Dsonar.cpd.exclusions=**/*.spec.js,**/*.spec.ts,**/cypress/**
+            -Dsonar.coverage.exclusions=**/*.spec.js,**/*.spec.ts,**/*.vue,**/assets/**,**/playwright/**,**/packages/test-utils/**,apps/server/src/plugins/**
+            -Dsonar.cpd.exclusions=**/*.spec.js,**/*.spec.ts,**/playwright/**
             -Dsonar.scm.provider=git
             ${{ github.event_name == 'pull_request' && steps.sonar-args.outputs.SONAR_ARGS_PR || steps.sonar-args.outputs.SONAR_ARGS_BRANCH }}
         continue-on-error: true
@@ -247,7 +247,7 @@ jobs:
         with:
           path: |
             ${{ steps.pnpm-store.outputs.STORE_PATH }}
-            /home/runner/.cache/Cypress
+            /home/runner/.cache/ms-playwright
           key: node-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             node-${{ runner.os }}-${{ runner.arch }}-
@@ -257,7 +257,7 @@ jobs:
         with:
           path: |
             ./.turbo/cache
-          key: turbo-component-${{ runner.os }}-${{ runner.arch }}-${{ matrix.browsers }}-${{ hashFiles('apps/**/src/**','apps/client/cypress/**','packages/**/src/**') }}
+          key: turbo-component-${{ runner.os }}-${{ runner.arch }}-${{ matrix.browsers }}-${{ hashFiles('apps/**/src/**','apps/client/playwright/**','packages/**/src/**') }}
           restore-keys: |
             turbo-component-${{ runner.os }}-${{ runner.arch }}-${{ matrix.browsers }}-
             turbo-component-${{ runner.os }}-${{ runner.arch }}-
@@ -268,12 +268,12 @@ jobs:
       - name: Run component tests
         run: pnpm run test:ct-ci -- --browser "${{ matrix.browsers }}"
 
-      - name: Upload cypress artifacts
+      - name: Upload playwright artifacts
         if: ${{ failure() }}
         uses: actions/upload-artifact@v6
         with:
-          name: cypress-report
-          path: ./cypress/components/screenshots/
+          name: playwright-report
+          path: ./playwright-report/
           retention-days: 14
 
   pre-build:
@@ -459,7 +459,7 @@ jobs:
         with:
           path: |
             ${{ steps.pnpm-store.outputs.STORE_PATH }}
-            /home/runner/.cache/Cypress
+            /home/runner/.cache/ms-playwright
           key: node-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             node-${{ runner.os }}-${{ runner.arch }}-
@@ -480,12 +480,12 @@ jobs:
       - name: Run e2e tests
         run: pnpm run test:e2e-ci -- --browser "${{ matrix.browsers }}"
 
-      - name: Upload cypress artifacts
+      - name: Upload playwright artifacts
         if: ${{ failure() }}
         uses: actions/upload-artifact@v6
         with:
-          name: cypress-report
-          path: ./cypress/e2e/screenshots/
+          name: playwright-report
+          path: ./playwright-report/
           retention-days: 14
 
   images-scan:
