@@ -1,8 +1,6 @@
 # Values used by chart-testing (ct install) in the CI.
-# The chart deploys the image tagged with its appVersion, a placeholder until release-please bumps it,
-# and the image of a pull request is not published, so test the install with the latest published image.
+# The chart deploys the image tagged with its appVersion, and the image of a pull request is not published,
+# so test the install with the latest published image.
 docs:
   image:
-    # TODO: remove this line once the first release has published ghcr.io/dnum-mi/transversal-doc/docs
-    repository: ghcr.io/dnum-mi/transversal-doc
     tag: latest
