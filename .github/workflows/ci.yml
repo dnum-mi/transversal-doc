@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+    branches:
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  lint-commits:
+    if: ${{ !github.event.pull_request.draft }}
+    uses: dnum-mi/fabnum-cicd/.github/workflows/lint-commits.yml@v0
+    permissions:
+      pull-requests: read
+      contents: read
+    with:
+      CONFIG_FILE: commitlint.config.cjs
+
+  lint-helm:
+    if: ${{ !github.event.pull_request.draft }}
+    uses: dnum-mi/fabnum-cicd/.github/workflows/lint-helm.yml@v0
+    permissions:
+      contents: read
+    with:
+      CT_CONF_PATH: ci/configs/ct.yaml
+      CHARTS_DIR: helm
+      LINT_DOCS: false
+
+  test-helm:
+    needs:
+      - lint-helm
+    uses: dnum-mi/fabnum-cicd/.github/workflows/test-helm.yml@v0
+    permissions:
+      contents: read
+    with:
+      CT_CONF_PATH: ci/configs/ct.yaml
+
+  # Build the image (and so the site) without publishing it, the image is exported as an artifact for the next jobs
+  build-docker:
+    if: ${{ !github.event.pull_request.draft }}
+    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@v0
+    permissions:
+      packages: write
+      contents: read
+    with:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_TAG: pr-${{ github.event.pull_request.number || github.run_number }}
+      IMAGE_CONTEXT: ./
+      IMAGE_DOCKERFILE: ./Dockerfile
+      IMAGE_TARGET: prod
+      PUSH: false
+      BUILD_AMD64: true
+      BUILD_ARM64: false
+
+  # Check the nginx configuration, including the generated CSP hashes
+  test-docker:
+    needs:
+      - build-docker
+    uses: dnum-mi/fabnum-cicd/.github/workflows/test-docker.yml@v0
+    permissions:
+      contents: read
+      packages: read
+    with:
+      IMAGE_ARTIFACT: ${{ needs.build-docker.outputs.artifact-prefix }}-amd64
+      COMMAND: nginx -t
+
+  scan-trivy-image:
+    needs:
+      - build-docker
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-trivy.yml@v0
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+      packages: read
+    with:
+      IMAGE_ARTIFACT: ${{ needs.build-docker.outputs.artifact-prefix }}-amd64
+      PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+
+  scan-trivy-config:
+    if: ${{ !github.event.pull_request.draft }}
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-trivy.yml@v0
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+      packages: read
+    with:
+      PATH: ./
+      PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+
+  # Workaround for required status check in protection branches (see. https://github.com/orgs/community/discussions/13690)
+  all-jobs-passed:
+    name: Check jobs status
+    if: ${{ always() }}
+    needs:
+      - lint-commits
+      - lint-helm
+      - test-helm
+      - build-docker
+      - test-docker
+      - scan-trivy-image
+      - scan-trivy-config
+    uses: dnum-mi/fabnum-cicd/.github/workflows/check-jobs.yml@v0
+    with:
+      NEEDS: ${{ toJson(needs) }}
