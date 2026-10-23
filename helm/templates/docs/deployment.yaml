@@ -57,6 +57,14 @@ spec:
               port: {{ .Values.docs.container.port }}
           resources:
             {{- toYaml .Values.docs.resources | nindent 12 }}
+          {{- with .Values.docs.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.docs.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.docs.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
