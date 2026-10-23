@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.1](https://github.com/dnum-mi/transversal-doc/compare/v0.1.0...v0.1.1) (2026-10-23)
+
+
+### Bug Fixes
+
+* **release:** bump appVersion and keep the formatting of Chart.yaml ([48b2e9d](https://github.com/dnum-mi/transversal-doc/commit/48b2e9d6784422e5930f52d2bec3a45cc90c8597))
+
+
+### Code Refactoring
+
+* **release:** scope the image and the chart names to the project ([1ebe88d](https://github.com/dnum-mi/transversal-doc/commit/1ebe88d259fe1a3a804668b9018346e13fb14a37))
+
 ## 0.1.0 (2026-10-23)
 
 
