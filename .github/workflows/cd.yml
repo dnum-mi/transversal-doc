@@ -30,7 +30,7 @@ jobs:
       packages: write
       contents: read
     with:
-      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_NAME: ghcr.io/${{ github.repository }}/docs
       IMAGE_TAG: ${{ needs.release.outputs.version }}
       IMAGE_CONTEXT: ./
       IMAGE_DOCKERFILE: ./Dockerfile
@@ -53,5 +53,6 @@ jobs:
       packages: write
     with:
       CHART_PATH: helm
+      REPOSITORY: ${{ github.repository }}/charts
       CHART_VERSION: ${{ needs.release.outputs.version }}
       APP_VERSION: ${{ needs.release.outputs.version }}

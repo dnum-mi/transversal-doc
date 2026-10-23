@@ -13,7 +13,7 @@ imageCredentials:
 docs:
   replicaCount: 1
   image:
-    repository: ghcr.io/dnum-mi/transversal-doc
+    repository: ghcr.io/dnum-mi/transversal-doc/docs
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""

@@ -48,7 +48,7 @@ jobs:
       packages: write
       contents: read
     with:
-      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_NAME: ghcr.io/${{ github.repository }}/docs
       IMAGE_TAG: pr-${{ github.event.pull_request.number || github.run_number }}
       IMAGE_CONTEXT: ./
       IMAGE_DOCKERFILE: ./Dockerfile
