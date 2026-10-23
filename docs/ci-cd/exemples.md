@@ -430,6 +430,18 @@ jobs:
 Le check à exiger dans la protection de branche est `Check jobs status / Required jobs` (les checks d'un workflow réutilisable sont préfixés par le nom du job appelant). Voir la [documentation de `check-jobs`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/80-check-jobs.md) pour migrer un gate existant sans bloquer les pull requests en cours.
 :::
 
+::: tip Dépôt avec `"type": "module"`
+Sans configuration, `lint-commits` génère un `commitlint.config.js` CommonJS, qui échoue dans un dépôt dont le `package.json` racine déclare `"type": "module"` (`module is not defined in ES module scope`). Dans ce cas, ajouter un fichier `commitlint.config.cjs` à la racine :
+
+```js
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+}
+```
+
+et le passer au workflow avec `CONFIG_FILE: commitlint.config.cjs` dans le `with:` du job `lint-commits`. Les règles par défaut (types standards, scope optionnel, titre limité à 100 caractères) sont celles de `@commitlint/config-conventional`.
+:::
+
 ## Déploiement continu (CD)
 
 Le workflow `release-app` s'appuie sur [release-please](https://github.com/googleapis/release-please) : il ouvre une pull request de release à partir des commits conventionnels, puis crée le tag et la release GitHub quand celle-ci est fusionnée. Il lit sa configuration dans deux fichiers à la racine du dépôt.
