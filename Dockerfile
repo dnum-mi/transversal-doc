@@ -16,7 +16,7 @@ RUN pnpm run build
 
 
 # Prod stage
-FROM docker.io/nginxinc/nginx-unprivileged:1.29-alpine AS prod
+FROM docker.io/nginxinc/nginx-unprivileged:1.30-alpine AS prod
 
 USER 0
 COPY --chown=1001:0 --chmod=770 --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/
