@@ -17,5 +17,5 @@ deprecated: false
 annotations: {}
 # version and appVersion are bumped together by release-please, on the lines marked x-release-please-version.
 # appVersion is the image tag deployed by default.
-version: 0.1.0  # x-release-please-version
-appVersion: "0.1.0"  # x-release-please-version
+version: 0.1.1  # x-release-please-version
+appVersion: "0.1.1"  # x-release-please-version
