@@ -1,0 +1,6 @@
+# Values used by chart-testing (ct install) in the CI.
+# The chart deploys the image tagged with its appVersion, a placeholder until release-please bumps it,
+# and the image of a pull request is not published, so test the install with the latest published image.
+docs:
+  image:
+    tag: latest

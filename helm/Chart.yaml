@@ -1,6 +1,6 @@
 apiVersion: v2
 name: transversal-doc
-description: A Helm chart to deploy ...
+description: Documentation transversale de la Fabrique Numérique (CoFabNum), site VitePress servi par nginx
 type: application
 keywords: []
 home: https://github.com/dnum-mi/transversal-doc
@@ -14,5 +14,7 @@ maintainers:
 # icon: A URL to an SVG or PNG image to be used as an icon (optional).
 deprecated: false
 annotations: {}
-version: 1.0.0
-appVersion: "1.0.0"
+# version and appVersion are placeholders, release-please bumps both with the application (see release-please-config.json).
+# appVersion is the image tag deployed by default.
+version: 0.0.0  # x-release-please-version
+appVersion: "0.0.0"  # x-release-please-version
