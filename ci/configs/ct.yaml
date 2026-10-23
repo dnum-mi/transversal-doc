@@ -1,0 +1,9 @@
+# Voir https://github.com/helm/chart-testing/blob/main/doc/ct_lint.md
+target-branch: main
+# Le chart est dans helm/ : chart-dirs liste le répertoire parent des charts
+chart-dirs:
+  - .
+helm-extra-args: --timeout 600s
+# La version du chart est portée par release-please (lock-step avec l'application), pas par les pull requests
+check-version-increment: false
+validate-maintainers: false

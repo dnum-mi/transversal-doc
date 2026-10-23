@@ -1,0 +1,57 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Open the release pull request from the conventional commits, and tag the release once it is merged.
+  # It also bumps the version and appVersion of helm/Chart.yaml (see release-please-config.json).
+  release:
+    uses: dnum-mi/fabnum-cicd/.github/workflows/release-app.yml@v0
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    # Optional: without a credential the release pull request is opened with the GITHUB_TOKEN, which does not
+    # trigger the CI on it. Provide a GitHub App (recommended) or a GH_PAT to get the CI to run on that pull request.
+    secrets:
+      APP_CLIENT_ID: ${{ secrets.APP_CLIENT_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+      GH_PAT: ${{ secrets.GH_PAT }}
+
+  build-docker:
+    if: ${{ needs.release.outputs.release-created == 'true' }}
+    needs:
+      - release
+    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@v0
+    permissions:
+      packages: write
+      contents: read
+    with:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_TAG: ${{ needs.release.outputs.version }}
+      IMAGE_CONTEXT: ./
+      IMAGE_DOCKERFILE: ./Dockerfile
+      IMAGE_TARGET: prod
+      LATEST_TAG: true
+      BUILD_AMD64: true
+      BUILD_ARM64: true
+      CACHE: true
+
+  # Publish the helm chart as an OCI artifact, once the image it deploys exists.
+  # ArgoCD follows the chart versions (eg. targetRevision: "0.*"), no sync call is needed.
+  release-helm:
+    if: ${{ needs.release.outputs.release-created == 'true' }}
+    needs:
+      - release
+      - build-docker
+    uses: dnum-mi/fabnum-cicd/.github/workflows/release-helm-local.yml@v0
+    permissions:
+      contents: read
+      packages: write
+    with:
+      CHART_PATH: helm
+      CHART_VERSION: ${{ needs.release.outputs.version }}
+      APP_VERSION: ${{ needs.release.outputs.version }}
