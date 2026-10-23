@@ -17,17 +17,17 @@ Utiliser les workflows réutilisables plutôt que de réécrire vos propres pipe
 
 | Workflow                                                                                                           | Description                                              |
 | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- |
-| [`build-docker.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/02-build-docker.md)           | Build et push d'images Docker multi-architecture         |
-| [`clean-cache.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/03-clean-cache.md)             | Nettoyage du cache GitHub Actions et des images GHCR     |
-| [`lint-commits.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/04-lint-commits.md)           | Validation des messages de commit (Conventional Commits) |
-| [`lint-helm.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/05-lint-helm.md)                 | Lint des charts Helm avec chart-testing                  |
-| [`release-app.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/06-release-app.md)             | Gestion automatisée des releases avec release-please     |
-| [`release-helm.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/07-release-helm.md)           | Publication de charts Helm sur registres OCI             |
-| [`scan-sonarqube.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/08-scan-sonarqube.md)       | Analyse de qualité du code avec SonarQube                |
-| [`scan-trivy.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/09-scan-trivy.md)               | Analyse de vulnérabilités avec Trivy                     |
-| [`sync-cpin.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/10-sync-cpin.md)                 | Synchronisation avec l'instance GitLab CPiN              |
-| [`test-helm.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/11-test-helm.md)                 | Test d'installation des charts Helm dans Kind            |
-| [`update-helm-chart.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/12-update-helm-chart.md) | Mise à jour automatique des versions de charts Helm      |
+| [`build-docker.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/30-build-docker.md)           | Build et push d'images Docker multi-architecture         |
+| [`clean-cache.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/70-clean-cache.md)             | Nettoyage du cache GitHub Actions et des images GHCR     |
+| [`lint-commits.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/10-lint-commits.md)           | Validation des messages de commit (Conventional Commits) |
+| [`lint-helm.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/11-lint-helm.md)                 | Lint des charts Helm avec chart-testing                  |
+| [`release-app.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/50-release-app.md)             | Gestion automatisée des releases avec release-please     |
+| [`release-helm.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/51-release-helm.md)           | Publication de charts Helm sur registres OCI             |
+| [`scan-sonarqube.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/40-scan-sonarqube.md)       | Analyse de qualité du code avec SonarQube                |
+| [`scan-trivy.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/41-scan-trivy.md)               | Analyse de vulnérabilités avec Trivy                     |
+| [`sync-cpin.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/72-sync-cpin.md)                 | Synchronisation avec l'instance GitLab CPiN              |
+| [`test-helm.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/20-test-helm.md)                 | Test d'installation des charts Helm dans Kind            |
+| [`update-helm-chart.yml`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/53-update-helm-chart.md) | Mise à jour automatique des versions de charts Helm      |
 
 ## Utilisation rapide
 
@@ -36,7 +36,7 @@ Pour utiliser un workflow réutilisable, il suffit d'utiliser le mot-clé `uses`
 ```yaml
 jobs:
   mon-job:
-    uses: dnum-mi/fabnum-cicd/.github/workflows/<nom-du-workflow>.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/<nom-du-workflow>.yml@v0
     with:
       # inputs du workflow
     secrets:
@@ -56,10 +56,13 @@ on:
 
 jobs:
   lint-commits:
-    uses: dnum-mi/fabnum-cicd/.github/workflows/lint-commits.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/lint-commits.yml@v0
+    permissions:
+      pull-requests: read
+      contents: read
 
   scan-sonarqube:
-    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-sonarqube.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-sonarqube.yml@v0
     permissions:
       issues: write
       pull-requests: write
@@ -72,7 +75,7 @@ jobs:
       SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
 
   build-docker:
-    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@v0
     permissions:
       packages: write
       contents: read
@@ -84,7 +87,7 @@ jobs:
 
   scan-trivy:
     needs: build-docker
-    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-trivy.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-trivy.yml@v0
     permissions:
       contents: read
       security-events: write
@@ -106,7 +109,7 @@ on:
 
 jobs:
   release:
-    uses: dnum-mi/fabnum-cicd/.github/workflows/release-app.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/release-app.yml@v0
     permissions:
       issues: write
       pull-requests: write
@@ -119,7 +122,7 @@ jobs:
       GH_PAT: ${{ secrets.GH_PAT }}
 
   build-docker:
-    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@main
+    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@v0
     if: ${{ needs.release.outputs.release-created == 'true' }}
     needs: release
     permissions:
