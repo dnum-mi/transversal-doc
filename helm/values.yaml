@@ -14,9 +14,9 @@ docs:
   replicaCount: 1
   image:
     repository: ghcr.io/dnum-mi/transversal-doc
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: ""
   podAnnotations: {}
   podSecurityContext:
     runAsNonRoot: true
