@@ -12,7 +12,8 @@ ENTRYPOINT [ "pnpm", "run", "dev" ]
 # Build stage
 FROM dev AS build
 
-RUN pnpm run build
+COPY --chown=node:root scripts ./scripts
+RUN pnpm run build && pnpm run build:csp
 
 
 # Prod stage
@@ -20,7 +21,8 @@ FROM docker.io/nginxinc/nginx-unprivileged:1.30-alpine AS prod
 
 USER 0
 COPY --chown=1001:0 --chmod=770 --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/
+COPY --chown=1001:0 --chmod=660 --from=build /app/csp-hashes.conf /etc/nginx/conf.d/csp-hashes.conf
 COPY --chown=1001:0 --chmod=660 ./nginx.conf /etc/nginx/conf.d/default.conf
-RUN chmod 660 /etc/nginx/conf.d/default.conf
+RUN chmod 660 /etc/nginx/conf.d/csp-hashes.conf /etc/nginx/conf.d/default.conf
 USER 1001
 EXPOSE 8080

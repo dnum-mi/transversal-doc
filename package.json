@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vitepress --port 5172 --host 0.0.0.0 dev docs",
     "build": "vitepress build docs",
+    "build:csp": "node scripts/csp-hashes.mjs docs/.vitepress/dist csp-hashes.conf",
     "preview": "vitepress preview docs",
     "docker:build": "docker build --tag transversal-doc --target prod .",
     "docker:run": "docker run --publish 8080:8080 --rm transversal-doc"

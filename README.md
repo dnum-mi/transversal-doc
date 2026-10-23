@@ -48,8 +48,9 @@ pnpm docker:run
 ```
 docs/          # Sources de la documentation (Markdown + VitePress)
 helm/          # Chart Helm pour le déploiement Kubernetes
+scripts/       # Scripts de build (hashes CSP des scripts inline)
 Dockerfile     # Image de production (nginx)
-nginx.conf     # Configuration nginx
+nginx.conf     # Configuration nginx (headers de sécurité inclus)
 ```
 
 ## Contribuer
