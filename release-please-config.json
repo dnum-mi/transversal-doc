@@ -20,7 +20,7 @@
         { "type": "style", "section": "Styles", "hidden": true },
         { "type": "test", "section": "Tests", "hidden": true }
       ],
-      "extra-files": ["helm/Chart.yaml"]
+      "extra-files": [{ "type": "generic", "path": "helm/Chart.yaml" }]
     }
   }
 }

@@ -15,5 +15,7 @@ maintainers:
     url: https://github.com/this-is-tobi
 deprecated: false
 annotations: {}
-version: 0.1.0
-appVersion: 0.0.0
+# version and appVersion are bumped together by release-please, on the lines marked x-release-please-version.
+# appVersion is the image tag deployed by default.
+version: 0.1.0  # x-release-please-version
+appVersion: "0.1.0"  # x-release-please-version
