@@ -31,7 +31,7 @@ RUN corepack enable && pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm build
 
-FROM docker.io/nginxinc/nginx-unprivileged:1.29-alpine AS prod
+FROM docker.io/nginxinc/nginx-unprivileged:1.30-alpine AS prod
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 8080
 USER 1001
