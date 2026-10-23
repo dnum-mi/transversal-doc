@@ -1,10 +1,32 @@
 # Exemples de pipelines (Github Actions)
 
-Quelques exemples de pipelines très complets avec les Github Actions, n'hésitez pas à retirer les parties ne concernant pas votre projet.
+Quelques exemples de pipelines très complets avec les Github Actions, construits sur les [workflows réutilisables](/ci-cd/workflows-reutilisables) du dépôt [`dnum-mi/fabnum-cicd`](https://github.com/dnum-mi/fabnum-cicd). N'hésitez pas à retirer les parties ne concernant pas votre projet.
+
+Les workflows réutilisables couvrent tout ce qui est commun aux projets de la Fabrique Numérique :
+
+| Besoin                                   | Workflow réutilisable                                                                                      |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Validation des messages de commit        | [`lint-commits`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/10-lint-commits.md)       |
+| Analyse de qualité (SonarQube)           | [`scan-sonarqube`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/40-scan-sonarqube.md)   |
+| Build et push de l'image Docker          | [`build-docker`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/30-build-docker.md)       |
+| Scan de vulnérabilités (images, config)  | [`scan-trivy`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/41-scan-trivy.md)           |
+| Check unique exigible par la protection de branche | [`check-jobs`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/80-check-jobs.md) |
+| Release (tags, changelog)                | [`release-app`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/50-release-app.md)         |
+
+Les jobs propres à la stack du projet (ici lint et tests d'un monorepo Node avec pnpm) restent écrits dans le dépôt : il n'existe pas de workflow réutilisable pour eux.
 
 > *__Notes:__ Ne pas oublier de définir les commandes `test`, `test:ct-ci` et `test:e2e-ci` dans votre `package.json`.*
 
+::: tip Version des workflows
+Les exemples référencent les workflows avec `@v0`, le tag qui suit les dernières versions `0.x` du dépôt. Pour figer une version précise, utiliser un tag complet (`@v0.24.1`) ou un SHA de commit.
+:::
+
 ## Intégration continue (CI)
+
+Prérequis dans les paramètres du dépôt (**Settings > Secrets and variables > Actions**) :
+
+- les secrets `SONAR_TOKEN` et `SONAR_PROJECT_KEY` et la variable `SONAR_URL` (retirer le job `scan-sonarqube` si le projet n'utilise pas SonarQube) ;
+- aucun autre secret : la construction et le push de l'image vers GHCR, ainsi que les scans Trivy, utilisent le `GITHUB_TOKEN` fourni automatiquement.
 
 ```yaml
 name: CI
@@ -23,30 +45,38 @@ on:
 env:
   NODE_VERSION: "24.22.1"
   PNPM_VERSION: "10"
-  REGISTRY: "ghcr.io"
-  MULTI_ARCH: false
+  BUILD_AMD64: true
+  BUILD_ARM64: false
   USE_QEMU: false
   IMAGE_NAME: my-app
-  TAG: pr-${{ github.event.pull_request.number || github.event.number }}
+  IMAGE_TAG: pr-${{ github.event.pull_request.number || github.event.number }}
   BROWSERS: ${{ github.base_ref == 'main' && fromJson('["electron", "firefox"]') || fromJson('["electron"]') }}
 
 jobs:
+  # Le contexte `env` n'est pas accessible dans les `with:` d'un workflow réutilisable : les valeurs sont exposées en outputs
   expose-vars:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.draft }}
     outputs:
       NODE_VERSION: ${{ env.NODE_VERSION }}
       PNPM_VERSION: ${{ env.PNPM_VERSION }}
-      REGISTRY: ${{ env.REGISTRY }}
-      NAMESPACE: ${{ env.GITHUB_REPOSITORY_OWNER }}
-      MULTI_ARCH: ${{ env.MULTI_ARCH }}
+      BUILD_AMD64: ${{ env.BUILD_AMD64 }}
+      BUILD_ARM64: ${{ env.BUILD_ARM64 }}
       USE_QEMU: ${{ env.USE_QEMU }}
       IMAGE_NAME: ${{ env.IMAGE_NAME }}
-      TAG: ${{ env.TAG }}
+      IMAGE_TAG: ${{ env.IMAGE_TAG }}
       BROWSERS: ${{ env.BROWSERS }}
     steps:
       - name: Exposing env vars
         run: echo "Exposing env vars"
+
+  lint-commits:
+    needs:
+      - expose-vars
+    uses: dnum-mi/fabnum-cicd/.github/workflows/lint-commits.yml@v0
+    permissions:
+      pull-requests: read
+      contents: read
 
   lint:
     name: Lint codebase
@@ -157,50 +187,28 @@ jobs:
             ./**/coverage/lcov.info
           retention-days: 1
 
-      - name: Check for sonar secrets
-        id: check-secrets
-        run: |
-          if [ "${{ secrets.SONAR_HOST_URL }}" != "" ] && [ "${{ secrets.SONAR_TOKEN }}" != "" ] && [ "${{ secrets.SONAR_PROJECT_KEY }}" != "" ]; then
-            echo "run-scan=true" >> $GITHUB_OUTPUT
-          else
-            echo "run-scan=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Set sonarqube args
-        if: ${{ steps.check-secrets.outputs.run-scan == 'true' }}
-        id: sonar-args
-        run: |
-          echo "SONAR_ARGS_PR=-Dsonar.pullrequest.provider=github -Dsonar.pullrequest.key=${{ github.event.number }} -Dsonar.pullrequest.branch=${{ github.head_ref }} -Dsonar.pullrequest.base=${{ github.base_ref }} -Dsonar.pullrequest.github.repository=${{ github.repository }}" >> $GITHUB_OUTPUT
-          echo "SONAR_ARGS_BRANCH=-Dsonar.branch.name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
-
-      - name: SonarQube Scan
-        if: ${{ steps.check-secrets.outputs.run-scan == 'true' }}
-        uses: sonarsource/sonarqube-scan-action@v7
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=apps,packages
-            -Dsonar.javascript.node.maxspace=4096
-            -Dsonar.javascript.lcov.reportPaths=coverage/apps/server/coverage/lcov.info,coverage/apps/client/coverage/lcov.info,coverage/packages/shared/coverage/lcov.info
-            -Dsonar.coverage.exclusions=**/*.spec.js,**/*.spec.ts,**/*.vue,**/assets/**,**/playwright/**,**/packages/test-utils/**,apps/server/src/plugins/**
-            -Dsonar.cpd.exclusions=**/*.spec.js,**/*.spec.ts,**/playwright/**
-            -Dsonar.scm.provider=git
-            ${{ github.event_name == 'pull_request' && steps.sonar-args.outputs.SONAR_ARGS_PR || steps.sonar-args.outputs.SONAR_ARGS_BRANCH }}
-        continue-on-error: true
-
-      - name: SonarQube Quality Gate check
-        if: ${{ steps.check-secrets.outputs.run-scan == 'true' }}
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        timeout-minutes: 5
-        continue-on-error: true
+  scan-sonarqube:
+    needs:
+      - expose-vars
+      - unit-tests
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-sonarqube.yml@v0
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+    with:
+      SONAR_URL: ${{ vars.SONAR_URL }}
+      SOURCES_PATH: apps,packages
+      # Importe l'artefact `unit-tests-coverage` publié par le job `unit-tests`
+      COVERAGE_IMPORT: true
+      SONAR_EXTRA_ARGS: >-
+        -Dsonar.javascript.node.maxspace=4096
+        -Dsonar.javascript.lcov.reportPaths=coverage/apps/server/coverage/lcov.info,coverage/apps/client/coverage/lcov.info,coverage/packages/shared/coverage/lcov.info
+        -Dsonar.coverage.exclusions=**/*.spec.js,**/*.spec.ts,**/*.vue,**/assets/**,**/playwright/**,**/packages/test-utils/**,apps/server/src/plugins/**
+        -Dsonar.cpd.exclusions=**/*.spec.js,**/*.spec.ts,**/playwright/**
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
 
   component-tests:
     runs-on: ubuntu-latest
@@ -276,148 +284,30 @@ jobs:
           path: ./playwright-report/
           retention-days: 14
 
-  pre-build:
-    name: Generate matrix for build & scan
-    runs-on: ubuntu-latest
+  build-docker:
     needs:
       - expose-vars
-    outputs:
-      lower-branch: ${{ steps.get-infos.outputs.LOWER_BRANCH }}
-      short-sha: ${{ steps.get-infos.outputs.SHORT_SHA }}
-    steps:
-      - name: Checks-out repository
-        uses: actions/checkout@v6
-
-      - name: Generate matrix for build
-        id: get-infos
-        run: |
-          echo "LOWER_BRANCH=$(echo '${{ github.head_ref }}' | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-          echo "SHORT_SHA=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-  build:
-    name: Build application
-    runs-on: ${{ matrix.runners }}
-    needs:
-      - expose-vars
-      - pre-build
-    strategy:
-      matrix:
-        runners: ${{ needs.expose-vars.outputs.MULTI_ARCH && !needs.expose-vars.outputs.USE_QEMU && fromJson('["ubuntu-latest", "ARM64"]') || fromJson('["ubuntu-latest"]') }}
-    steps:
-      - name: Checks-out repository
-        uses: actions/checkout@v6
-
-      - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker layers
-        uses: actions/cache@v5
-        with:
-          path: /tmp/.buildx-cache
-          key: buildx-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('src/**') }}
-          restore-keys: |
-            buildx-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: Set up QEMU (for multi platform build)
-        uses: docker/setup-qemu-action@v3
-        if: ${{ needs.expose-vars.outputs.USE_QEMU }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ needs.expose-vars.outputs.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          logout: true
-
-      - name: Build and push docker image
-        id: build
-        uses: docker/build-push-action@v6
-        with:
-          context: ./
-          file: ./Dockerfile
-          provenance: false
-          platforms: ${{ needs.expose-vars.outputs.MULTI_ARCH && needs.expose-vars.outputs.USE_QEMU && 'linux/amd64,linux/arm64' || (contains(runner.arch, 'ARM') && 'linux/arm64' || 'linux/amd64') }}
-          outputs: type=image,name=${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          build-args: |
-            APP_VERSION=${{ needs.expose-vars.outputs.TAG || needs.pre-build.outputs.short-sha }}
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-      # Necessary to avoid forever growing cache
-      # https://github.com/docker/build-push-action/issues/252
-      # https://github.com/moby/buildkit/issues/1896
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-      - name: Export digest
-        run: |
-          mkdir -p /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/${digest#sha256:}"
-
-      - name: Upload digest
-        uses: actions/upload-artifact@v6
-        with:
-          name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/*
-          if-no-files-found: error
-          retention-days: 1
-
-  post-build:
-    name: Merge digest
-    runs-on: ubuntu-latest
-    needs:
-      - expose-vars
-      - pre-build
-      - build
-    steps:
-      - name: Download digests
-        uses: actions/download-artifact@v7
-        with:
-          name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          tags: |
-            type=raw,value=${{ needs.pre-build.outputs.lower-branch }},enable=${{ github.head_ref != 'main' }}
-            type=raw,value=${{ needs.expose-vars.outputs.TAG }},enable=${{ needs.expose-vars.outputs.TAG != '' }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ needs.expose-vars.outputs.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          logout: true
-
-      - name: Create manifest list and push
-        working-directory: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-        run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}@sha256:%s ' *)
-
-      - name: Inspect image
-        run: |
-          docker buildx imagetools inspect ${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@v0
+    permissions:
+      packages: write
+      contents: read
+    with:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}
+      IMAGE_TAG: ${{ needs.expose-vars.outputs.IMAGE_TAG }}
+      IMAGE_CONTEXT: ./
+      IMAGE_DOCKERFILE: ./Dockerfile
+      BUILD_AMD64: ${{ needs.expose-vars.outputs.BUILD_AMD64 == 'true' }}
+      BUILD_ARM64: ${{ needs.expose-vars.outputs.BUILD_ARM64 == 'true' }}
+      USE_QEMU: ${{ needs.expose-vars.outputs.USE_QEMU == 'true' }}
+      BUILD_ARGS: APP_VERSION=${{ needs.expose-vars.outputs.IMAGE_TAG }}
+      CACHE: true
 
   e2e-tests:
     name: End to end tests
     runs-on: ubuntu-latest
     needs:
       - expose-vars
-      - post-build
+      - build-docker
     strategy:
       matrix:
         browsers: ${{ needs.expose-vars.outputs.BROWSERS }}
@@ -488,102 +378,84 @@ jobs:
           path: ./playwright-report/
           retention-days: 14
 
-  images-scan:
-    name: Scan images vulnerabilities
-    runs-on: ubuntu-latest
+  scan-trivy-image:
     needs:
       - expose-vars
-      - post-build
-    steps:
-      - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v3
+      - build-docker
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-trivy.yml@v0
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+      packages: read
+    with:
+      IMAGE: ${{ needs.build-docker.outputs.image }}:${{ needs.expose-vars.outputs.IMAGE_TAG }}
+      PR_NUMBER: ${{ github.event.pull_request.number || github.event.number || '' }}
 
-      - name: Create security artifacts directory
-        run: mkdir -p ./artifacts/vulnerability-report/images/
-
-      - name: Run Trivy vulnerability scanner on images
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          image-ref: "${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}:${{ needs.expose-vars.outputs.TAG }}"
-          format: "table"
-          exit-code: "1"
-          vuln-type: "os,library"
-          ignore-unfixed: true
-          output: "./artifacts/vulnerability-report/images/${{ needs.expose-vars.outputs.IMAGE_NAME }}.json"
-        continue-on-error: true
-
-      - name: Upload scan artifacts
-        uses: actions/upload-artifact@v6
-        with:
-          name: vulnerability-report
-          path: ./artifacts/vulnerability-report/
-          retention-days: 14
-
-  config-scan:
-    name: Scan config files vulnerabilities
-    runs-on: ubuntu-latest
+  scan-trivy-config:
     needs:
       - expose-vars
-      - post-build
-    steps:
-      - name: Checks-out repository
-        uses: actions/checkout@v6
-
-      - name: Create security artifacts directory
-        run: mkdir -p ./artifacts/vulnerability-report/configs/
-
-      - name: Run Trivy vulnerability scanner on config files
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          scan-ref: "."
-          scan-type: "config"
-          format: "table"
-          exit-code: "1"
-          ignore-unfixed: true
-          output: "./artifacts/vulnerability-report/configs/config.json"
-        continue-on-error: true
-
-      - name: Upload scan artifacts
-        uses: actions/upload-artifact@v6
-        with:
-          name: vulnerability-report
-          path: ./artifacts/vulnerability-report/
-          retention-days: 14
+    uses: dnum-mi/fabnum-cicd/.github/workflows/scan-trivy.yml@v0
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+      packages: read
+    with:
+      PATH: ./
+      PR_NUMBER: ${{ github.event.pull_request.number || github.event.number || '' }}
 
   # Workaround for required status check in protection branches (see. https://github.com/orgs/community/discussions/13690)
+  # `needs:` doit lister TOUS les jobs du pipeline : un job absent peut échouer sans bloquer la pull request
   all-jobs-passed:
     name: Check jobs status
-    runs-on: ubuntu-latest
     if: ${{ always() }}
     needs:
       - expose-vars
+      - lint-commits
       - lint
       - unit-tests
+      - scan-sonarqube
       - component-tests
-      - pre-build
-      - build
-      - post-build
+      - build-docker
       - e2e-tests
-      - images-scan
-      - config-scan
-    steps:
-      - name: Check status of all required jobs
-        run: |-
-          NEEDS_CONTEXT='${{ toJson(needs) }}'
-          JOB_IDS=$(echo "$NEEDS_CONTEXT" | jq -r 'keys[]')
-          for JOB_ID in $JOB_IDS; do
-            RESULT=$(echo "$NEEDS_CONTEXT" | jq -r ".[\"$JOB_ID\"].result")
-            echo "$JOB_ID job result: $RESULT"
-            if [[ $RESULT != "success" && $RESULT != "skipped" ]]; then
-              echo "***"
-              echo "Error: The $JOB_ID job did not pass."
-              exit 1
-            fi
-          done
-          echo "All jobs passed or were skipped."
+      - scan-trivy-image
+      - scan-trivy-config
+    uses: dnum-mi/fabnum-cicd/.github/workflows/check-jobs.yml@v0
+    with:
+      NEEDS: ${{ toJson(needs) }}
 ```
 
+::: warning Check requis
+Le check à exiger dans la protection de branche est `Check jobs status / Required jobs` (les checks d'un workflow réutilisable sont préfixés par le nom du job appelant). Voir la [documentation de `check-jobs`](https://github.com/dnum-mi/fabnum-cicd/blob/main/docs/workflows/80-check-jobs.md) pour migrer un gate existant sans bloquer les pull requests en cours.
+:::
+
 ## Déploiement continu (CD)
+
+Le workflow `release-app` s'appuie sur [release-please](https://github.com/googleapis/release-please) : il ouvre une pull request de release à partir des commits conventionnels, puis crée le tag et la release GitHub quand celle-ci est fusionnée. Il lit sa configuration dans deux fichiers à la racine du dépôt.
+
+`release-please-config.json` :
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "initial-version": "0.0.1",
+      "include-component-in-tag": false
+    }
+  }
+}
+```
+
+`.release-please-manifest.json` (à initialiser avec la version courante, release-please le met ensuite à jour) :
+
+```json
+{
+  ".": "0.0.1"
+}
+```
 
 ```yaml
 name: CD
@@ -594,8 +466,8 @@ on:
       - main
 
 env:
-  REGISTRY: "ghcr.io"
-  MULTI_ARCH: true
+  BUILD_AMD64: true
+  BUILD_ARM64: true
   USE_QEMU: false
   IMAGE_NAME: my-app
 
@@ -603,9 +475,8 @@ jobs:
   expose-vars:
     runs-on: ubuntu-latest
     outputs:
-      REGISTRY: ${{ env.REGISTRY }}
-      NAMESPACE: ${{ env.GITHUB_REPOSITORY_OWNER }}
-      MULTI_ARCH: ${{ env.MULTI_ARCH }}
+      BUILD_AMD64: ${{ env.BUILD_AMD64 }}
+      BUILD_ARM64: ${{ env.BUILD_ARM64 }}
       USE_QEMU: ${{ env.USE_QEMU }}
       IMAGE_NAME: ${{ env.IMAGE_NAME }}
     steps:
@@ -614,141 +485,41 @@ jobs:
 
   release:
     name: Create new release
-    runs-on: ubuntu-latest
-    outputs:
-      release-created: ${{ steps.release.outputs.release_created }}
-      major-tag: ${{ steps.release.outputs.major }}
-      minor-tag: ${{ steps.release.outputs.minor }}
-      patch-tag: ${{ steps.release.outputs.patch }}
-    steps:
-      - name: Checks-out repository
-        uses: actions/checkout@v6
+    needs:
+      - expose-vars
+    uses: dnum-mi/fabnum-cicd/.github/workflows/release-app.yml@v0
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    # Sans credential, la pull request de release est ouverte avec le GITHUB_TOKEN et ne déclenche pas la CI.
+    # Pour qu'elle la déclenche (ou pour l'automerge), fournir une GitHub App (ou un GH_PAT) :
+    # secrets:
+    #   APP_CLIENT_ID: ${{ secrets.APP_CLIENT_ID }}
+    #   APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - name: Pre release new version
-        uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          package-name: ${{ env.IMAGE_NAME }}
-          release-type: node
-          default-branch: main
-          group-pull-request-title-pattern: release v${version}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  build:
+  build-docker:
     name: Build application
     if: ${{ needs.release.outputs.release-created == 'true' }}
-    runs-on: ${{ matrix.runners }}
     needs:
       - expose-vars
       - release
-    strategy:
-      matrix:
-        runners: ${{ needs.expose-vars.outputs.MULTI_ARCH && !needs.expose-vars.outputs.USE_QEMU && fromJson('["ubuntu-latest", "ARM64"]') || fromJson('["ubuntu-latest"]') }}
-    steps:
-      - name: Checks-out repository
-        uses: actions/checkout@v6
-
-      - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker layers
-        uses: actions/cache@v5
-        with:
-          path: /tmp/.buildx-cache
-          key: buildx-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('src/**') }}
-          restore-keys: |
-            buildx-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: Set up QEMU (for multi platform build)
-        uses: docker/setup-qemu-action@v3
-        if: ${{ needs.expose-vars.outputs.USE_QEMU }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ needs.expose-vars.outputs.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          logout: true
-
-      - name: Build and push docker image
-        id: build
-        uses: docker/build-push-action@v6
-        with:
-          context: ./
-          file: ./Dockerfile
-          provenance: false
-          platforms: ${{ needs.expose-vars.outputs.MULTI_ARCH && needs.expose-vars.outputs.USE_QEMU && 'linux/amd64,linux/arm64' || (contains(runner.arch, 'ARM') && 'linux/arm64' || 'linux/amd64') }}
-          outputs: type=image,name=${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-      # Necessary to avoid forever growing cache
-      # https://github.com/docker/build-push-action/issues/252
-      # https://github.com/moby/buildkit/issues/1896
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-      - name: Export digest
-        run: |
-          mkdir -p /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/${digest#sha256:}"
-
-      - name: Upload digest
-        uses: actions/upload-artifact@v6
-        with:
-          name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}/*
-          if-no-files-found: error
-          retention-days: 1
-
-  post-build:
-    name: Merge digest
-    if: ${{ needs.release.outputs.release-created == 'true' }}
-    runs-on: ubuntu-latest
-    needs:
-      - expose-vars
-      - release
-      - build
-    steps:
-      - name: Download digests
-        uses: actions/download-artifact@v7
-        with:
-          name: digests-${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          path: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-          tags: |
-            type=raw,value=${{ needs.release.outputs.major-tag }}.${{ needs.release.outputs.minor-tag }}.${{ needs.release.outputs.patch-tag }}
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ needs.expose-vars.outputs.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          logout: true
-
-      - name: Create manifest list and push
-        working-directory: /tmp/digests/${{ needs.expose-vars.outputs.IMAGE_NAME }}
-        run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}@sha256:%s ' *)
-
-      - name: Inspect image
-        run: |
-          docker buildx imagetools inspect ${{ needs.expose-vars.outputs.REGISTRY }}/${{ needs.expose-vars.outputs.NAMESPACE }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+    uses: dnum-mi/fabnum-cicd/.github/workflows/build-docker.yml@v0
+    permissions:
+      packages: write
+      contents: read
+    with:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}/${{ needs.expose-vars.outputs.IMAGE_NAME }}
+      IMAGE_TAG: ${{ needs.release.outputs.version }}
+      IMAGE_CONTEXT: ./
+      IMAGE_DOCKERFILE: ./Dockerfile
+      BUILD_AMD64: ${{ needs.expose-vars.outputs.BUILD_AMD64 == 'true' }}
+      BUILD_ARM64: ${{ needs.expose-vars.outputs.BUILD_ARM64 == 'true' }}
+      USE_QEMU: ${{ needs.expose-vars.outputs.USE_QEMU == 'true' }}
+      LATEST_TAG: true
+      CACHE: true
 ```
+
+::: info Aller plus loin
+Les workflows réutilisables couvrent aussi les pré-releases (`ENABLE_PRERELEASE`), la mise à jour d'un chart Helm (`dispatch-helm-chart`, `update-helm-chart`), la publication de charts et de paquets npm, les attestations de sécurité (`attest-docker`) ou l'audit des workflows (`scan-zizmor`). La [documentation de chaque workflow](https://github.com/dnum-mi/fabnum-cicd/tree/main/docs/workflows) détaille ses inputs, outputs, secrets et permissions, avec des pipelines complets par cas d'usage.
+:::
