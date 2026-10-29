@@ -10,6 +10,7 @@ export default defineConfig({
   },
   title: 'CoFabNum',
   description: 'Conventions et bonnes pratiques de la Fabrique Numérique',
+  srcExclude: ['adr/**'],
   themeConfig: {
     search: {
       provider: 'local',
