@@ -1,6 +1,6 @@
 ---
 name: fabnum-cicd
-description: Set up CI/CD the Fabrique Numérique way: CI and CD phases, reusable GitHub Actions workflows from dnum-mi/fabnum-cicd, required secrets and pipeline examples. Use when creating or changing a GitHub Actions workflow, a release process or branch protection.
+description: "Set up CI/CD the Fabrique Numérique way: CI and CD phases, reusable GitHub Actions workflows from dnum-mi/fabnum-cicd, required secrets and pipeline examples. Use when creating or changing a GitHub Actions workflow, a release process or branch protection."
 ---
 
 # CI/CD

@@ -1,6 +1,6 @@
 ---
 name: fabnum-code-style
-description: Apply the Fabrique Numérique code style: naming of branches, commits, files and variables, TypeScript rules, code practices (functions, errors, async, imports, dependencies), ESLint, Ruff and EditorConfig. Use when writing or reviewing code, naming things, or setting up lint and formatting.
+description: "Apply the Fabrique Numérique code style: naming of branches, commits, files and variables, TypeScript rules, code practices (functions, errors, async, imports, dependencies), ESLint, Ruff and EditorConfig. Use when writing or reviewing code, naming things, or setting up lint and formatting."
 ---
 
 # Code style

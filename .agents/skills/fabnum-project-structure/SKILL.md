@@ -1,6 +1,6 @@
 ---
 name: fabnum-project-structure
-description: Lay out a Fabrique Numérique project: reference folder trees for Fastify, Vue.js and FastAPI, and monorepos with pnpm workspaces and Turborepo. Use when creating a project, adding a package or application, or moving files around.
+description: "Lay out a Fabrique Numérique project: reference folder trees for Fastify, Vue.js and FastAPI, and monorepos with pnpm workspaces and Turborepo. Use when creating a project, adding a package or application, or moving files around."
 ---
 
 # Project structure

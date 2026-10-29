@@ -1,6 +1,6 @@
 ---
 name: fabnum-client
-description: Build a front end the Fabrique Numérique way with Vue 3 or Nuxt 3 and the French design system (VueDsfr), including the toaster alert system. Use when starting or extending a front-end project.
+description: "Build a front end the Fabrique Numérique way with Vue 3 or Nuxt 3 and the French design system (VueDsfr), including the toaster alert system. Use when starting or extending a front-end project."
 ---
 
 # Client recipes

@@ -1,6 +1,6 @@
 ---
 name: fabnum-poc-to-prod
-description: Run the Fabrique Numérique checklist for moving a proof of concept to production: architecture, validation, security, containers, tests, observability, MLOps, documentation, maintenance. Use when preparing a project for production or reviewing its readiness.
+description: "Run the Fabrique Numérique checklist for moving a proof of concept to production: architecture, validation, security, containers, tests, observability, MLOps, documentation, maintenance. Use when preparing a project for production or reviewing its readiness."
 ---
 
 # From POC to production

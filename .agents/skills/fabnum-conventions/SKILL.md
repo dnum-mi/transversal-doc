@@ -1,6 +1,6 @@
 ---
 name: fabnum-conventions
-description: Entry point to the Fabrique Numérique (CoFabNum) development conventions. Use when a task touches a project convention or when it is unclear which fabnum-* skill applies, for example when asked whether a project is compliant.
+description: "Entry point to the Fabrique Numérique (CoFabNum) development conventions. Use when a task touches a project convention or when it is unclear which fabnum-* skill applies, for example when asked whether a project is compliant."
 ---
 
 # Fabrique Numérique conventions

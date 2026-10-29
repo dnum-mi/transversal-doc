@@ -1,6 +1,6 @@
 ---
 name: fabnum-server
-description: Build a backend the Fabrique Numérique way with NestJS, Fastify or FastAPI: naming, validation, routing, logging, error handling, OpenAPI documentation, tests. Use when starting or extending a server project.
+description: "Build a backend the Fabrique Numérique way with NestJS, Fastify or FastAPI: naming, validation, routing, logging, error handling, OpenAPI documentation, tests. Use when starting or extending a server project."
 ---
 
 # Server recipes

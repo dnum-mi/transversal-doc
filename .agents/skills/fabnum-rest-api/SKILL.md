@@ -1,6 +1,6 @@
 ---
 name: fabnum-rest-api
-description: Design a RESTful API the Fabrique Numérique way: route naming, HTTP methods and status codes, logging levels, error responses and .rest test files. Use when designing, implementing or reviewing API routes and their error handling.
+description: "Design a RESTful API the Fabrique Numérique way: route naming, HTTP methods and status codes, logging levels, error responses and .rest test files. Use when designing, implementing or reviewing API routes and their error handling."
 ---
 
 # RESTful API

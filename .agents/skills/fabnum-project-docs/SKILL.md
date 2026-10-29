@@ -1,6 +1,6 @@
 ---
 name: fabnum-project-docs
-description: Write the documentation of a Fabrique Numérique project: user and developer documentation, README.md minimum content, CONTRIBUTING.md. Use when creating or updating a README or any project documentation.
+description: "Write the documentation of a Fabrique Numérique project: user and developer documentation, README.md minimum content, CONTRIBUTING.md. Use when creating or updating a README or any project documentation."
 ---
 
 # Project documentation

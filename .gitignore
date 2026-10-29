@@ -351,3 +351,6 @@ $RECYCLE.BIN/
 
 **/.vitepress/cache
 csp-hashes.conf
+
+# Claude Code local settings
+.claude/settings.local.json

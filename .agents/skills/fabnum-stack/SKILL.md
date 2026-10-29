@@ -1,6 +1,6 @@
 ---
 name: fabnum-stack
-description: Choose and configure the Fabrique Numérique recommended stack: package manager, Node version, lint, testing, dates, ORM (Prisma), database, Python tooling, ESLint, Prettier, REST Client. Use when picking a library or tool, or configuring ESLint, Prettier or Prisma.
+description: "Choose and configure the Fabrique Numérique recommended stack: package manager, Node version, lint, testing, dates, ORM (Prisma), database, Python tooling, ESLint, Prettier, REST Client. Use when picking a library or tool, or configuring ESLint, Prettier or Prisma."
 ---
 
 # Recommended stack

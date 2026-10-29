@@ -1,6 +1,6 @@
 ---
 name: fabnum-deployment
-description: Containerise and deploy a Fabrique Numérique project: Docker images (rootless, multi-stage), Kubernetes security context, Helm charts and Cloud Pi Native. Use when writing a Dockerfile, a Helm chart or deployment configuration.
+description: "Containerise and deploy a Fabrique Numérique project: Docker images (rootless, multi-stage), Kubernetes security context, Helm charts and Cloud Pi Native. Use when writing a Dockerfile, a Helm chart or deployment configuration."
 ---
 
 # Deployment
