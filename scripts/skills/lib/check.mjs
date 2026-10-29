@@ -18,22 +18,20 @@ function coverageProblems({ config, pages, skills }) {
     .map(([, page]) => `${page.file} is neither mapped to a skill nor excluded`)
 }
 
-function freshnessProblems(root, config) {
-  const problems = []
-  const expected = renderSkills(root)
-  for (const [file, content] of expected) {
+function staleProblems(root) {
+  return [...renderSkills(root)].flatMap(([file, content]) => {
     if (!existsSync(join(root, file)))
-      problems.push(`${file} is missing, run the generator`)
-    else if (readFileSync(join(root, file), 'utf8') !== content)
-      problems.push(`${file} is out of date, run the generator`)
-  }
+      return [`${file} is missing, run the generator`]
+    return readFileSync(join(root, file), 'utf8') === content ? [] : [`${file} is out of date, run the generator`]
+  })
+}
+
+function unknownFolderProblems(root, config) {
   const known = new Set([...config.skills.map(s => s.name), config.entry.name])
   const dir = join(root, SKILLS_DIR)
-  for (const name of existsSync(dir) ? readdirSync(dir) : []) {
-    if (!known.has(name))
-      problems.push(`${SKILLS_DIR}/${name} is not in the configuration`)
-  }
-  return problems
+  return (existsSync(dir) ? readdirSync(dir) : [])
+    .filter(name => !known.has(name))
+    .map(name => `${SKILLS_DIR}/${name} is not in the configuration`)
 }
 
 /** Every reason why the committed skills cannot be trusted; an empty list means they are good to ship. */
@@ -41,6 +39,6 @@ export function checkSkills(root) {
   const resolved = plan(root)
   const problems = [...configProblems(resolved.config), ...resolved.problems, ...coverageProblems(resolved)]
   if (!resolved.problems.length)
-    problems.push(...freshnessProblems(root, resolved.config))
+    problems.push(...staleProblems(root), ...unknownFolderProblems(root, resolved.config))
   return [...problems, ...committedSkillProblems(root, resolved)]
 }

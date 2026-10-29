@@ -16,7 +16,7 @@
     "docker:run": "docker run --publish 8080:8080 --rm transversal-doc",
     "skills:generate": "node scripts/skills/cli.mjs",
     "skills:check": "node scripts/skills/cli.mjs --check",
-    "test:skills": "node --test \"scripts/skills/tests/*.test.mjs\"",
+    "test:skills": "node scripts/skills/cli.mjs --check && node --test \"scripts/skills/tests/*.test.mjs\"",
     "test:skills:integration": "node scripts/skills/integration.mjs"
   },
   "devDependencies": {

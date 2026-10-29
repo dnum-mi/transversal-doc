@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { headingAnchors } from './anchors.mjs'
 import { extractKeyPoints } from './keypoints.mjs'
+import { pageUrl } from './urls.mjs'
 
 export const SKILLS_DIR = '.agents/skills'
 export const MAX_KEY_POINTS = 10
@@ -37,9 +38,37 @@ export function loadPages(root) {
   return pages
 }
 
-export function pageUrl(config, page) {
-  const path = page === 'index' ? '' : page.replace(/\/index$/, '/')
-  return `${config.siteUrl}/${path}`
+function keyPointsProblems(skill, page) {
+  if (!page.keyPoints?.length)
+    return [`${page.file}: mapped to ${skill.name} but has no "Points clés" block`]
+  if (page.keyPoints.length > MAX_KEY_POINTS)
+    return [`${page.file}: "Points clés" has ${page.keyPoints.length} bullets, ${MAX_KEY_POINTS} at most`]
+  return []
+}
+
+function resolveChapter(context, chapter) {
+  const { config, skill, entry, page, problems } = context
+  const heading = page.headings.find(h => h.title === chapter.heading)
+  if (!heading)
+    problems.push(`${skill.name}: heading "${chapter.heading}" not found in ${page.file}`)
+  const url = pageUrl(config.siteUrl, entry.page)
+  return { ...chapter, url: heading ? `${url}#${heading.anchor}` : url }
+}
+
+function resolveEntry(config, pages, skill, entry, problems) {
+  const resolved = { ...entry, url: pageUrl(config.siteUrl, entry.page), chapters: [], keyPoints: [] }
+  const page = pages.get(entry.page)
+  if (!page) {
+    problems.push(`${skill.name}: page "${entry.page}" does not exist in docs/`)
+    return resolved
+  }
+  problems.push(...keyPointsProblems(skill, page))
+  const context = { config, skill, entry, page, problems }
+  return {
+    ...resolved,
+    chapters: (entry.chapters ?? []).map(chapter => resolveChapter(context, chapter)),
+    keyPoints: page.keyPoints ?? [],
+  }
 }
 
 /**
@@ -52,25 +81,7 @@ export function plan(root) {
   const problems = []
   const skills = config.skills.map(skill => ({
     ...skill,
-    pages: skill.pages.map((entry) => {
-      const page = pages.get(entry.page)
-      if (!page) {
-        problems.push(`${skill.name}: page "${entry.page}" does not exist in docs/`)
-        return { ...entry, url: pageUrl(config, entry.page), chapters: [], keyPoints: [] }
-      }
-      if (!page.keyPoints?.length)
-        problems.push(`${page.file}: mapped to ${skill.name} but has no "Points clés" block`)
-      else if (page.keyPoints.length > MAX_KEY_POINTS)
-        problems.push(`${page.file}: "Points clés" has ${page.keyPoints.length} bullets, ${MAX_KEY_POINTS} at most`)
-      const chapters = (entry.chapters ?? []).map((chapter) => {
-        const heading = page.headings.find(h => h.title === chapter.heading)
-        if (!heading)
-          problems.push(`${skill.name}: heading "${chapter.heading}" not found in ${page.file}`)
-        const url = pageUrl(config, entry.page)
-        return { ...chapter, url: heading ? `${url}#${heading.anchor}` : url }
-      })
-      return { ...entry, url: pageUrl(config, entry.page), chapters, keyPoints: page.keyPoints ?? [] }
-    }),
+    pages: skill.pages.map(entry => resolveEntry(config, pages, skill, entry, problems)),
   }))
   return { config, pages, skills, problems }
 }

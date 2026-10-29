@@ -51,11 +51,10 @@ Les fichiers `.agents/skills/*/SKILL.md` sont **générés** : ne pas les modifi
 
 ```bash
 pnpm skills:generate   # écrit les skills
-pnpm skills:check      # skills à jour, liens valides, couverture, pas de texte recopié
-pnpm test:skills       # tests, sans réseau
+pnpm test:skills       # skills à jour, liens valides, couverture, pas de texte recopié, puis les tests (sans réseau)
 ```
 
-La CI exécute `skills:check` et les tests. Renommer un titre de la documentation fait échouer la vérification tant que la configuration n'est pas mise à jour.
+La CI exécute les mêmes vérifications. Renommer un titre de la documentation fait échouer la vérification tant que la configuration n'est pas mise à jour.
 
 ## Vérifications lentes
 

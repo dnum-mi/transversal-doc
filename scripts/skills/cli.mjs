@@ -4,6 +4,7 @@
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { checkSkills } from './lib/check.mjs'
+import { SkillsError } from './lib/errors.mjs'
 import { writeSkills } from './lib/generate.mjs'
 
 const args = process.argv.slice(2)
@@ -21,6 +22,14 @@ if (args.includes('--check')) {
   console.log('Skills are valid and up to date.')
 }
 else {
-  writeSkills(root)
-  console.log('Skills generated.')
+  try {
+    writeSkills(root)
+    console.log('Skills generated.')
+  }
+  catch (error) {
+    if (!(error instanceof SkillsError))
+      throw error
+    console.error(error.message)
+    process.exit(1)
+  }
 }
