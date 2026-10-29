@@ -6,14 +6,18 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "main": "index.js",
+  "main": "plugin/fabnum.js",
   "scripts": {
     "dev": "vitepress --port 5172 --host 0.0.0.0 dev docs",
     "build": "vitepress build docs",
     "build:csp": "node scripts/csp-hashes.mjs docs/.vitepress/dist csp-hashes.conf",
     "preview": "vitepress preview docs",
     "docker:build": "docker build --tag transversal-doc --target prod .",
-    "docker:run": "docker run --publish 8080:8080 --rm transversal-doc"
+    "docker:run": "docker run --publish 8080:8080 --rm transversal-doc",
+    "skills:generate": "node scripts/skills/cli.mjs",
+    "skills:check": "node scripts/skills/cli.mjs --check",
+    "test:skills": "node --test \"scripts/skills/tests/*.test.mjs\"",
+    "test:skills:integration": "node scripts/skills/integration.mjs"
   },
   "devDependencies": {
     "@gouvminint/vue-dsfr": "^8.21.0",

@@ -1,0 +1,234 @@
+{
+  "siteUrl": "https://docs.fabrique-numerique.fr",
+  "exclude": [
+    { "pattern": "index", "reason": "front page of the site" },
+    { "pattern": "ce-document", "reason": "presentation of the documentation itself" },
+    { "pattern": "*/index", "reason": "section index pages only list the pages of their section" },
+    { "pattern": "installations/**", "reason": "one-off workstation setup, not a rule to apply while coding" },
+    { "pattern": "outils/**", "reason": "developer tools overview, one-off workstation setup" },
+    { "pattern": "adr/**", "reason": "architecture decision records, not published on the site" }
+  ],
+  "entry": {
+    "name": "fabnum-conventions",
+    "title": "Fabrique Numérique conventions",
+    "description": "Entry point to the Fabrique Numérique (CoFabNum) development conventions. Use when a task touches a project convention or when it is unclear which fabnum-* skill applies, for example when asked whether a project is compliant."
+  },
+  "skills": [
+    {
+      "name": "fabnum-code-style",
+      "title": "Code style",
+      "summary": "naming (branches, commits, files, variables), TypeScript rules, code practices, lint and formatting.",
+      "description": "Apply the Fabrique Numérique code style: naming of branches, commits, files and variables, TypeScript rules, code practices (functions, errors, async, imports, dependencies), ESLint, Ruff and EditorConfig. Use when writing or reviewing code, naming things, or setting up lint and formatting.",
+      "pages": [
+        {
+          "page": "conventions/nommage",
+          "title": "Naming",
+          "when": "naming a git branch, a commit, a file, a folder, a variable or a Vue component",
+          "chapters": [
+            { "heading": "Noms de branche git", "when": "creating or naming a git branch" },
+            { "heading": "Message de validation (commit)", "when": "writing a commit message" },
+            { "heading": "Noms de dossiers et fichiers", "when": "creating files, folders or Vue components" },
+            { "heading": "Noms de variables", "when": "naming variables, functions, classes or constants" }
+          ]
+        },
+        {
+          "page": "conventions/typescript",
+          "title": "TypeScript",
+          "when": "writing TypeScript code or choosing between interface, type, enum and similar constructs",
+          "chapters": [
+            { "heading": "interface vs type", "when": "typing an object, a union or a utility type" },
+            { "heading": "Validation runtime avec Zod", "when": "validating external data at runtime" }
+          ]
+        },
+        {
+          "page": "conventions/autres",
+          "title": "Code practices",
+          "when": "writing functions, handling errors, using async code, ordering imports or adding a dependency",
+          "chapters": [
+            { "heading": "Gestion des erreurs", "when": "handling or throwing errors" },
+            { "heading": "Ordre des imports", "when": "ordering imports" },
+            { "heading": "Choix et veille des dépendances", "when": "adding a library, an action or an image" }
+          ]
+        },
+        {
+          "page": "conventions/lint-formattage",
+          "title": "Lint and formatting",
+          "when": "setting up or fixing ESLint, Ruff or EditorConfig",
+          "chapters": [
+            { "heading": "Lint avec ESLint", "when": "configuring a JavaScript or TypeScript project" },
+            { "heading": "Lint avec Ruff", "when": "configuring a Python project" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fabnum-project-structure",
+      "title": "Project structure",
+      "summary": "folder layout per project type, pnpm workspaces and Turborepo monorepos.",
+      "description": "Lay out a Fabrique Numérique project: reference folder trees for Fastify, Vue.js and FastAPI, and monorepos with pnpm workspaces and Turborepo. Use when creating a project, adding a package or application, or moving files around.",
+      "pages": [
+        {
+          "page": "conventions/architecture-dossiers",
+          "title": "Folder architecture",
+          "when": "creating a project or deciding where a file belongs",
+          "chapters": [
+            { "heading": "Fastify", "when": "structuring a Fastify server" },
+            { "heading": "Vue.js", "when": "structuring a Vue application" },
+            { "heading": "FastAPI", "when": "structuring a FastAPI server" }
+          ]
+        },
+        { "page": "monorepo/pnpm", "title": "pnpm workspaces", "when": "creating or organising a monorepo" },
+        { "page": "monorepo/turbo", "title": "Turborepo", "when": "orchestrating tasks of a monorepo" },
+        { "page": "monorepo/gabarit", "title": "Monorepo templates", "when": "looking for a monorepo template to start from" }
+      ]
+    },
+    {
+      "name": "fabnum-rest-api",
+      "title": "RESTful API",
+      "summary": "route naming, logging, HTTP status codes and error responses of REST APIs.",
+      "description": "Design a RESTful API the Fabrique Numérique way: route naming, HTTP methods and status codes, logging levels, error responses and .rest test files. Use when designing, implementing or reviewing API routes and their error handling.",
+      "pages": [
+        {
+          "page": "conventions/api-restful",
+          "title": "API conventions",
+          "when": "designing routes, choosing a status code, logging or returning an error",
+          "chapters": [
+            { "heading": "Nommage des routes", "when": "naming a route" },
+            { "heading": "Gestion de la journalisation", "when": "adding logs or error handling" },
+            { "heading": "Les codes HTTP de retour", "when": "choosing a status code" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fabnum-project-docs",
+      "title": "Project documentation",
+      "summary": "what the user and developer documentation of a project must contain, README and CONTRIBUTING.",
+      "description": "Write the documentation of a Fabrique Numérique project: user and developer documentation, README.md minimum content, CONTRIBUTING.md. Use when creating or updating a README or any project documentation.",
+      "pages": [
+        {
+          "page": "conventions/documentation",
+          "title": "Project documentation",
+          "when": "writing a README, a CONTRIBUTING file or user documentation",
+          "chapters": [
+            { "heading": "La documentation pour les développeurs", "when": "documenting a project for developers" },
+            { "heading": "Le fichier README.md", "when": "writing a README" },
+            { "heading": "La documentation pour les utilisateurs", "when": "documenting a project for end users" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fabnum-poc-to-prod",
+      "title": "From POC to production",
+      "summary": "the production-readiness checklist of an AI or fullstack project.",
+      "description": "Run the Fabrique Numérique checklist for moving a proof of concept to production: architecture, validation, security, containers, tests, observability, MLOps, documentation, maintenance. Use when preparing a project for production or reviewing its readiness.",
+      "pages": [
+        {
+          "page": "conventions/poc-to-prod",
+          "title": "POC to production checklist",
+          "when": "preparing a project for production or auditing its readiness",
+          "chapters": [
+            { "heading": "Checklist récapitulative", "when": "needing the one-table summary" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fabnum-deployment",
+      "title": "Deployment",
+      "summary": "Docker images, Kubernetes security, Helm charts, Cloud Pi Native target.",
+      "description": "Containerise and deploy a Fabrique Numérique project: Docker images (rootless, multi-stage), Kubernetes security context, Helm charts and Cloud Pi Native. Use when writing a Dockerfile, a Helm chart or deployment configuration.",
+      "pages": [
+        {
+          "page": "conventions/deploiement",
+          "title": "Deployment",
+          "when": "writing a Dockerfile, a Helm chart or a Docker Compose file",
+          "chapters": [
+            { "heading": "Images Docker optimisées", "when": "writing a Dockerfile" },
+            { "heading": "Bonnes pratiques de sécurité", "when": "securing an image or a pod" },
+            { "heading": "Helm charts", "when": "writing or reviewing a Helm chart" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fabnum-cicd",
+      "title": "CI/CD",
+      "summary": "pipeline phases and the reusable GitHub Actions workflows of dnum-mi/fabnum-cicd.",
+      "description": "Set up CI/CD the Fabrique Numérique way: CI and CD phases, reusable GitHub Actions workflows from dnum-mi/fabnum-cicd, required secrets and pipeline examples. Use when creating or changing a GitHub Actions workflow, a release process or branch protection.",
+      "pages": [
+        { "page": "ci-cd/principes", "title": "CI/CD principles", "when": "deciding which pipeline stages a project needs" },
+        {
+          "page": "ci-cd/workflows-reutilisables",
+          "title": "Reusable workflows",
+          "when": "writing a workflow, before writing any pipeline job by hand",
+          "chapters": [
+            { "heading": "Workflows disponibles", "when": "looking for the right reusable workflow" },
+            { "heading": "Secrets requis", "when": "configuring repository secrets" }
+          ]
+        },
+        {
+          "page": "ci-cd/exemples",
+          "title": "Pipeline examples",
+          "when": "needing a complete CI or CD pipeline to start from",
+          "chapters": [
+            { "heading": "Intégration continue (CI)", "when": "writing a CI pipeline" },
+            { "heading": "Déploiement continu (CD)", "when": "writing a release and deployment pipeline" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fabnum-stack",
+      "title": "Recommended stack",
+      "summary": "recommended libraries and tools, ESLint, Prettier, Prisma, REST Client.",
+      "description": "Choose and configure the Fabrique Numérique recommended stack: package manager, Node version, lint, testing, dates, ORM (Prisma), database, Python tooling, ESLint, Prettier, REST Client. Use when picking a library or tool, or configuring ESLint, Prettier or Prisma.",
+      "pages": [
+        { "page": "stack/index", "title": "Recommended libraries and frameworks", "when": "choosing a library, a framework or a tool" },
+        { "page": "stack/eslint", "title": "ESLint", "when": "installing or configuring ESLint" },
+        { "page": "stack/prettier", "title": "Prettier", "when": "wondering whether to use Prettier" },
+        {
+          "page": "stack/prisma",
+          "title": "Prisma",
+          "when": "using Prisma as the ORM",
+          "chapters": [
+            { "heading": "Conventions de nommage du schema", "when": "writing a Prisma schema" },
+            { "heading": "Migrations", "when": "creating or applying migrations" }
+          ]
+        },
+        { "page": "stack/rest-client", "title": "REST Client", "when": "testing an API from VS Code" }
+      ]
+    },
+    {
+      "name": "fabnum-server",
+      "title": "Server recipes",
+      "summary": "NestJS, Fastify and FastAPI project conventions.",
+      "description": "Build a backend the Fabrique Numérique way with NestJS, Fastify or FastAPI: naming, validation, routing, logging, error handling, OpenAPI documentation, tests. Use when starting or extending a server project.",
+      "pages": [
+        {
+          "page": "serveur/nestjs",
+          "title": "NestJS",
+          "when": "building a NestJS server",
+          "chapters": [
+            { "heading": "Log", "when": "adding logging" },
+            { "heading": "Gestion des erreurs", "when": "handling errors" }
+          ]
+        },
+        { "page": "serveur/fastify", "title": "Fastify", "when": "building a Fastify server" },
+        { "page": "serveur/fastapi", "title": "FastAPI", "when": "building a FastAPI server" }
+      ]
+    },
+    {
+      "name": "fabnum-client",
+      "title": "Client recipes",
+      "summary": "Vue 3, Nuxt 3 with VueDsfr, and the toaster alert system.",
+      "description": "Build a front end the Fabrique Numérique way with Vue 3 or Nuxt 3 and the French design system (VueDsfr), including the toaster alert system. Use when starting or extending a front-end project.",
+      "pages": [
+        { "page": "client/vue3", "title": "Vue 3", "when": "starting a Vue 3 application" },
+        { "page": "client/nuxt3", "title": "Nuxt 3", "when": "starting a Nuxt 3 application" },
+        { "page": "client/toaster", "title": "Toaster", "when": "adding user alerts to a Vue application" }
+      ]
+    }
+  ]
+}

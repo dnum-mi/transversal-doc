@@ -59,6 +59,7 @@ export default defineConfig({
           { text: 'Installation Windows', link: '/installations/windows' },
           { text: 'Installation macOS', link: '/installations/macos' },
           { text: 'Installation Ubuntu', link: '/installations/ubuntu' },
+          { text: 'Skills pour agents de code', link: '/outils/agents' },
         ],
       },
       {
