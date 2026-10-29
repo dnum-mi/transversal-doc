@@ -1,5 +1,14 @@
 # [Prisma](https://www.prisma.io/)
 
+::: tip Points clés
+- Prisma est l’ORM recommandé pour Node.js/TypeScript ; extension VS Code Prisma conseillée.
+- Prisma 7+ : générateur `prisma-client` (et non `prisma-client-js`, déprécié), avec un `output` explicite.
+- Schéma : modèles en `PascalCase` au singulier, champs en `camelCase` avec `@map("snake_case")`, tables en `snake_case` au pluriel via `@@map`.
+- Nommer explicitement les clés étrangères avec `@map`.
+- Ne jamais modifier une migration à la main : passer par `prisma migrate dev`.
+- Une seule instance de `PrismaClient` par application (singleton) ; seed dans `prisma/seed.ts`.
+:::
+
 [Prisma](https://www.prisma.io/) est l'ORM recommandé pour les projets Node.js/TypeScript de la Fabrique Numérique. Il offre un client type-safe auto-généré, un système de migrations, et un studio de visualisation de données.
 
 ## VS Code

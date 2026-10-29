@@ -1,5 +1,12 @@
 # Construire un projet Vue 3 pour le MI
 
+::: tip Points clés
+- Le front du ministère suit le système de design de l’État (DSFR) ; la Fabrique Numérique a choisi Vue, avec le portage VueDsfr.
+- Créer le projet avec la CLI `create-vue-dsfr`, en répondant `Vue 3` et `TS`.
+- Le projet généré contient TypeScript, ESLint, VueDsfr, une application d’exemple avec en-tête, un router minimal, un store minimal et les plugins `unplugin-auto-import` et `unplugin-vue-components`.
+- Ajouter `date-fns` si le projet manipule ou affiche des dates.
+:::
+
 Le ministère de l’intérieur doit suivre le [système de design français (DSFR)](https://www.systeme-de-design.gouv.fr/), et la Fabrique Numérique a choisi Vue pour ses projets Front.
 
 Il existe un [portage du DSFR pour Vue](https://vue-dsfr.netlify.app/) qui est activement mis à jour par Stanislas Ormières et par l’équipe du BRR.

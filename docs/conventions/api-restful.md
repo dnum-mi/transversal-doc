@@ -1,5 +1,16 @@
 # Conventions pour les API
 
+::: tip Points clés
+- Routes : uniquement des noms, au pluriel, jamais de verbe ; la méthode HTTP fait office de verbe (`POST /cats`, `GET /cats/:id`, `PATCH /cats/:id`).
+- `PUT` modifie toutes les propriétés d’une ressource, `PATCH` une partie seulement.
+- Les logs sortent sur la sortie standard ; chaque requête est loggée avec son temps de réponse.
+- Les actions importantes (connexion, création d’un enregistrement) sont journalisées ; les erreurs sont gérées à un seul endroit.
+- Niveaux de log : `verbose` et `debug` en dev seulement, `log` toujours, `warn` pour l’anormal prévu, `error` pour l’imprévu grave.
+- Codes HTTP : `200` succès, `201` création (POST uniquement), `400` requête incomprise, `401` non identifié (avec `WWW-Authenticate: Bearer`), `403` interdit, `404` introuvable, `409` conflit, `429` trop de requêtes, `500` erreur serveur.
+- Les erreurs de l’API sont en français compréhensible ou en clés d’un dictionnaire connu du client.
+- Les fichiers `.rest` permettent de tester l’API (extension REST Client de VS Code).
+:::
+
 cf. [Nommage](/conventions/nommage)
 
 ## Nommage des routes

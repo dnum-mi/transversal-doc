@@ -1,5 +1,17 @@
 # Passer un projet du `POC` à la `PRODUCTION`
 
+::: tip Points clés
+- Checklist en 10 étapes pour un projet IA / fullstack : architecture, validation, concurrence, sécurité, conteneurs, tests, observabilité, MLOps, documentation, maintenance.
+- Architecture modulaire, API découplée de la logique IA ; configuration et constantes dans `config.py` (Pydantic BaseSettings).
+- Validation des entrées et sorties avec Pydantic ; endpoints asynchrones, tâches CPU via queue ou thread pool.
+- Sécurité : CORS restreint, JWT/OAuth2, données validées et assainies, secrets dans `.env`, un vault ou le cloud.
+- Docker multi-stage, non-root, avec healthchecks ; pipeline CI/CD automatique ; orchestration Kubernetes.
+- Tests unitaires et d’intégration dès le début (`pytest`, `httpx`) ; lint avec `ruff` ; schémas OpenAPI validés.
+- Observabilité : logs structurés JSON avec `request_id`, métriques Prometheus/Grafana, endpoints `/health` et `/readiness`.
+- Modèles versionnés comme artefacts, surveillance du drift, rollout progressif (canary).
+- Maintenance : plan de rollback, migrations de base (Alembic), politique de sécurité (Snyk, Dependabot).
+:::
+
 ## Projet IA / Fullstack
 
 ### 1. Architecture & structure du projet

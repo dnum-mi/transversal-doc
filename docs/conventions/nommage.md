@@ -1,5 +1,16 @@
 # Conventions de nommage
 
+::: tip Points clés
+- La branche par défaut s’appelle `main`.
+- Les autres branches suivent `<feat|fix|hotfix|tech|docs|refactor>/<description-en-kebab-case>#<ticket_github>`.
+- Les messages de commit respectent les Commits Conventionnels ; ils peuvent être en français.
+- Dossiers et fichiers sont en `kebab-case`, sauf les composants Vue (et leurs fichiers de test) en `PascalCase`.
+- Un composant Vue a au moins 2 mots dans son nom, sauf `App.vue`.
+- Booléen : préfixe `is` (rarement `has`, `should`, `can`) ; date : suffixe `Date` ou `At`, en `camelCase`.
+- Classes et constructeurs en `PascalCase`, variables et fonctions en `camelCase`, constantes en `SCREAMING_SNAKE_CASE`.
+- Noms explicites, pas de variable d’un seul caractère, noms en anglais sauf traduction ambiguë (`demarche`, `dossier`).
+:::
+
 ## Noms de branche git
 
 ### Le nom de la branche par défaut devrait être `main`

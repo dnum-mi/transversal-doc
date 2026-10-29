@@ -1,5 +1,13 @@
 # Les principes de la CI/CD
 
+::: tip Points clés
+- Suivre le maximum d’étapes de CI/CD pour détecter bugs et régressions, contrôler la qualité et être averti des failles.
+- CI à chaque merge de pull request : lint, tests unitaires et d’intégration, build, tests de bout en bout, analyse de qualité du code.
+- CD pour livrer automatiquement : analyse de CVE et de mauvaise configuration, release avec changelog, déploiement.
+- Outils complémentaires : SonarQube (qualité du code) et Trivy (CVE des dépendances et de la configuration).
+- Pour des pipelines complets, utiliser les workflows réutilisables maintenus par l’équipe DevOps.
+:::
+
 L'approche CI/CD permet d'augmenter la fréquence de distribution des applications grâce à l'introduction de l'automatisation au niveau des étapes de développement des applications. Les principaux concepts liés à l'approche CI/CD sont l'intégration continue, la distribution continue et le déploiement continu. L'approche CI/CD représente une solution aux problèmes posés par l'intégration de nouveaux segments de code pour les équipes de développement et d'exploitation (ce qu'on appelle en anglais « integration hell », ou l'enfer de l'intégration).
 
 Plus précisément, l'approche CI/CD garantit une automatisation et une surveillance continues tout au long du cycle de vie des applications, des phases d'intégration et de test jusqu'à la distribution et au déploiement. Ensemble, ces pratiques sont souvent désignées par l'expression « pipeline CI/CD » et elles reposent sur une collaboration agile entre les équipes de développement et d'exploitation, que ce soit dans le cadre d'une approche DevOps ou d'ingénierie de la fiabilité des sites (SRE).

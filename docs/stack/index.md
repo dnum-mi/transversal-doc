@@ -1,5 +1,15 @@
 # Les bibliothèques et frameworks préconisés
 
+::: tip Points clés
+- Gestionnaire de paquets : pnpm ; versions de Node épinglées avec proto, sans oublier `"engines"` dans le `package.json`.
+- Lint et formattage : ESLint (Prettier seulement dans les cas décrits par sa page) ; langage : TypeScript.
+- Monorepo : pnpm et Turborepo ; scripts npm : `npm-run-all2`.
+- Dates : stockées et manipulées en UTC, converties à l’affichage, formats ISO 8601 avec millisecondes, conversions avec `date-fns`, validation côté client et serveur.
+- Client : Vite, Vue, VueDsfr, Pinia, VueRouter, UnoCSS ; tests avec Vitest, Vue Testing Library, Jest DOM (pas Jest) et Playwright ; Storybook pour les bibliothèques UI.
+- Serveur web : Fastify ou NestJS, avec Vitest et supertest ; ORM : Prisma ; base de données : PostgreSQL.
+- Python : `uv` pour le projet, FastAPI pour le web, Ruff pour le lint et le formattage.
+:::
+
 ## Agent pour le registre npm
 
 - [pnpm](https://pnpm.io)
