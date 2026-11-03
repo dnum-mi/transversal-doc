@@ -18,6 +18,15 @@ test('the entry skill lists every domain skill', () => {
   assert.match(entry, /`fabnum-code-style`: Naming rules\./)
 })
 
+test('the index lists every skill with its files, for opencode to read from a URL', () => {
+  const { root } = makeRepo()
+  const index = JSON.parse(renderSkills(root).get('.agents/skills/index.json'))
+  assert.deepEqual(index, { skills: [
+    { name: 'fabnum-conventions', files: ['SKILL.md'] },
+    { name: 'fabnum-code-style', files: ['SKILL.md'] },
+  ] })
+})
+
 test('a description with a colon stays valid YAML', () => {
   const config = structuredClone(CONFIG)
   config.skills[0].description = 'Apply the rules: naming, branches. Use when "naming" things.'

@@ -1,0 +1,70 @@
+{
+  "skills": [
+    {
+      "name": "fabnum-conventions",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-code-style",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-project-structure",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-rest-api",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-project-docs",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-poc-to-prod",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-deployment",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-cicd",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-stack",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-server",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "fabnum-client",
+      "files": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

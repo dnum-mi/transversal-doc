@@ -21,7 +21,17 @@ Déclarer le plugin dans l'`opencode.json` du projet :
 }
 ```
 
-Dans ce dépôt, les skills sont aussi lus directement depuis `.agents/skills/`.
+Le plugin est téléchargé avec `npm`, qui installe aussi les dépendances du site. Pour ne charger que les skills, sans rien installer, les déclarer par URL : OpenCode lit l'`index.json` du dossier (généré avec les skills). Remplacer `<commit>` par un commit pour figer la version, ou par `main` pour suivre la dernière.
+
+```json
+{
+  "skills": {
+    "urls": ["https://raw.githubusercontent.com/dnum-mi/transversal-doc/<commit>/.agents/skills/"]
+  }
+}
+```
+
+Le `/` final est obligatoire. Dans ce dépôt, les skills sont aussi lus directement depuis `.agents/skills/`.
 
 ## Les skills
 

@@ -61,6 +61,17 @@ function renderEntrySkill(entry, skills) {
   ].join('\n')
 }
 
+export const INDEX_FILE = 'index.json'
+
+/**
+ * The index opencode reads when the skills folder is declared by URL ("skills.urls"): a web server cannot list
+ * a folder, so every skill names its files.
+ */
+function renderIndex(config, skills) {
+  const names = [config.entry.name, ...skills.map(skill => skill.name)]
+  return `${JSON.stringify({ skills: names.map(name => ({ name, files: ['SKILL.md'] })) }, null, 2)}\n`
+}
+
 /** The generated skills as a map `path relative to the root -> file content`. */
 export function renderSkills(root) {
   const { config, skills, problems } = plan(root)
@@ -70,6 +81,7 @@ export function renderSkills(root) {
   for (const skill of skills)
     files.set(`${SKILLS_DIR}/${skill.name}/SKILL.md`, renderDomainSkill(skill))
   files.set(`${SKILLS_DIR}/${config.entry.name}/SKILL.md`, renderEntrySkill(config.entry, skills))
+  files.set(`${SKILLS_DIR}/${INDEX_FILE}`, renderIndex(config, skills))
   return files
 }
 

@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { committedSkillProblems, configProblems } from './conformance.mjs'
-import { renderSkills } from './generate.mjs'
+import { INDEX_FILE, renderSkills } from './generate.mjs'
 import { SKILLS_DIR, plan } from './plan.mjs'
 
 function globToRegExp(pattern) {
@@ -30,7 +30,7 @@ function unknownFolderProblems(root, config) {
   const known = new Set([...config.skills.map(s => s.name), config.entry.name])
   const dir = join(root, SKILLS_DIR)
   return (existsSync(dir) ? readdirSync(dir) : [])
-    .filter(name => !known.has(name))
+    .filter(name => name !== INDEX_FILE && !known.has(name))
     .map(name => `${SKILLS_DIR}/${name} is not in the configuration`)
 }
 
