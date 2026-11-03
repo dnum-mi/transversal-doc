@@ -1,5 +1,15 @@
 # Conventions de lint et formattage
 
+::: tip Points clés
+- Un fichier `.editorconfig` à la racine du projet, avec la configuration recommandée.
+- JavaScript/TypeScript : ESLint avec `@antfu/eslint-config`, qui gère aussi le formattage (pas de Prettier à côté).
+- Configuration en flat config (`eslint.config.js`), plus de `.eslintrc` ; règles de style préfixées `style/`.
+- Surcharger `style/comma-dangle` en `['error', 'always-multiline']` et désactiver `no-irregular-whitespace`.
+- NestJS : activer le support des décorateurs dans `tsconfig.json` et ajuster les règles ESLint indiquées.
+- Python : Ruff (installé avec `uv`) remplace black, flake8 et isort ; configuration dans `ruff.toml` ou `pyproject.toml`.
+- Lint et formattage s’intègrent à VS Code (`.vscode/settings.json`) et s’exécutent en CI.
+:::
+
 Ce document couvre les conventions de lint et de formattage pour les projets JavaScript/TypeScript et Python.
 
 ## Editorconfig

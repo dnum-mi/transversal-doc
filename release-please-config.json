@@ -20,7 +20,10 @@
         { "type": "style", "section": "Styles", "hidden": true },
         { "type": "test", "section": "Tests", "hidden": true }
       ],
-      "extra-files": [{ "type": "generic", "path": "helm/Chart.yaml" }]
+      "extra-files": [
+        { "type": "generic", "path": "helm/Chart.yaml" },
+        { "type": "json", "path": ".claude-plugin/marketplace.json", "jsonpath": "$.plugins[0].version" }
+      ]
     }
   }
 }

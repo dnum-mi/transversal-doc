@@ -1,5 +1,12 @@
 # Workflows réutilisables
 
+::: tip Points clés
+- Utiliser les workflows réutilisables du dépôt `dnum-mi/fabnum-cicd` plutôt que réécrire ses pipelines (recommandation forte).
+- On les appelle avec le mot-clé `uses` d’un job ; la page liste les workflows disponibles (build Docker, lint des commits, lint et test Helm, release, scans Sonarqube et Trivy, etc.).
+- Secrets possibles : `GH_PAT` (release-app, update-helm-chart), `SONAR_TOKEN` et `SONAR_PROJECT_KEY` (scan-sonarqube), `GIT_MIRROR_TOKEN` (sync-cpin).
+- La documentation détaillée de chaque workflow (inputs, outputs, permissions) est dans le dépôt `fabnum-cicd`.
+:::
+
 La Fabrique Numérique maintient un catalogue de **workflows GitHub Actions réutilisables** dans le dépôt [`dnum-mi/fabnum-cicd`](https://github.com/dnum-mi/fabnum-cicd). Ces workflows sont maintenus par l'équipe DevOps et **doivent être privilégiés** par rapport à des pipelines écrits from scratch.
 
 ::: tip Recommandation forte

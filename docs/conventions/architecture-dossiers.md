@@ -1,5 +1,13 @@
 # Conventions d’architecture de dossier
 
+::: tip Points clés
+- Chaque type de projet a une arborescence de référence : NestJS (page dédiée), Fastify, Vue.js, FastAPI.
+- Fastify : `src/` avec `index.ts` (démarrage), `app.ts` (instance), `plugins/`, `routes/<ressource>/` (routes, schémas, service) et `utils/` ; tests dans `test/`.
+- Vue.js : `src/` avec `components/` (réutilisables), `stores/`, `views/` (une page par dossier, ses composants dans `components/`), `utils/` ; `public/` pour les fichiers copiés tels quels.
+- Vue.js : tests (`.cy.ts`, `.spec.ts`) à côté du composant qu’ils testent.
+- FastAPI : `app/` avec `main.py`, `config.py`, `models/`, `schemas/`, `routers/`, `services/`, `utils/` ; tests dans `tests/`, `pyproject.toml`, `uv.lock` et `Dockerfile` à la racine.
+:::
+
 ## NestJS
 
 Cf. [page dédiée](/serveur/nestjs)

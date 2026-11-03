@@ -94,6 +94,21 @@ jobs:
       PATH: ./
       PR_NUMBER: ${{ github.event.pull_request.number || '' }}
 
+  # The agent skills are generated from the docs: fail when they are stale, invalid or link to a missing heading.
+  # Node only, no dependency to install. The slower integration checks (pnpm test:skills:integration) run locally.
+  test-skills:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node scripts/skills/cli.mjs --check
+      - run: node --test "scripts/skills/tests/*.test.mjs"
+
   # Workaround for required status check in protection branches (see. https://github.com/orgs/community/discussions/13690)
   all-jobs-passed:
     name: Check jobs status
@@ -101,6 +116,7 @@ jobs:
     needs:
       - lint-commits
       - lint-helm
+      - test-skills
       - test-helm
       - build-docker
       - test-docker

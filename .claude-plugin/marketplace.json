@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "transversal-doc",
+  "description": "Agent skills that make coding agents follow the Fabrique Numérique conventions published in docs.fabrique-numerique.fr",
+  "owner": {
+    "name": "dnum-mi",
+    "url": "https://github.com/dnum-mi/transversal-doc"
+  },
+  "plugins": [
+    {
+      "name": "fabnum",
+      "source": "./",
+      "version": "0.1.1",
+      "description": "Fabrique Numérique conventions as agent skills: code style, project structure, REST API, deployment, CI/CD, stack, server and client recipes",
+      "homepage": "https://docs.fabrique-numerique.fr",
+      "skills": [
+        "./.agents/skills"
+      ]
+    }
+  ]
+}

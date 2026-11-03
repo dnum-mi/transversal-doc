@@ -1,5 +1,12 @@
 # Construire un projet NestJS
 
+::: tip Points clés
+- Noms des modules et fichiers selon la convention NestJS, au pluriel : `CatsModule`, `CatsService`, `CatsController`.
+- Logger recommandé : `nestjs-pino` avec `pino-http` (logs JSON sans configuration), branché dans `app.module.ts` et `main.ts`.
+- Un *filter* global intercepte toutes les erreurs, les logge et renvoie une réponse HTTP structurée.
+- L’API fournit une documentation OpenAPI à jour avec `@nestjs/swagger`.
+:::
+
 ## Conventions
 
 ### Conventions de nommage

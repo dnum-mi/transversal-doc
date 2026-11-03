@@ -1,0 +1,15 @@
+[
+  { "prompt": "Crée une branche pour corriger le bug d'affichage de la liste des dossiers (ticket 412).", "expected": "fabnum-code-style" },
+  { "prompt": "Can I use an enum for the status of an order in this TypeScript module?", "expected": "fabnum-code-style" },
+  { "prompt": "Où dois-je ranger les schémas de validation et les services dans mon projet Fastify ?", "expected": "fabnum-project-structure" },
+  { "prompt": "Set up a pnpm workspace with Turborepo for a client and a server package.", "expected": "fabnum-project-structure" },
+  { "prompt": "Quelles routes et quels codes HTTP pour l'API qui gère les chats (création, liste, suppression) ?", "expected": "fabnum-rest-api" },
+  { "prompt": "Rédige le README de ce projet.", "expected": "fabnum-project-docs" },
+  { "prompt": "Mon POC FastAPI part en production le mois prochain, qu'est-ce qu'il me manque ?", "expected": "fabnum-poc-to-prod" },
+  { "prompt": "Écris le Dockerfile et le chart Helm de ce service Node.", "expected": "fabnum-deployment" },
+  { "prompt": "Add a GitHub Actions pipeline with lint, tests, image build and release.", "expected": "fabnum-cicd" },
+  { "prompt": "Quelle bibliothèque utiliser pour les dates et quel ORM pour la base PostgreSQL ?", "expected": "fabnum-stack" },
+  { "prompt": "Start a NestJS backend with structured logging and a global error filter.", "expected": "fabnum-server" },
+  { "prompt": "Démarre une application Vue 3 avec le DSFR et ajoute des notifications d'alerte.", "expected": "fabnum-client" },
+  { "prompt": "Est-ce que mon projet respecte les conventions de la Fabrique Numérique ?", "expected": "fabnum-conventions" }
+]

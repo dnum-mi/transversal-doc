@@ -1,5 +1,14 @@
 # [Turborepo](http://turbo.build/repo)
 
+::: tip Points clés
+- Turborepo accélère un monorepo JS/TS par cache, parallélisation et graphe de dépendances.
+- `turbo.json` à la racine définit les tâches : `dependsOn` (`^build` = build des dépendances internes), `outputs` (mis en cache), `cache: false` et `persistent: true` pour les tâches de dev.
+- Ajouter `.turbo` au `.gitignore`.
+- Définir des `outputs` précis pour chaque tâche.
+- En CI, utiliser `--filter` pour ne lancer les tâches que sur les packages impactés par une PR.
+- Les scripts Turborepo sont déclarés dans le `package.json` racine.
+:::
+
 [Turborepo](https://turbo.build/repo) est un outil de build intelligent pour les monorepos JavaScript/TypeScript. Il optimise l'exécution des tâches grâce à un système de cache et de parallélisation.
 
 ## Pourquoi Turborepo

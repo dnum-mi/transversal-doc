@@ -1,5 +1,14 @@
 # Construire un projet Fastify
 
+::: tip Points clés
+- Fastify est structuré en plugins, chacun encapsulant un domaine fonctionnel.
+- La validation des entrées par JSON Schema est obligatoire ; `@sinclair/typebox` est recommandé.
+- Routes enregistrées avec `@fastify/autoload` ou manuellement comme plugins.
+- Logger pino intégré, activé à l’initialisation ; gestionnaire d’erreurs global.
+- Documentation OpenAPI obligatoire avec `@fastify/swagger` et `@fastify/swagger-ui`.
+- Tester les routes avec `inject()`, sans démarrer le serveur.
+:::
+
 [Fastify](https://www.fastify.io/) est un framework web pour Node.js axé sur la performance et l'expérience développeur. Il offre un système de plugins puissant, une validation des schémas intégrée via JSON Schema, et un support natif de TypeScript.
 
 ## Initialisation d'un projet

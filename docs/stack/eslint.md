@@ -1,5 +1,13 @@
 # ESLint
 
+::: tip Points clés
+- ESLint s’installe en dépendance de développement et se configure dans l’éditeur (extension ESLint de VS Code).
+- Partir de la configuration d’Anthony Fu (`@antfu/eslint-config`) et surcharger les règles indiquées par la page.
+- Projet back : mêmes surcharges avec deux règles de plus ; projet fullstack à back Python : configuration front seule.
+- Idéalement, la configuration ESLint vit dans un workspace dédié, utilisé par tous les autres.
+- Les scripts de lint et de formattage (fix) sont séparés.
+:::
+
 ## Qu’est-ce que ESLint
 
 ESLint est, comme son nom l’indique, un *linter*, et est aussi par extension un *formateur*, même si ce n’est pas son but premier.

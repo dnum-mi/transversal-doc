@@ -1,5 +1,15 @@
 # Exemples de pipelines (Github Actions)
 
+::: tip Points clés
+- Les exemples s’appuient sur les workflows réutilisables : lint-commits, scan-sonarqube, build-docker, scan-trivy, check-jobs, release-app.
+- Les jobs propres à la stack (lint et tests d’un monorepo Node avec pnpm) restent écrits dans le dépôt.
+- Définir les scripts `test`, `test:ct-ci` et `test:e2e-ci` dans le `package.json`.
+- Référencer les workflows avec `@v0` (dernières versions 0.x) ou figer un tag complet (`@v0.24.1`) ou un SHA.
+- Le check exigé par la protection de branche est `Check jobs status / Required jobs`.
+- Dépôt avec `"type": "module"` : fournir un `commitlint.config.cjs` et le passer avec `CONFIG_FILE` au job `lint-commits`.
+- Le CD repose sur `release-app` (release-please, pull request de release puis tag) suivi du build de l’image.
+:::
+
 Quelques exemples de pipelines très complets avec les Github Actions, construits sur les [workflows réutilisables](/ci-cd/workflows-reutilisables) du dépôt [`dnum-mi/fabnum-cicd`](https://github.com/dnum-mi/fabnum-cicd). N'hésitez pas à retirer les parties ne concernant pas votre projet.
 
 Les workflows réutilisables couvrent tout ce qui est commun aux projets de la Fabrique Numérique :

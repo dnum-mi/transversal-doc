@@ -14,6 +14,8 @@ Ce dépôt centralise les référentiels communs aux projets de la Fabrique Num�
 - **Environnement de travail** – installation et configuration de la machine de développement (Windows, macOS, Ubuntu).
 - **Monorepo** – configuration pnpm workspaces et Turborepo.
 - **CI/CD** – principes et exemples de pipelines GitHub Actions.
+- **Skills pour agents de code** – les conventions mises à disposition de Claude Code et d'opencode, avec leur [installation](https://docs.fabrique-numerique.fr/outils/agents) :
+  `claude plugin marketplace add dnum-mi/transversal-doc` puis `claude plugin install fabnum@transversal-doc`.
 
 ## Démarrage rapide
 

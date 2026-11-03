@@ -1,5 +1,15 @@
 # Construire un projet FastAPI
 
+::: tip Points clés
+- Projet géré avec `uv` (`pyproject.toml` et `uv.lock`).
+- Validation des données entrantes et sortantes avec des modèles Pydantic.
+- Routes organisées par domaine avec des `APIRouter`, enregistrés dans `main.py`.
+- Endpoints `async` pour les opérations d’I/O.
+- Logging avec le module `logging` standard et le pattern `lifespan` (`@app.on_event` est déprécié).
+- Gestionnaires d’exceptions personnalisés ; documentation OpenAPI générée (`/docs`, `/redoc`).
+- Tests avec `pytest` et le `TestClient` de FastAPI ; Dockerfile multi-stage avec `uv`.
+:::
+
 [FastAPI](https://fastapi.tiangolo.com/) est un framework web Python moderne et performant, basé sur les annotations de type Python et [Pydantic](https://docs.pydantic.dev/). Il génère automatiquement la documentation OpenAPI.
 
 ## Initialisation d'un projet

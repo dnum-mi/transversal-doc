@@ -1,5 +1,11 @@
 # Ajouter un système d’alerte (toaster)
 
+::: tip Points clés
+- Les alertes passent par un composable `useToaster` qui gère la liste des messages.
+- Le composant `AppToaster` affiche les messages avec `DsfrAlert` de VueDsfr.
+- `AppToaster` est monté une fois dans l’application racine ; le code complet est dans la page.
+:::
+
 ## Le composable `useToaster`
 
 ```ts twoslash

@@ -1,5 +1,13 @@
 # [`pnpm`](https://pnpm.io)
 
+::: tip Points clés
+- pnpm est le gestionnaire de paquets, avec support des workspaces pour les monorepos.
+- Un fichier `pnpm-workspace.yaml` à la racine déclare les workspaces dans `apps` et `packages`.
+- Par convention : applications dans `apps`, paquets partagés dans `packages`.
+- Chaque application et chaque paquet a son `package.json` ; un seul fichier de verrouillage, à la racine.
+- Le nom d’un paquet partagé est scopé (`@<scope>/shared`) et utilisé tel quel dans `dependencies` et `devDependencies`.
+:::
+
 `pnpm` est un gestionnaire de paquets (*packages*) qui utilise le registre (*registry*) [`npm`](https://npmjs.com) et qui
 
 - est plus rapide ;

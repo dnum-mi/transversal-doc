@@ -1,5 +1,15 @@
 # Conventions TypeScript
 
+::: tip Points clés
+- TypeScript est très fortement recommandé, en mode strict : pas de JavaScript émis si le compilateur est en erreur.
+- `any` est à éviter au maximum ; `object` est proscrit (préférer `Record<string | symbol, any>`).
+- `enum` et `namespace` sont proscrits : utiliser des objets `as const` et des modules.
+- `interface` pour la forme d’un objet (API, props, entités) ; `type` pour unions, intersections, types utilitaires et mappés.
+- Modéliser les états exclusifs avec des unions discriminées.
+- Valider les données à l’exécution (entrées, réponses d’API, variables d’environnement) avec Zod.
+- Utiliser les types utilitaires du langage plutôt que de redéfinir les types à la main.
+:::
+
 TypeScript (TS) est **très fortement** recommandé, et avec la version stricte : TS ne doit pas émettre de fichier JavaScript si le compilateur sort en erreur.
 ::: tip Voir aussi
 - [Lint et formattage](/conventions/lint-formattage) — Configuration ESLint et Prettier pour TypeScript

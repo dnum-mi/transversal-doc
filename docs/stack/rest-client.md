@@ -1,5 +1,11 @@
 # REST Client
 
+::: tip Points clés
+- L’extension REST Client de VS Code sert à tester les API depuis des fichiers `.rest`.
+- Variables locales au fichier, réutilisables avec `{{ }}` ; `@name` stocke la réponse d’une requête pour la réutiliser dans une autre.
+- Plusieurs environnements se déclarent dans `.vscode/settings.json` et se changent avec la commande `switch environment`.
+:::
+
 ## Installation
 
 Installer l'extension [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) dans VS Code.

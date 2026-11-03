@@ -1,5 +1,11 @@
 # Les recettes pour Nuxt 3
 
+::: tip Points clés
+- Nuxt 3 apporte SSR, SSG et routage par fichiers au-dessus de Vue 3 ; VueDsfr y est compatible.
+- Créer le projet avec la CLI `create-vue-dsfr`, en répondant `Nuxt 3` et `TS`.
+- Le projet généré contient TypeScript, ESLint, VueDsfr, une application d’exemple avec en-tête et un store minimal.
+:::
+
 [Nuxt 3](https://nuxt.com/) est un framework fullstack basé sur Vue 3 qui apporte le rendu côté serveur (SSR), la génération statique (SSG), le routage automatique basé sur le système de fichiers, et l'auto-import des composants et composables. Il est particulièrement adapté pour les applications nécessitant un bon référencement (SEO) ou un premier affichage rapide.
 
 ## Construire un projet Nuxt 3 pour le MI

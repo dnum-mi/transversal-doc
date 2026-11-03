@@ -1,5 +1,11 @@
 # Prettier
 
+::: tip Points clés
+- Avec `@antfu/eslint-config` (recommandé), ne pas installer Prettier : ESLint gère lint et formattage.
+- Prettier reste utile pour les projets legacy et pour les fichiers non JS/TS (Markdown, JSON, YAML, CSS, HTML).
+- S’il est utilisé : `.prettierrc` et `.prettierignore` recommandés, donnés par la page.
+:::
+
 ## Qu'est-ce que Prettier
 
 [Prettier](https://prettier.io/) est un formateur de code opinionated. Il reformate automatiquement le code pour garantir un style cohérent dans tout le projet.

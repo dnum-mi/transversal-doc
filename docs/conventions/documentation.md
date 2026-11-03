@@ -1,5 +1,14 @@
 # La documentation des projets
 
+::: tip Points clés
+- Chaque projet a deux documentations distinctes, tenues à jour : une pour les utilisateurs, une pour les développeurs.
+- Une documentation de déploiement est possible ; idéalement simple et incluse dans celle des développeurs.
+- Documentation développeurs : prérequis, stack détaillée, TL;DR (tests, démarrage), partie nouveaux arrivants, conventions du projet.
+- Le `README.md` est le premier fichier lu par un nouveau développeur ; au minimum : description, prérequis, démarrage rapide, scripts disponibles, architecture.
+- `CONTRIBUTING.md` (branches, PR, revues) est recommandé quand il y a des contributeurs externes.
+- Documentation utilisateurs, pour un public non technique : guide pas-à-pas, fonctionnalités avec captures ou GIFs, FAQ, contact.
+:::
+
 La documentation d’un projet est très importante pour deux populations très distinctes : les utilisateurs de l’application, et les développeurs de l’application.
 
 ::: tip

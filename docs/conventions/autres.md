@@ -1,5 +1,16 @@
 # Bonnes pratiques de code
 
+::: tip Points clés
+- Lignes : 80 colonnes avec Prettier, à éviter au-delà de 120, proscrites au-delà de 140.
+- Une fonction fait au plus 20 lignes, ne fait qu’une chose, a un nom explicite et idéalement un test.
+- Ne jamais ignorer silencieusement une erreur ; utiliser des classes d’erreurs typées plutôt que `Error`.
+- Toujours `async`/`await` plutôt que `.then()`/`.catch()` ; paralléliser les opérations indépendantes.
+- Imports ordonnés en groupes séparés par une ligne vide : natifs Node.js, packages externes, modules internes, relatifs.
+- Pas de valeurs magiques : extraire des constantes nommées ; privilégier les retours anticipés.
+- Avant d’ajouter une dépendance, évaluer version, popularité, fréquence de mise à jour, maintenance et taille.
+- Jamais `@latest`, `@master` ou `@main` en production ; épingler les GitHub Actions sur un tag de version.
+:::
+
 ## Taille des lignes
 
 Les lignes sont par défaut de 80 colonnes si Prettier est utilisé. C’est un héritage des consoles qui ne pouvaient afficher que 80 colonnes. Cela fait un peu court avec les écrans dont nous disposons aujourd’hui.

@@ -1,5 +1,16 @@
 # Déploiement
 
+::: tip Points clés
+- La plateforme cible est Cloud Pi Native (Kubernetes) : conteneuriser tous les services, privilèges minimaux, compatibilité Kubernetes et OpenShift dès la création.
+- Images Docker : base légère (`alpine`, `slim`, `distroless`), build multi-stage, utilisateur non-root (UID ≥ 1000), port non privilégié (≥ 1024, ex. `8080`).
+- Pas de secrets, fichiers de développement ou outils inutiles dans l’image.
+- Jamais l’image `latest` en production : épingler un tag précis ; scanner les images (Trivy ou équivalent) en CI.
+- Configurer un `securityContext` Kubernetes restrictif.
+- Développement local : Docker Compose par défaut ; Kind, k3d ou Minikube en option pour tester les manifestes.
+- Déploiement vers Kubernetes systématiquement par des Helm charts, pas de manifestes YAML bruts.
+- Helm : labels standards via `_helpers.tpl`, ressources optionnelles par conditions, pas de secret en clair dans `values.yaml`, `version` ≠ `appVersion`, `helm lint` et `helm template` en CI.
+:::
+
 ## Cloud Pi Native
 
 La plateforme de déploiement cible est [Cloud Pi Native](https://cloud-pi-native.fr), un PaaS open source interne basé sur Kubernetes. La [console Cloud Pi Native](https://github.com/cloud-pi-native/console) offre une surcouche simplifiée pour le déploiement vers des clusters Kubernetes et OpenShift.
