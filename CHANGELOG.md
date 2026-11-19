@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/dnum-mi/transversal-doc/compare/v0.1.1...v0.1.2) (2026-11-19)
+
+
+### Documentation
+
+* **ci-cd:** document the build vs chore split for release-please ([09d1338](https://github.com/dnum-mi/transversal-doc/commit/09d133826dcf40e04aabbde6486755299c90516e))
+
 ## [0.1.1](https://github.com/dnum-mi/transversal-doc/compare/v0.1.0...v0.1.1) (2026-10-23)
 
 
