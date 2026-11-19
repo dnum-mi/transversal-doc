@@ -469,6 +469,20 @@ Le workflow `release-app` s'appuie sur [release-please](https://github.com/googl
 }
 ```
 
+::: warning Les mises à jour de dépendances doivent être en `build`, pas en `chore`
+Release-please n'ouvre une pull request de release que si les commits depuis la release précédente contiennent au moins un **type affiché** dans le CHANGELOG (voir `changelog-sections` de `release-please-config.json`). Les types marqués `hidden: true` sont ignorés : ici c'est `ci`, `chore`, `style` et `test` ; à l'inverse `feat`, `fix`, `perf`, `refactor`, `docs`, `build` et `revert` sont affichés.
+
+Conséquence : une mise à jour de dépendances ou d'images de base committée en `chore(deps): …` produit, en fusionnant seule, **ni pull request de release, ni build, ni déploiement** — le commit attend le prochain `feat`/`fix`. Committer en `build(deps): …` (type affiché) suffit pour qu'une release part : un commit `build` isolé déclenche une release de type *patch* (ex. `0.1.1` → `0.1.2`), sans `Release-As`.
+
+```text
+build(deps): update docker base images and js dependencies
+```
+
+- Si la mise à jour est automatisée (`renovate`, `dependabot`), régler leur préfixe de commit sur `build` pour que le type reste affiché (plusieurs outils utilisent `chore(deps)` par défaut).
+- `Release-As: X.Y.Z` (corps du commit, ou corps de la pull request lorsqu'on fusionne en squash) est **optionnel** : il fixe la version exacte au lieu du bump sémantique, utile pour découpler une release d'un lot de commits hétérogènes. Aucune version n'est nécessaire dans une release `build` ordinaire.
+- Piège si l'on ajoute un commit de relance **sans aucun diff** (les changements étant déjà sur `main`) : en fusion en *squash* ce commit est vide et disparaît ; le préférer en *merge commit* ou *rebase*, ou l'associer à un diff réel.
+:::
+
 ```yaml
 name: CD
 
