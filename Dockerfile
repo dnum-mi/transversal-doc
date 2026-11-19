@@ -1,5 +1,5 @@
 # Base stage
-FROM docker.io/node:24-slim AS dev
+FROM docker.io/node:26-slim AS dev
 
 WORKDIR /app
 RUN npm install --location=global pnpm
@@ -17,7 +17,7 @@ RUN pnpm run build && pnpm run build:csp
 
 
 # Prod stage
-FROM docker.io/nginxinc/nginx-unprivileged:1.30-alpine AS prod
+FROM docker.io/nginx/nginx-unprivileged:1.31-alpine AS prod
 
 USER 0
 COPY --chown=1001:0 --chmod=770 --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/
